@@ -1,26 +1,317 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-black: #212121;
+  --color-white: #ffffff;
+  --color-blue: #496eb5;
+  --color-pink: #de6b9b;
+
+  --font-primary: "Zyzol", sans-serif;
+  --font-secondary: "Zyzol Round", sans-serif;
+  --font-outline: "Zyzol Outline", sans-serif;
+
+  /* Custom font sizes */
+  --text-165: 16.5rem;
+  --text-132: 13.2rem;
+  --text-128: 12.8rem;
+  --text-90: 9rem;
+  --text-75: 7.5rem;
+  --text-65: 6.5rem;
+  --text-60: 6rem;
+  --text-45: 4.5rem;
+  --text-43: 4.3rem;
+  --text-40: 4rem;
+  --text-38: 3.8rem;
+  --text-36: 3.6rem;
+  --text-34: 3.4rem;
+  --text-32: 3.2rem;
+  --text-29: 2.9rem;
+  --text-25: 2.5rem;
+  --text-22: 2.2rem;
+  --text-20: 2rem;
+  --text-18: 1.8rem;
+  --text-16: 1.6rem;
+
+  /* Custom breakpoint */
+  --breakpoint-xs: 580px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@utility border-only {
+  border: 0.5rem solid #212121;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@utility box-shadow {
+  border: 0.5rem solid #212121;
+  filter: drop-shadow(0.6rem 0.6rem #212121);
+}
+
+@utility text-border {
+  display: inline-block;
+  position: relative;
+  -webkit-text-stroke: 4px #212121;
+  filter: drop-shadow(2px 2px #212121);
+}
+
+@utility text-border-lg {
+  -webkit-text-stroke: 8px #212121;
+  filter: drop-shadow(2px 2px #212121);
+}
+
+@utility drop-shadow-filter {
+  filter: drop-shadow(2px 2px #212121);
+}
+
+@utility drop-shadow-filter-lg {
+  filter: drop-shadow(5px 5px #212121);
+}
+
+@utility stop-scroll {
+  overflow: hidden;
+}
+
+@utility grid-auto-min {
+  grid-auto-rows: min-content;
+  grid-auto-columns: min-content;
+}
+
+@utility h-calc {
+  height: calc(100svh - 20rem);
+}
+
+@utility floatAnimation {
+  animation: float 2s cubic-bezier(0.39, 0.02, 0.5, 0.98) infinite;
+  transition: all 0.4s;
+}
+
+@utility floatAnimationSmall {
+  animation: floatSmall 2s cubic-bezier(0.39, 0.02, 0.5, 0.98) infinite;
+  transition: all 0.4s;
+}
+
+@layer base {
+  html {
+    font-family: "Zyzol", sans-serif;
+    font-size: calc(100vw / 3440 * 10);
+    box-sizing: border-box;
+  }
+
+  @media (width <= 160em) {
+    html {
+      font-size: calc(100vw / 2560 * 12);
+    }
+  }
+  @media (width <= 120em) {
+    html {
+      font-size: calc(100vw / 1920 * 10);
+    }
+  }
+  @media (width <= 63.8em) {
+    html {
+      font-size: calc(100vw / 1024 * 10);
+    }
+  }
+  @media (width <= 36.25em) {
+    html {
+      font-size: calc(100vw / 580 * 10);
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .text-border::before {
+    content: attr(data-text);
+    position: absolute;
+    pointer-events: none;
+    -webkit-text-stroke: 0px;
+  }
+
+  /* Input */
+  .input {
+    @apply box-shadow h-[3.6rem] w-220 rounded-full px-12 py-14 text-32 bg-white text-black/90;
+  }
+
+  @media (width >= 768px) {
+    .text-border {
+      filter: drop-shadow(4px 4px #212121);
+    }
+  }
+
+  /* Navigation */
+  .activeNavLink {
+    position: relative;
+    z-index: 20;
+  }
+
+  .activeNavLink::after {
+    content: "";
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform-origin: center;
+    animation: scaleIn 0.2s both;
+    border: 2px solid #212121;
+
+    @apply md:border-only absolute -z-10 inline-block h-[130%] w-[140%] border-black bg-pink;
+  }
+
+  @keyframes scaleIn {
+    0% {
+      transform: translate(-50%, -50%) scale(0.1) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1)
+        rotate(var(--nav-rotation, 2.4deg));
+    }
+  }
+
+  /* Check box */
+  .checkbox {
+    position: relative;
+    display: block;
+    width: 25rem;
+    height: 60px;
+  }
+  .check {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    opacity: 0;
+  }
+  .path1 {
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    transition: 0.5s all;
+  }
+
+  .check:checked + label svg g path {
+    stroke-dashoffset: 0;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #212112;
+    border-radius: 2rem;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #4d4d4d;
+  }
+
+  /* Color picker */
+  .fix-pointer .w-color-alpha-pointer {
+    top: 50% !important;
+  }
+  .fix-pointer .w-color-alpha-fill {
+    transform: translate(-9px, -50%) !important;
+    width: 0.8rem;
+    height: 0.8rem;
+
+    @apply border-only border-4;
+  }
+
+  /* Slider */
+  .slider {
+    -webkit-appearance: none;
+    appearance: none;
+    @apply box-shadow h-[0.6rem] w-[6rem] bg-white opacity-100 outline-none;
+  }
+
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    @apply border-only h-[0.8rem] w-[0.8rem] cursor-pointer rounded-full border-4 bg-white;
+  }
+
+  .slider::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    @apply border-only h-[0.8rem] w-[0.8rem] cursor-pointer rounded-full border-4 bg-white;
+  }
+
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-2rem);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  @keyframes floatSmall {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-1rem);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  html.lenis {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  .lenis.lenis-scrolling iframe {
+    pointer-events: none;
+  }
+
+  .transitionBlock {
+    z-index: 999;
+    @apply fixed left-0 top-0 h-svh w-full bg-blue;
+  }
+}
+
+@font-face {
+  font-family: "Zyzol Round";
+  src:
+    url("./assets/font/ZyzolRound.woff2") format("woff2"),
+    url("./assets/font/ZyzolRound.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Zyzol";
+  src:
+    url("./assets/font/ZyzolRegular.woff2") format("woff2"),
+    url("./assets/font/ZyzolRegular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Zyzol Outline";
+  src:
+    url("./assets/font/ZyzolOutline.woff2") format("woff2"),
+    url("./assets/font/ZyzolOutline.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
