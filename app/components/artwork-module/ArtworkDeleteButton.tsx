@@ -10,7 +10,13 @@ const ArtworkDeleteButton = ({ artworkId }: { artworkId: string }) => {
     >
       <input type="hidden" name="artworkId" value={artworkId} />
       <button type="submit" name="intent" value="delete">
-        <Image src={TrashIcon} alt="" width={24} height={24} />
+        <Image
+          src={TrashIcon}
+          alt=""
+          width={60}
+          height={60}
+          className="h-24 w-24"
+        />
       </button>
     </form>
   );

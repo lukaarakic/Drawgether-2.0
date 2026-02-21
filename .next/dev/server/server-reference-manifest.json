@@ -1,5 +1,21 @@
 {
-  "node": {},
+  "node": {
+    "404e9627f05133d8f675bec962330fccafb93832ec": {
+      "workers": {
+        "app/(app)/search/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/search/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/searchArtists.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "$$RSC_SERVER_ACTION_0",
+          "filename": "app/lib/searchArtists.ts"
+        }
+      },
+      "layer": {
+        "app/(app)/search/page": "rsc"
+      },
+      "filename": "app/lib/searchArtists.ts",
+      "exportedName": "$$RSC_SERVER_ACTION_0"
+    }
+  },
   "edge": {},
-  "encryptionKey": "RmaQSvMQU2cvA4+jgfB2+fxLghtROMvuIZzAqsYkwG4="
+  "encryptionKey": "pk9LqOixxWYj9lhSNoPOXAsnbzg2dwiogdBNctuVWRA="
 }
