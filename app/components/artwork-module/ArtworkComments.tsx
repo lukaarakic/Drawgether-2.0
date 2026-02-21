@@ -1,17 +1,19 @@
 import Link from "next/link";
+import { Prisma } from "@/app/generated/prisma/client";
 
-type Comment = {
-  id: string;
-  content: string;
-  artist: {
-    id: string;
-    username: string;
-    avatar: string | null;
+type Comments = Prisma.ArtworkGetPayload<{
+  include: {
+    comments: {
+      select: {
+        id: true;
+        content: true;
+        artist: { select: { id: true; username: true } };
+      };
+    };
   };
-};
-
+}>;
 type ArtworkCommentsProps = {
-  comments: Comment[];
+  comments: Comments["comments"];
   artworkId: string;
 };
 
@@ -57,7 +59,7 @@ const ArtworkComments = ({ comments, artworkId }: ArtworkCommentsProps) => {
         : null}
 
       <Link
-        href={`/artwork/${artworkId}/comments`}
+        href={`/feed/artwork/${artworkId}`}
         scroll={false}
         data-text={
           hasComments

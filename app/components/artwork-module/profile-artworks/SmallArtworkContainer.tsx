@@ -1,19 +1,16 @@
 import Link from "next/link";
 import SmallArtwork from "./SmallArtwork";
+import { Prisma } from "@/app/generated/prisma/client";
 
-type Artwork = {
-  id: string;
-  image: string;
-  theme: string;
-  likesCount: number;
-};
+type ArtistWithArtworks = Prisma.ArtistGetPayload<{
+  select: {
+    id: true;
+    username: true;
+    artworks: { select: { id: true; artworkImage: true } };
+  };
+}>;
 
-type Artist = {
-  username: string;
-  artworks: Artwork[];
-};
-
-const SmallArtworkContainer = ({ artist }: { artist: Artist }) => {
+const SmallArtworkContainer = ({ artist }: { artist: ArtistWithArtworks }) => {
   return (
     <div className="grid grid-cols-3 items-center justify-items-center gap-x-4 gap-y-8">
       {artist.artworks.map((artwork, index) => (
@@ -21,7 +18,7 @@ const SmallArtworkContainer = ({ artist }: { artist: Artist }) => {
           key={artwork.id}
           href={`/artist/${artist.username}/artwork/${artwork.id}`}
         >
-          <SmallArtwork art={artwork.image} index={index} />
+          <SmallArtwork art={artwork.artworkImage} index={index} />
         </Link>
       ))}
     </div>

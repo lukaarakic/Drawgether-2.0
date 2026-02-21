@@ -1,7 +1,8 @@
 {
   "/(app)/artist/[artistId]/page": "app/(app)/artist/[artistId]/page.js",
+  "/(app)/feed/@modal/(.)artwork/[artworkId]/page": "app/(app)/feed/@modal/(.)artwork/[artworkId]/page.js",
+  "/(app)/feed/artwork/[artworkId]/page": "app/(app)/feed/artwork/[artworkId]/page.js",
   "/(app)/feed/page": "app/(app)/feed/page.js",
-  "/(app)/play/page": "app/(app)/play/page.js",
   "/(app)/search/page": "app/(app)/search/page.js",
   "/_not-found/page": "app/_not-found/page.js"
 }

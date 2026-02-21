@@ -59,32 +59,24 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/image.js [app-rsc] (ecmascript)");
 ;
 ;
-const ArtistCircle = ({ avatar, size, className })=>{
-    const avatarSrc = avatar.avatarUrl ? avatar.avatarUrl : `https://api.dicebear.com/7.x/adventurer/svg?seed=${avatar.seed || "default"}`;
+const ArtistCircle = ({ username, className, size = "medium" })=>{
+    const avatarSrc = `https://api.dicebear.com/7.x/adventurer/svg?seed=${username || "default"}`;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: `${className || ""} box-shadow flex items-center justify-center overflow-hidden rounded-full bg-white`,
-        style: {
-            width: `${size}rem`,
-            height: `${size}rem`
-        },
+        className: `${className || ""} ${size === "small" ? "w-24 h-24" : size === "large" ? "w-50 h-50" : "w-30 h-30"} box-shadow flex items-center justify-center overflow-hidden rounded-full bg-white`,
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
             src: avatarSrc,
-            alt: "Artist avatar",
-            width: size * 10 * 0.9,
-            height: size * 10 * 0.9,
-            unoptimized: true,
-            style: {
-                width: `${size * 0.9}rem`,
-                height: `${size * 0.9}rem`
-            }
+            alt: `${username || "default"} avatar`,
+            width: size === "small" ? 48 : size === "large" ? 272 : 60,
+            height: size === "small" ? 48 : size === "large" ? 272 : 60,
+            unoptimized: true
         }, void 0, false, {
             fileName: "[project]/app/components/ui/ArtistCircle.tsx",
-            lineNumber: 26,
+            lineNumber: 21,
             columnNumber: 7
         }, ("TURBOPACK compile-time value", void 0))
     }, void 0, false, {
         fileName: "[project]/app/components/ui/ArtistCircle.tsx",
-        lineNumber: 19,
+        lineNumber: 18,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -123,7 +115,7 @@ const __TURBOPACK__default__export__ = BoxLabel;
 }),
 "[project]/app/assets/misc/searchIcon.svg (static in ecmascript, tag client)", ((__turbopack_context__) => {
 
-__turbopack_context__.v("/_next/static/media/searchIcon.77e44543.svg");}),
+__turbopack_context__.v("/_next/static/media/searchIcon.c06f4250.svg");}),
 "[project]/app/assets/misc/searchIcon.svg.mjs { IMAGE => \"[project]/app/assets/misc/searchIcon.svg (static in ecmascript, tag client)\" } [app-rsc] (structured image object with data url, ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
@@ -144,6 +136,8 @@ const __TURBOPACK__default__export__ = {
 "[project]/app/(app)/search/page.tsx [app-rsc] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
+return __turbopack_context__.a(async (__turbopack_handle_async_dependencies__, __turbopack_async_result__) => { try {
+
 __turbopack_context__.s([
     "default",
     ()=>__TURBOPACK__default__export__,
@@ -157,6 +151,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$B
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$ArtistCircle$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/components/ui/ArtistCircle.tsx [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$BoxLabel$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/components/ui/BoxLabel.tsx [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$assets$2f$misc$2f$searchIcon$2e$svg$2e$mjs__$7b$__IMAGE__$3d3e$__$225b$project$5d2f$app$2f$assets$2f$misc$2f$searchIcon$2e$svg__$28$static__in__ecmascript$2c$__tag__client$2922$__$7d$__$5b$app$2d$rsc$5d$__$28$structured__image__object__with__data__url$2c$__ecmascript$29$__ = __turbopack_context__.i('[project]/app/assets/misc/searchIcon.svg.mjs { IMAGE => "[project]/app/assets/misc/searchIcon.svg (static in ecmascript, tag client)" } [app-rsc] (structured image object with data url, ecmascript)');
+var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$searchArtists$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/lib/searchArtists.ts [app-rsc] (ecmascript)");
+var __turbopack_async_dependencies__ = __turbopack_handle_async_dependencies__([
+    __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$searchArtists$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__
+]);
+[__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$searchArtists$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__] = __turbopack_async_dependencies__.then ? (await __turbopack_async_dependencies__)() : __turbopack_async_dependencies__;
+;
 ;
 ;
 ;
@@ -171,43 +171,14 @@ const metadata = {
 function generateRandomRotation(seed) {
     return seed * 7 % 5 - 2.5;
 }
-// Dummy artists data
-const dummyArtists = [
-    {
-        id: "a1",
-        username: "cosmicArtist",
-        avatar: null
-    },
-    {
-        id: "a2",
-        username: "starPainter",
-        avatar: null
-    },
-    {
-        id: "a3",
-        username: "waveCreator",
-        avatar: null
-    },
-    {
-        id: "a4",
-        username: "peakDrawer",
-        avatar: null
-    },
-    {
-        id: "a5",
-        username: "urbanSketch",
-        avatar: null
-    }
-];
 const SearchPage = async ({ searchParams })=>{
     const { search: searchTerm } = await searchParams;
-    // Filter dummy artists based on search term
-    const artists = searchTerm ? dummyArtists.filter((artist)=>artist.username.toLowerCase().includes(searchTerm.toLowerCase())) : [];
+    const artists = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$searchArtists$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["searchArtist"])(searchTerm || "");
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
         className: "",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
-                method: "GET",
+                action: __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$searchArtists$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["searchArtistsAction"],
                 className: "flex items-center justify-center gap-12",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -222,7 +193,7 @@ const SearchPage = async ({ searchParams })=>{
                         }
                     }, void 0, false, {
                         fileName: "[project]/app/(app)/search/page.tsx",
-                        lineNumber: 44,
+                        lineNumber: 34,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$BoxButton$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
@@ -235,18 +206,18 @@ const SearchPage = async ({ searchParams })=>{
                             className: "h-22 w-22"
                         }, void 0, false, {
                             fileName: "[project]/app/(app)/search/page.tsx",
-                            lineNumber: 56,
+                            lineNumber: 46,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/app/(app)/search/page.tsx",
-                        lineNumber: 55,
+                        lineNumber: 45,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/(app)/search/page.tsx",
-                lineNumber: 43,
+                lineNumber: 30,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -258,7 +229,7 @@ const SearchPage = async ({ searchParams })=>{
                         children: "Search results:"
                     }, void 0, false, {
                         fileName: "[project]/app/(app)/search/page.tsx",
-                        lineNumber: 62,
+                        lineNumber: 52,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)) : null,
                     artists.length > 0 ? artists.map((artist, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
@@ -266,14 +237,11 @@ const SearchPage = async ({ searchParams })=>{
                             className: "mb-8 flex items-center gap-8",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$ArtistCircle$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
-                                    size: 11.8,
-                                    avatar: {
-                                        avatarUrl: artist.avatar,
-                                        seed: artist.username
-                                    }
+                                    size: "medium",
+                                    username: artist.username
                                 }, void 0, false, {
                                     fileName: "[project]/app/(app)/search/page.tsx",
-                                    lineNumber: 77,
+                                    lineNumber: 67,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$components$2f$ui$2f$BoxLabel$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
@@ -286,23 +254,23 @@ const SearchPage = async ({ searchParams })=>{
                                             children: artist.username
                                         }, void 0, false, {
                                             fileName: "[project]/app/(app)/search/page.tsx",
-                                            lineNumber: 87,
+                                            lineNumber: 71,
                                             columnNumber: 19
                                         }, ("TURBOPACK compile-time value", void 0))
                                     }, void 0, false, {
                                         fileName: "[project]/app/(app)/search/page.tsx",
-                                        lineNumber: 86,
+                                        lineNumber: 70,
                                         columnNumber: 17
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/app/(app)/search/page.tsx",
-                                    lineNumber: 85,
+                                    lineNumber: 69,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, artist.id, true, {
                             fileName: "[project]/app/(app)/search/page.tsx",
-                            lineNumber: 72,
+                            lineNumber: 62,
                             columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))) : searchTerm?.length ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                         className: "text-border mb-12 text-center text-32 tracking-[.5rem] text-white",
@@ -310,24 +278,25 @@ const SearchPage = async ({ searchParams })=>{
                         children: "No artists found"
                     }, void 0, false, {
                         fileName: "[project]/app/(app)/search/page.tsx",
-                        lineNumber: 98,
+                        lineNumber: 82,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)) : null
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/(app)/search/page.tsx",
-                lineNumber: 60,
+                lineNumber: 50,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/app/(app)/search/page.tsx",
-        lineNumber: 42,
+        lineNumber: 29,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
 const __TURBOPACK__default__export__ = SearchPage;
-}),
+__turbopack_async_result__();
+} catch(e) { __turbopack_async_result__(e); } }, false);}),
 "[project]/app/(app)/search/page.tsx [app-rsc] (ecmascript, Next.js Server Component)", ((__turbopack_context__) => {
 
 __turbopack_context__.n(__turbopack_context__.i("[project]/app/(app)/search/page.tsx [app-rsc] (ecmascript)"));
