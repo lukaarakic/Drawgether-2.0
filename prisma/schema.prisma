@@ -1,0 +1,131 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// --- USER / ARTIST ENTITY ---
+model Artist {
+  id            String    @id @default(cuid())
+  username      String    @unique
+  email         String    @unique
+  emailVerified DateTime?
+  avatar        String?
+
+  followerCount  Int @default(0)
+  followingCount Int @default(0)
+  artworksCount  Int @default(0)
+
+  password Password?
+  artworks Artwork[]
+  comments Comment[]
+  likes    Like[]
+
+  roleId String
+  role   Role   @relation(fields: [roleId], references: [id])
+
+  followers Follows[] @relation("following")
+  following Follows[] @relation("follower")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+// --- AUTHENTICATION (NextAuth Custom) ---
+model Password {
+  hash     String
+  artistId String @unique
+  artist   Artist @relation(fields: [artistId], references: [id], onDelete: Cascade)
+}
+
+// --- GAME & ARTWORK ---
+model Artwork {
+  id            String @id @default(cuid())
+  theme         String
+  artworkImage  String
+  likesCount    Int    @default(0)
+  commentsCount Int    @default(0)
+
+  artists Artist[]
+  roomId  String?  @unique
+  room    Room?    @relation(fields: [roomId], references: [id])
+
+  comments Comment[]
+  likes    Like[]
+
+  created_at DateTime @default(now())
+}
+
+model Room {
+  id        String     @id @default(cuid())
+  theme     String
+  status    RoomStatus @default(WAITING)
+  startsAt  DateTime?
+  expiresAt DateTime?
+
+  artwork Artwork?
+}
+
+enum RoomStatus {
+  WAITING
+  ACTIVE
+  FINISHED
+}
+
+// --- INTERACTIONS ---
+model Comment {
+  id         String   @id @default(cuid())
+  content    String
+  artistId   String
+  artist     Artist   @relation(fields: [artistId], references: [id])
+  artworkId  String
+  artwork    Artwork  @relation(fields: [artworkId], references: [id])
+  created_at DateTime @default(now())
+}
+
+model Follows {
+  followerId  String
+  follower    Artist   @relation("follower", fields: [followerId], references: [id])
+  followingId String
+  following   Artist   @relation("following", fields: [followingId], references: [id])
+  createdAt   DateTime @default(now())
+
+  @@id([followerId, followingId])
+}
+
+model Like {
+  artistId  String
+  artworkId String
+  artist    Artist   @relation(fields: [artistId], references: [id])
+  artwork   Artwork  @relation(fields: [artworkId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@id([artistId, artworkId])
+}
+
+// --- PERMISSIONS ---
+model Role {
+  id          String       @id @default(cuid())
+  name        String       @unique
+  artists     Artist[]
+  permissions Permission[]
+}
+
+model Permission {
+  id     String @id @default(cuid())
+  action String
+  entity String
+  access String
+  roles  Role[]
+
+  @@unique([action, entity, access])
+}

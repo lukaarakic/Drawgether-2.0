@@ -5,6 +5,7 @@ import BoxButton from "@/app/components/ui/BoxButton";
 import ArtistCircle from "@/app/components/ui/ArtistCircle";
 import BoxLabel from "@/app/components/ui/BoxLabel";
 import SearchIcon from "@/app/assets/misc/searchIcon.svg";
+import { searchArtist, searchArtistsAction } from "@/app/lib/searchArtists";
 
 export const metadata: Metadata = {
   title: "Find Artist",
@@ -15,15 +16,6 @@ function generateRandomRotation(seed: number): number {
   return ((seed * 7) % 5) - 2.5;
 }
 
-// Dummy artists data
-const dummyArtists = [
-  { id: "a1", username: "cosmicArtist", avatar: null },
-  { id: "a2", username: "starPainter", avatar: null },
-  { id: "a3", username: "waveCreator", avatar: null },
-  { id: "a4", username: "peakDrawer", avatar: null },
-  { id: "a5", username: "urbanSketch", avatar: null },
-];
-
 type SearchPageProps = {
   searchParams: Promise<{ search?: string }>;
 };
@@ -31,16 +23,14 @@ type SearchPageProps = {
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const { search: searchTerm } = await searchParams;
 
-  // Filter dummy artists based on search term
-  const artists = searchTerm
-    ? dummyArtists.filter((artist) =>
-        artist.username.toLowerCase().includes(searchTerm.toLowerCase()),
-      )
-    : [];
+  const artists = await searchArtist(searchTerm || "");
 
   return (
     <main className="">
-      <form method="GET" className="flex items-center justify-center gap-12">
+      <form
+        action={searchArtistsAction}
+        className="flex items-center justify-center gap-12"
+      >
         <input
           type="text"
           name="search"
@@ -74,13 +64,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
               key={artist.id}
               className="mb-8 flex items-center gap-8"
             >
-              <ArtistCircle
-                size={11.8}
-                avatar={{
-                  avatarUrl: artist.avatar,
-                  seed: artist.username,
-                }}
-              />
+              <ArtistCircle size="medium" username={artist.username} />
 
               <BoxLabel degree={generateRandomRotation(index % 4)}>
                 <div className="flex h-28 w-116 items-center justify-between gap-20 px-4">

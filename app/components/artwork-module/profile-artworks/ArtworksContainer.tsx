@@ -1,33 +1,28 @@
+import { Prisma } from "@/app/generated/prisma/client";
 import ArtworkPost from "../ArtworkPost";
 
-type Artwork = {
-  id: string;
-  image: string;
-  theme: string;
-  likesCount: number;
-};
+type ArtworkWithArtists = Prisma.ArtworkGetPayload<{
+  include: {
+    artists: { select: { id: true; username: true } };
+    comments: {
+      select: {
+        id: true;
+        artist: { select: { id: true; username: true } };
+        content: true;
+      };
+    };
+  };
+}>;
 
 type ArtworksContainerProps = {
-  artworks: Artwork[];
-  profileRoute?: string | null;
+  artworks: ArtworkWithArtists[];
 };
 
-const ArtworksContainer = ({
-  artworks,
-  profileRoute,
-}: ArtworksContainerProps) => {
+const ArtworksContainer = ({ artworks }: ArtworksContainerProps) => {
   return (
     <div className="flex flex-col">
       {artworks.map((artwork, index) => (
-        <ArtworkPost
-          key={artwork.id}
-          id={artwork.id}
-          index={index}
-          theme={artwork.theme}
-          artworkImage={artwork.image}
-          likesCount={artwork.likesCount}
-          artists={[{ id: "owner", username: profileRoute || "unknown" }]}
-        />
+        <ArtworkPost artwork={artwork} index={index} key={artwork.id} />
       ))}
     </div>
   );
