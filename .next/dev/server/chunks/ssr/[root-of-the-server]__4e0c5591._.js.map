@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 26, "column": 0}, "map": {"version":3,"sources":["file:///D:/drawgether_2.0/app/%28auth%29/forgot-password/page.tsx"],"sourcesContent":["const ForgotPassword = () => {\r\n  return <div>ForgotPassword</div>;\r\n};\r\n\r\nexport default ForgotPassword;\r\n"],"names":[],"mappings":";;;;;;AAAA,MAAM,iBAAiB;IACrB,qBAAO,8OAAC;kBAAI;;;;;;AACd;uCAEe"}}]
-}

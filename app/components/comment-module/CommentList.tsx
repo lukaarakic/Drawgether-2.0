@@ -1,23 +1,19 @@
-import Comment from "./Comment"
+import Comment from "./Comment";
 
 const CommentList = ({
   comments,
 }: {
   comments: {
-    id: string
-    content: string
+    id: string;
+    content: string;
     artist: {
-      id: string
-      username: string
-      avatar: string | null
-    }
-  }[]
+      id: string;
+      username: string;
+    };
+  }[];
 }) => {
   return (
-    <div
-      className="mx-auto h-[41.5rem] w-[90%] overflow-y-scroll"
-      data-lenis-prevent
-    >
+    <div className="mx-auto w-full overflow-y-auto" data-lenis-prevent>
       {comments.length > 0 ? (
         comments.map((comment) => (
           <Comment
@@ -34,7 +30,7 @@ const CommentList = ({
         </p>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default CommentList
+export default CommentList;

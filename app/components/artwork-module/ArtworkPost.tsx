@@ -6,107 +6,92 @@ import ArtworkDeleteButton from "./ArtworkDeleteButton";
 import Image from "next/image";
 import Link from "next/link";
 import CommentIcon from "@/app/assets/misc/comment.svg";
+import { Prisma } from "@/app/generated/prisma/client";
 
-type Artist = {
-  id: string;
-  username: string;
-  avatar?: string;
-};
-
-type Comment = {
-  id: string;
-  content: string;
-  artist: {
-    id: string;
-    username: string;
-    avatar: string | null;
+type ArtworkWithArtists = Prisma.ArtworkGetPayload<{
+  include: {
+    artists: { select: { id: true; username: true } };
+    comments: {
+      select: {
+        id: true;
+        content: true;
+        artist: { select: { id: true; username: true } };
+      };
+    };
   };
-};
-
-type ArtworkPostProps = {
-  id: string;
-  theme: string;
-  index: number;
-  artworkImage: string;
-  likesCount: number;
-  isLiked?: boolean;
-  artists: Artist[];
-  comments?: Comment[];
-  showComments?: boolean;
-  showDeleteButton?: boolean;
-  className?: string;
-};
+}>;
 
 function generateRandomRotation(seed: number): number {
   return ((seed * 7) % 5) - 2.5;
 }
 
 const ArtworkPost = ({
-  id,
-  theme,
+  artwork,
   index,
-  artworkImage,
-  likesCount,
-  isLiked = false,
-  artists,
-  comments = [],
-  showComments = false,
-  showDeleteButton = false,
   className,
-}: ArtworkPostProps) => {
+  showComments = true,
+}: {
+  artwork: ArtworkWithArtists;
+  index: number;
+  className?: string;
+  showComments?: boolean;
+}) => {
   return (
-    <article className={className}>
+    <article className={`${className}`}>
       <BoxLabel degree={generateRandomRotation((index % 12) + 1)}>
         <h2
-          data-text={theme}
+          data-text={artwork.theme}
           className="text-border text-border-lg whitespace-break-spaces p-2 text-25 md:text-32"
         >
-          {theme}
+          {artwork.theme}
         </h2>
       </BoxLabel>
 
       <div
         className="relative mb-24"
         style={{
-          rotate: `${generateRandomRotation(index % 10) / 2}deg`,
+          rotate: `${generateRandomRotation((index % 12) + 1)}deg`,
         }}
       >
         <Image
-          src={artworkImage}
-          alt={theme}
+          src={artwork.artworkImage}
+          alt={artwork.theme}
           width={572}
           height={572}
           className="box-shadow mt-5 h-[57.2rem] w-[57.2rem] object-cover"
         />
 
         <div className="absolute -bottom-12 -left-5 flex">
-          <ArtworkLikeButton likesCount={likesCount} isLiked={isLiked} />
+          <ArtworkLikeButton likesCount={artwork.likesCount} isLiked={false} />
           {showComments && (
-            <Link href={`/artwork/${id}/comments`}>
+            <Link
+              href={`/artwork/${artwork.id}/comments`}
+              className="flex items-end"
+            >
               <Image src={CommentIcon} alt="Comments" className="h-24 w-24" />
             </Link>
           )}
-          {showDeleteButton && <ArtworkDeleteButton artworkId={id} />}
+
+          <ArtworkDeleteButton artworkId={artwork.id} />
         </div>
 
-        <div className="absolute -bottom-16 -right-8 flex items-baseline">
-          {artists.map((artist) => (
-            <Link href={`/artist/${artist.username}`} key={artist.id}>
+        <div className="absolute -bottom-10 -right-8 flex items-baseline">
+          {artwork.artists.map((artist) => (
+            <Link
+              href={`/artist/${artist.username}`}
+              key={artist.username}
+              className="-mr-10 last-of-type:mr-0"
+            >
               <ArtistCircle
-                size={6.8}
-                avatar={{
-                  avatarUrl: artist.avatar,
-                  seed: artist.username,
-                }}
-                className="-mr-10"
+                username={artist.username || "default"}
+                className=""
               />
             </Link>
           ))}
         </div>
       </div>
-
-      {showComments && comments.length > 0 && (
-        <ArtworkComments comments={comments} artworkId={id} />
+      {showComments && (
+        <ArtworkComments comments={artwork.comments} artworkId={artwork.id} />
       )}
     </article>
   );

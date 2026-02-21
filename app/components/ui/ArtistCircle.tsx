@@ -2,37 +2,28 @@ import { FC } from "react";
 import Image from "next/image";
 
 interface ArtistCircleProps {
-  avatar: {
-    avatarUrl?: string | null;
-    seed?: string;
-  };
-  size: number;
+  username: string;
   className?: string;
+  size?: "small" | "medium" | "large";
 }
 
-const ArtistCircle: FC<ArtistCircleProps> = ({ avatar, size, className }) => {
-  const avatarSrc = avatar.avatarUrl
-    ? avatar.avatarUrl
-    : `https://api.dicebear.com/7.x/adventurer/svg?seed=${avatar.seed || "default"}`;
+const ArtistCircle: FC<ArtistCircleProps> = ({
+  username,
+  className,
+  size = "medium",
+}) => {
+  const avatarSrc = `https://api.dicebear.com/7.x/adventurer/svg?seed=${username || "default"}`;
 
   return (
     <div
-      className={`${className || ""} box-shadow flex items-center justify-center overflow-hidden rounded-full bg-white`}
-      style={{
-        width: `${size}rem`,
-        height: `${size}rem`,
-      }}
+      className={`${className || ""} ${size === "small" ? "w-24 h-24" : size === "large" ? "w-50 h-50" : "w-30 h-30"} box-shadow flex items-center justify-center overflow-hidden rounded-full bg-white`}
     >
       <Image
         src={avatarSrc}
-        alt="Artist avatar"
-        width={size * 10 * 0.9}
-        height={size * 10 * 0.9}
+        alt={`${username || "default"} avatar`}
+        width={size === "small" ? 48 : size === "large" ? 272 : 60}
+        height={size === "small" ? 48 : size === "large" ? 272 : 60}
         unoptimized
-        style={{
-          width: `${size * 0.9}rem`,
-          height: `${size * 0.9}rem`,
-        }}
       />
     </div>
   );

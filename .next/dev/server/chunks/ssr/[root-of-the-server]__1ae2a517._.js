@@ -19,7 +19,7 @@ __turbopack_context__.n(__turbopack_context__.i("[project]/app/not-found.tsx [ap
 }),
 "[project]/app/assets/logos/pink_logo.svg (static in ecmascript, tag client)", ((__turbopack_context__) => {
 
-__turbopack_context__.v("/_next/static/media/pink_logo.2ef2f39b.svg");}),
+__turbopack_context__.v("/_next/static/media/pink_logo.c74a8ad4.svg");}),
 "[project]/app/assets/logos/pink_logo.svg.mjs { IMAGE => \"[project]/app/assets/logos/pink_logo.svg (static in ecmascript, tag client)\" } [app-rsc] (structured image object with data url, ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
@@ -39,7 +39,7 @@ const __TURBOPACK__default__export__ = {
 }),
 "[project]/app/assets/clouds/left_white.svg (static in ecmascript, tag client)", ((__turbopack_context__) => {
 
-__turbopack_context__.v("/_next/static/media/left_white.c9ce8671.svg");}),
+__turbopack_context__.v("/_next/static/media/left_white.b56e3d46.svg");}),
 "[project]/app/assets/clouds/left_white.svg.mjs { IMAGE => \"[project]/app/assets/clouds/left_white.svg (static in ecmascript, tag client)\" } [app-rsc] (structured image object with data url, ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
@@ -59,7 +59,7 @@ const __TURBOPACK__default__export__ = {
 }),
 "[project]/app/assets/clouds/right_white.svg (static in ecmascript, tag client)", ((__turbopack_context__) => {
 
-__turbopack_context__.v("/_next/static/media/right_white.3ac6d0ee.svg");}),
+__turbopack_context__.v("/_next/static/media/right_white.3a8d8fc1.svg");}),
 "[project]/app/assets/clouds/right_white.svg.mjs { IMAGE => \"[project]/app/assets/clouds/right_white.svg (static in ecmascript, tag client)\" } [app-rsc] (structured image object with data url, ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
@@ -121,7 +121,7 @@ function Index() {
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                         className: "text-border text-border-lg drop-shadow-filter mb-10 rotate-2 text-center text-75 leading-none tracking-tighter text-white md:text-90 lg:text-128",
-                        "data-text": "UNLEASH YOUR CREATIVE SIDE",
+                        "data-text": "UNLEASH YOUR   CREATIVE SIDE",
                         children: [
                             "UNLEASH YOUR ",
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
