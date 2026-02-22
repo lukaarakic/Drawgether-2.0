@@ -1,6 +1,6 @@
-import "./spinner.css"
+import "./spinner.css";
 
-const Spinner = ({ className = "w-44 h-44" }: { className?: string }) => {
+const Spinner = ({ className = "w-10 h-10" }: { className?: string }) => {
   return (
     <svg
       className={`pencil ${className}`}
@@ -99,6 +99,6 @@ const Spinner = ({ className = "w-44 h-44" }: { className?: string }) => {
         </g>
       </g>
     </svg>
-  )
-}
-export default Spinner
+  );
+};
+export default Spinner;

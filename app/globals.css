@@ -221,7 +221,7 @@
   .slider {
     -webkit-appearance: none;
     appearance: none;
-    @apply box-shadow h-[0.6rem] w-[6rem] bg-white opacity-100 outline-none;
+    @apply box-shadow h-[0.6rem] w-24 bg-white opacity-100 outline-none;
   }
 
   .slider::-webkit-slider-thumb {
