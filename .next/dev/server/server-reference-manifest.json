@@ -1,5 +1,36 @@
 {
-  "node": {},
+  "node": {
+    "6031dbbe662ef0bec950b6d09558449e5713a53383": {
+      "workers": {
+        "app/(auth)/login/page": {
+          "moduleId": "[project]/.next-internal/server/app/(auth)/login/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/login.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "loginAction",
+          "filename": "app/lib/actions/login.ts"
+        }
+      },
+      "layer": {
+        "app/(auth)/login/page": "action-browser"
+      },
+      "filename": "app/lib/actions/login.ts",
+      "exportedName": "loginAction"
+    },
+    "60e28b45f9dc79c72e34d9ad5e23575925047736e1": {
+      "workers": {
+        "app/(auth)/register/page": {
+          "moduleId": "[project]/.next-internal/server/app/(auth)/register/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/register.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "registerAction",
+          "filename": "app/lib/actions/register.ts"
+        }
+      },
+      "layer": {
+        "app/(auth)/register/page": "action-browser"
+      },
+      "filename": "app/lib/actions/register.ts",
+      "exportedName": "registerAction"
+    }
+  },
   "edge": {},
-  "encryptionKey": "RmaQSvMQU2cvA4+jgfB2+fxLghtROMvuIZzAqsYkwG4="
+  "encryptionKey": "pk9LqOixxWYj9lhSNoPOXAsnbzg2dwiogdBNctuVWRA="
 }

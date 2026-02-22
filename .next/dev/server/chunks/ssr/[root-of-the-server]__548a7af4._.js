@@ -25,7 +25,7 @@ module.exports = mod;
 }),
 "[project]/app/assets/logos/logo_only.svg (static in ecmascript, tag client)", ((__turbopack_context__) => {
 
-__turbopack_context__.v("/_next/static/media/logo_only.7b596e73.svg");}),
+__turbopack_context__.v("/_next/static/media/logo_only.9b790824.svg");}),
 "[project]/app/assets/logos/logo_only.svg.mjs { IMAGE => \"[project]/app/assets/logos/logo_only.svg (static in ecmascript, tag client)\" } [app-ssr] (structured image object with data url, ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
