@@ -1,13 +1,25 @@
+"use client";
+
+import ErrorList from "@/app/components/error/ErrorList";
 import BoxButton from "@/app/components/ui/BoxButton";
+import { AuthState, registerAction } from "@/app/lib/actions/register";
 import Image from "next/image";
 import Link from "next/link";
+import { useActionState } from "react";
 
 const RegisterPage = () => {
+  const initalState: AuthState = { errors: {}, message: "" };
+
+  const [state, action, isPending] = useActionState(
+    registerAction,
+    initalState,
+  );
+
   return (
     <div>
       <form
+        action={action}
         aria-label="sign-up"
-        method="POST"
         className="mb-12 flex flex-col items-center gap-4 text-20"
       >
         <div className="relative text-center">
@@ -25,8 +37,13 @@ const RegisterPage = () => {
             type="text"
             placeholder="Username"
             className={`input rotate-[1.4deg] pl-40`}
+            name="username"
           />
-          <div className="w-220">{/* Error */}</div>
+          <div className="w-220">
+            {state.errors.username && (
+              <ErrorList errors={state.errors.username} />
+            )}
+          </div>
         </div>
 
         <div className="text-center">
@@ -34,7 +51,11 @@ const RegisterPage = () => {
             type="email"
             placeholder="lets@drawgether.com"
             className={`input -rotate-[1.18deg]`}
+            name="email"
           />
+          <div className="w-220">
+            {state.errors.email && <ErrorList errors={state.errors.email} />}
+          </div>
         </div>
 
         <div className="text-center">
@@ -42,7 +63,13 @@ const RegisterPage = () => {
             type="password"
             placeholder="********"
             className="input mb-4 rotate-[1.7deg]"
+            name="password"
           />
+          {state.errors.password && (
+            <div className="w-220">
+              <ErrorList errors={state.errors.password} />
+            </div>
+          )}
         </div>
 
         <div>
@@ -86,8 +113,12 @@ const RegisterPage = () => {
           </div>
         </div>
 
+        {state.message && <ErrorList errors={[state.message]} />}
+
         <BoxButton degree={1} type="submit" className="px-32">
-          <p className={`text-60 `}>Register</p>
+          <p className={`text-60 `}>
+            {isPending ? "Registering..." : "Register"}
+          </p>
         </BoxButton>
       </form>
 

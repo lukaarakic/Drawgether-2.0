@@ -40,7 +40,7 @@ model Artist {
   updated_at DateTime @updatedAt
 }
 
-// --- AUTHENTICATION (NextAuth Custom) ---
+// --- AUTHENTICATION ---
 model Password {
   hash     String
   artistId String @unique

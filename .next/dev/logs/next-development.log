@@ -1,9 +1,8 @@
-[00:00:00.907] Server  LOG     ✓ Ready in 682ms
-[00:00:01.805] Server  LOG     [{...},{...},{...},{...}]
-[00:00:01.994] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:02.125] Browser WARN    Image with src "/_next/static/media/logo_only.9b790824.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:00:02.125] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[00:00:01.279] Server  LOG     ✓ Ready in 968ms
+[00:00:02.185] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:02.369] Server  LOG     [{...},{...},{...},{...}]
+[00:00:02.572] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:03.478] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -36,8 +35,8 @@ It can also happen if the client has a browser extension installed which messes 
                             <a
                               data-text="HOME"
                               className="text-border md:text-border-lg uppercase text-white activeNavLink"
-+                             style={{--nav-rotation:"0.96deg"}}
--                             style={{--nav-rotation:"1.44deg"}}
++                             style={{--nav-rotation:"-0.38deg"}}
+-                             style={{--nav-rotation:"-1.18deg"}}
                               ref={function}
                               onClick={function onClick}
                               onMouseEnter={function onMouseEnter}
@@ -49,8 +48,8 @@ It can also happen if the client has a browser extension installed which messes 
                             <a
                               data-text="SEARCH"
                               className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"-1.48deg"}}
--                             style={{--nav-rotation:"0.30deg"}}
++                             style={{--nav-rotation:"-1.82deg"}}
+-                             style={{--nav-rotation:"-2.38deg"}}
                               ref={function}
                               onClick={function onClick}
                               onMouseEnter={function onMouseEnter}
@@ -63,8 +62,8 @@ It can also happen if the client has a browser extension installed which messes 
                             <a
                               data-text="profile"
                               className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"-1.17deg"}}
--                             style={{--nav-rotation:"-1.26deg"}}
++                             style={{--nav-rotation:"1.00deg"}}
+-                             style={{--nav-rotation:"2.29deg"}}
                               ref={function}
                               onClick={function onClick}
                               onMouseEnter={function onMouseEnter}
@@ -76,337 +75,8 @@ It can also happen if the client has a browser extension installed which messes 
                             <a
                               data-text="play"
                               className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"1.64deg"}}
--                             style={{--nav-rotation:"-1.24deg"}}
-                              ref={function}
-                              onClick={function onClick}
-                              onMouseEnter={function onMouseEnter}
-                              onTouchStart={function onTouchStart}
-                              href="/play"
-                            >
-+                             Play
-                ...
-          ...
-
-[00:00:18.798] Server  ERROR   ⨯ Error: The default export is not a React Component in "/feed/layout"
-[00:00:18.959] Server  ERROR   ⨯ Error: The default export is not a React Component in "/feed/layout"
-[00:00:19.681] Server  ERROR   ⨯ Error: The default export is not a React Component in "/feed/layout"
-[00:00:19.849] Server  ERROR   ⨯ Error: The default export is not a React Component in "/feed/layout"
-[00:00:19.963] Browser ERROR   uncaughtError: Error: The default export is not a React Component in "/feed/layout"
-[00:00:26.762] Server  LOG     [{...},{...},{...},{...}]
-[00:00:26.893] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:27.019] Browser WARN    Image with src "/_next/static/media/logo_only.9b790824.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:00:27.019] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-%s%s https://react.dev/link/hydration-mismatch 
-
-  ...
-    <HTTPAccessFallbackErrorBoundary pathname="/feed" notFound={<SegmentViewNode>} forbidden={undefined} ...>
-      <RedirectBoundary>
-        <RedirectErrorBoundary router={{...}}>
-          <InnerLayoutRouter url="/feed" tree={[...]} params={{}} cacheNode={{...}} segmentPath={[...]} ...>
-            <SegmentViewNode type="layout" pagePath="(app)/layo...">
-              <SegmentTrieNode>
-              <script>
-              <script>
-              <script>
-              <Layout>
-                <Layout>
-                  <header>
-                    <Navbar username="Netrunners">
-                      <div>
-                        <div>
-                        <nav className="box-shadow...">
-                          <LinkComponent data-text="HOME" href="/feed" className="text-borde..." style={{...}} ...>
-                            <a
-                              data-text="HOME"
-                              className="text-border md:text-border-lg uppercase text-white activeNavLink"
-+                             style={{--nav-rotation:"0.23deg"}}
--                             style={{--nav-rotation:"1.11deg"}}
-                              ref={function}
-                              onClick={function onClick}
-                              onMouseEnter={function onMouseEnter}
-                              onTouchStart={function onTouchStart}
-                              href="/feed"
-                            >
-+                             Home
-                          <LinkComponent data-text="SEARCH" href="/search" className={"text-bor..."} style={{...}} ...>
-                            <a
-                              data-text="SEARCH"
-                              className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"-0.82deg"}}
--                             style={{--nav-rotation:"-1.74deg"}}
-                              ref={function}
-                              onClick={function onClick}
-                              onMouseEnter={function onMouseEnter}
-                              onTouchStart={function onTouchStart}
-                              href="/search"
-                            >
-+                             Search
-                          <LinkComponent>
-                          <LinkComponent data-text="profile" href="/artist/Ne..." className={"text-bor..."} style={{...}} ...>
-                            <a
-                              data-text="profile"
-                              className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"1.47deg"}}
--                             style={{--nav-rotation:"2.35deg"}}
-                              ref={function}
-                              onClick={function onClick}
-                              onMouseEnter={function onMouseEnter}
-                              onTouchStart={function onTouchStart}
-                              href="/artist/Netrunners"
-                            >
-+                             Profile
-                          <LinkComponent data-text="play" href="/play" className={"text-bor..."} style={{...}} ...>
-                            <a
-                              data-text="play"
-                              className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"-1.92deg"}}
--                             style={{--nav-rotation:"1.92deg"}}
-                              ref={function}
-                              onClick={function onClick}
-                              onMouseEnter={function onMouseEnter}
-                              onTouchStart={function onTouchStart}
-                              href="/play"
-                            >
-+                             Play
-                ...
-          ...
-
-[00:00:28.366] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:29.388] Server  LOG     [{...},{...},{...},{...}]
-[00:00:45.173] Server  LOG     ✓ Compiled in 67ms
-[00:00:45.454] Server  LOG     [{...},{...},{...},{...}]
-[00:00:45.523] Server  LOG     [{...},{...},{...},{...}]
-[00:00:45.561] Server  LOG     [{...},{...},{...},{...}]
-[00:00:45.606] Server  LOG     [{...},{...},{...},{...}]
-[00:00:45.610] Server  LOG     [{...},{...},{...},{...}]
-[00:00:45.675] Server  LOG     [{...},{...},{...},{...}]
-[00:00:45.677] Server  LOG     [{...},{...},{...},{...}]
-[00:00:45.683] Server  LOG     [{...},{...},{...},{...}]
-[00:00:45.717] Server  LOG     [{...},{...},{...},{...}]
-[00:00:45.778] Server  LOG     [{...},{...},{...},{...}]
-[00:00:45.852] Server  LOG     [{...},{...},{...},{...}]
-[00:00:45.890] Server  LOG     [{...},{...},{...},{...}]
-[00:00:45.929] Server  LOG     [{...},{...},{...},{...}]
-[00:00:45.942] Server  LOG     [{...},{...},{...},{...}]
-[00:00:45.979] Server  LOG     [{...},{...},{...},{...}]
-[00:00:45.992] Server  LOG     [{...},{...},{...},{...}]
-[00:00:46.027] Server  LOG     [{...},{...},{...},{...}]
-[00:00:46.112] Server  LOG     [{...},{...},{...},{...}]
-[00:00:46.146] Server  LOG     [{...},{...},{...},{...}]
-[00:00:46.159] Server  LOG     [{...},{...},{...},{...}]
-[00:00:46.202] Server  LOG     [{...},{...},{...},{...}]
-[00:00:46.217] Server  LOG     [{...},{...},{...},{...}]
-[00:00:46.250] Server  LOG     [{...},{...},{...},{...}]
-[00:00:46.309] Server  LOG     [{...},{...},{...},{...}]
-[00:00:46.369] Server  LOG     [{...},{...},{...},{...}]
-[00:00:46.402] Server  LOG     [{...},{...},{...},{...}]
-[00:00:46.415] Server  LOG     [{...},{...},{...},{...}]
-[00:00:46.448] Server  LOG     [{...},{...},{...},{...}]
-[00:00:46.459] Server  LOG     [{...},{...},{...},{...}]
-[00:00:50.897] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:52.903] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:59.658] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:59.774] Browser WARN    Image with src "/_next/static/media/logo_only.9b790824.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:00:59.774] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-%s%s https://react.dev/link/hydration-mismatch 
-
-  ...
-    <HTTPAccessFallbackErrorBoundary pathname="/feed/artw..." notFound={<SegmentViewNode>} forbidden={undefined} ...>
-      <RedirectBoundary>
-        <RedirectErrorBoundary router={{...}}>
-          <InnerLayoutRouter url="/feed/artw..." tree={[...]} params={{}} cacheNode={{...}} segmentPath={[...]} ...>
-            <SegmentViewNode type="layout" pagePath="(app)/layo...">
-              <SegmentTrieNode>
-              <script>
-              <script>
-              <script>
-              <Layout>
-                <Layout>
-                  <header>
-                    <Navbar username="Netrunners">
-                      <div>
-                        <div>
-                        <nav className="box-shadow...">
-                          <LinkComponent data-text="HOME" href="/feed" className="text-borde..." style={{...}} ...>
-                            <a
-                              data-text="HOME"
-                              className="text-border md:text-border-lg uppercase text-white activeNavLink"
-+                             style={{--nav-rotation:"-0.33deg"}}
--                             style={{--nav-rotation:"2.12deg"}}
-                              ref={function}
-                              onClick={function onClick}
-                              onMouseEnter={function onMouseEnter}
-                              onTouchStart={function onTouchStart}
-                              href="/feed"
-                            >
-+                             Home
-                          <LinkComponent data-text="SEARCH" href="/search" className={"text-bor..."} style={{...}} ...>
-                            <a
-                              data-text="SEARCH"
-                              className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"1.23deg"}}
--                             style={{--nav-rotation:"2.28deg"}}
-                              ref={function}
-                              onClick={function onClick}
-                              onMouseEnter={function onMouseEnter}
-                              onTouchStart={function onTouchStart}
-                              href="/search"
-                            >
-+                             Search
-                          <LinkComponent>
-                          <LinkComponent data-text="profile" href="/artist/Ne..." className={"text-bor..."} style={{...}} ...>
-                            <a
-                              data-text="profile"
-                              className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"0.85deg"}}
--                             style={{--nav-rotation:"-0.04deg"}}
-                              ref={function}
-                              onClick={function onClick}
-                              onMouseEnter={function onMouseEnter}
-                              onTouchStart={function onTouchStart}
-                              href="/artist/Netrunners"
-                            >
-+                             Profile
-                          <LinkComponent data-text="play" href="/play" className={"text-bor..."} style={{...}} ...>
-                            <a
-                              data-text="play"
-                              className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"2.17deg"}}
--                             style={{--nav-rotation:"-0.45deg"}}
-                              ref={function}
-                              onClick={function onClick}
-                              onMouseEnter={function onMouseEnter}
-                              onTouchStart={function onTouchStart}
-                              href="/play"
-                            >
-+                             Play
-                ...
-          ...
-
-[00:01:01.845] Server  LOG     [{...},{...},{...},{...}]
-[00:01:22.094] Server  LOG     [{...},{...},{...},{...}]
-[00:01:22.106] Server  LOG     [{...},{...},{...},{...}]
-[00:04:27.346] Server  LOG     ✓ Compiled in 23ms
-[00:04:28.278] Server  LOG     ✓ Compiled in 22ms
-[00:04:29.950] Server  LOG     ✓ Compiled in 24ms
-[00:04:33.151] Server  LOG     ✓ Compiled in 23ms
-[00:04:37.666] Server  LOG     ✓ Compiled in 35ms
-[00:04:38.010] Server  LOG     [{...},{...},{...},{...}]
-[00:05:33.969] Server  LOG     ✓ Compiled in 24ms
-[00:05:34.337] Server  LOG     [{...},{...},{...},{...}]
-[00:06:09.842] Server  LOG     ✓ Compiled in 25ms
-[00:06:21.903] Server  LOG     [{...},{...},{...},{...}]
-[00:06:21.913] Server  LOG     [{...},{...},{...},{...}]
-[00:06:47.062] Server  LOG     ✓ Compiled in 22ms
-[00:06:47.367] Server  LOG     [{...},{...},{...},{...}]
-[00:07:01.819] Server  LOG     [{...},{...},{...},{...}]
-[00:07:01.833] Server  LOG     [{...},{...},{...},{...}]
-[00:07:05.822] Server  LOG     ✓ Compiled in 24ms
-[00:07:05.872] Server  LOG     [{...},{...},{...},{...}]
-[00:07:35.746] Server  LOG     {}
-[00:07:35.826] Server  LOG     [{...},{...},{...},{...}]
-[00:07:38.928] Server  LOG     [{...},{...},{...},{...}]
-[00:07:40.712] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:07:42.274] Server  LOG     [{...},{...},{...},{...}]
-[00:07:42.528] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:07:42.759] Browser WARN    Image with src "/_next/static/media/logo_only.9b790824.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:07:42.759] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
-
-- A server/client branch `if (typeof window !== 'undefined')`.
-- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
-- Date formatting in a user's locale which doesn't match the server.
-- External changing data without sending a snapshot of it along with the HTML.
-- Invalid HTML tag nesting.
-
-It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
-
-%s%s https://react.dev/link/hydration-mismatch 
-
-  ...
-    <HTTPAccessFallbackErrorBoundary pathname="/feed" notFound={<SegmentViewNode>} forbidden={undefined} ...>
-      <RedirectBoundary>
-        <RedirectErrorBoundary router={{...}}>
-          <InnerLayoutRouter url="/feed" tree={[...]} params={{}} cacheNode={{...}} segmentPath={[...]} ...>
-            <SegmentViewNode type="layout" pagePath="(app)/layo...">
-              <SegmentTrieNode>
-              <script>
-              <script>
-              <script>
-              <Layout>
-                <Layout>
-                  <header>
-                    <Navbar username="Netrunners">
-                      <div>
-                        <div>
-                        <nav className="box-shadow...">
-                          <LinkComponent data-text="HOME" href="/feed" className="text-borde..." style={{...}} ...>
-                            <a
-                              data-text="HOME"
-                              className="text-border md:text-border-lg uppercase text-white activeNavLink"
 +                             style={{--nav-rotation:"-0.97deg"}}
--                             style={{--nav-rotation:"1.60deg"}}
-                              ref={function}
-                              onClick={function onClick}
-                              onMouseEnter={function onMouseEnter}
-                              onTouchStart={function onTouchStart}
-                              href="/feed"
-                            >
-+                             Home
-                          <LinkComponent data-text="SEARCH" href="/search" className={"text-bor..."} style={{...}} ...>
-                            <a
-                              data-text="SEARCH"
-                              className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"-1.94deg"}}
--                             style={{--nav-rotation:"-0.67deg"}}
-                              ref={function}
-                              onClick={function onClick}
-                              onMouseEnter={function onMouseEnter}
-                              onTouchStart={function onTouchStart}
-                              href="/search"
-                            >
-+                             Search
-                          <LinkComponent>
-                          <LinkComponent data-text="profile" href="/artist/Ne..." className={"text-bor..."} style={{...}} ...>
-                            <a
-                              data-text="profile"
-                              className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"-1.31deg"}}
--                             style={{--nav-rotation:"0.91deg"}}
-                              ref={function}
-                              onClick={function onClick}
-                              onMouseEnter={function onMouseEnter}
-                              onTouchStart={function onTouchStart}
-                              href="/artist/Netrunners"
-                            >
-+                             Profile
-                          <LinkComponent data-text="play" href="/play" className={"text-bor..."} style={{...}} ...>
-                            <a
-                              data-text="play"
-                              className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"-0.40deg"}}
--                             style={{--nav-rotation:"-0.57deg"}}
+-                             style={{--nav-rotation:"1.48deg"}}
                               ref={function}
                               onClick={function onClick}
                               onMouseEnter={function onMouseEnter}
@@ -417,36 +87,30 @@ It can also happen if the client has a browser extension installed which messes 
                 ...
           ...
 
-[00:07:44.050] Server  LOG     {}
-[00:08:23.657] Server  LOG     {}
-[00:08:23.763] Server  LOG     [{...},{...},{...},{...}]
-[00:08:26.682] Server  LOG     [{...},{...},{...},{...}]
-[00:08:26.708] Server  LOG     {}
-[00:08:47.946] Server  LOG     {}
-[00:08:48.049] Server  LOG     [{...},{...},{...},{...}]
-[00:08:58.511] Server  LOG     {}
-[00:08:58.596] Server  LOG     [{...},{...},{...},{...}]
-[00:09:15.708] Server  LOG     {}
-[00:09:15.811] Server  LOG     [{...},{...},{...},{...}]
-[00:09:28.551] Server  LOG     {}
-[00:09:28.640] Server  LOG     [{...},{...},{...},{...}]
-[00:09:31.002] Server  LOG     [{...},{...},{...},{...}]
-[00:09:31.025] Server  LOG     {}
-[00:09:33.587] Server  LOG     [{...},{...},{...},{...}]
-[00:09:33.615] Server  LOG     {}
-[00:09:37.172] Server  LOG     [{...},{...},{...},{...}]
-[00:09:37.200] Server  LOG     {}
-[00:09:46.003] Server  LOG     [{...},{...},{...},{...}]
-[00:09:47.639] Server  LOG     {}
-[00:09:49.838] Server  LOG     {}
-[00:09:53.293] Server  LOG     {}
-[00:10:00.964] Server  LOG     {}
-[00:10:03.803] Server  LOG     {}
-[00:12:40.954] Server  LOG     [{...},{...},{...},{...}]
-[00:12:41.104] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:12:41.240] Browser WARN    Image with src "/_next/static/media/logo_only.9b790824.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+[00:00:05.438] Server  LOG     [{...},{...},{...},{...}]
+[00:00:05.456] Server  LOG     [{...},{...},{...},{...}]
+[00:00:44.806] Server  LOG     ✓ Compiled in 312ms
+[00:00:45.119] Server  LOG     [{...},{...},{...},{...}]
+[00:00:45.137] Server  LOG     [{...},{...},{...},{...}]
+[00:01:30.504] Server  LOG     ✓ Compiled in 27ms
+[00:01:30.702] Server  LOG     [{...},{...},{...},{...}]
+[00:01:30.804] Server  LOG     [{...},{...},{...},{...}]
+[00:01:51.629] Server  LOG     ✓ Compiled in 26ms
+[00:01:51.963] Server  LOG     [{...},{...},{...},{...}]
+[00:01:51.974] Server  LOG     [{...},{...},{...},{...}]
+[00:01:58.316] Server  LOG     ✓ Compiled in 109ms
+[00:01:58.391] Server  LOG     [{...},{...},{...},{...}]
+[00:01:58.407] Server  LOG     [{...},{...},{...},{...}]
+[00:02:48.294] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:31.738] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:36.200] Server  LOG     [{...},{...},{...},{...}]
+[00:04:38.706] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:06:46.949] Server  LOG     [{...},{...},{...},{...}]
+[00:07:19.895] Server  LOG     [{...},{...},{...},{...}]
+[00:07:20.122] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:07:20.373] Browser WARN    Image with src "/_next/static/media/logo_only.9b790824.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
 Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:12:41.240] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[00:07:20.374] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -479,8 +143,8 @@ It can also happen if the client has a browser extension installed which messes 
                             <a
                               data-text="HOME"
                               className="text-border md:text-border-lg uppercase text-white activeNavLink"
-+                             style={{--nav-rotation:"-0.78deg"}}
--                             style={{--nav-rotation:"-0.53deg"}}
++                             style={{--nav-rotation:"1.31deg"}}
+-                             style={{--nav-rotation:"-0.97deg"}}
                               ref={function}
                               onClick={function onClick}
                               onMouseEnter={function onMouseEnter}
@@ -492,8 +156,8 @@ It can also happen if the client has a browser extension installed which messes 
                             <a
                               data-text="SEARCH"
                               className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"0.15deg"}}
--                             style={{--nav-rotation:"-0.70deg"}}
++                             style={{--nav-rotation:"-2.39deg"}}
+-                             style={{--nav-rotation:"-0.98deg"}}
                               ref={function}
                               onClick={function onClick}
                               onMouseEnter={function onMouseEnter}
@@ -506,8 +170,8 @@ It can also happen if the client has a browser extension installed which messes 
                             <a
                               data-text="profile"
                               className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"-0.47deg"}}
--                             style={{--nav-rotation:"-1.79deg"}}
++                             style={{--nav-rotation:"-0.84deg"}}
+-                             style={{--nav-rotation:"-0.81deg"}}
                               ref={function}
                               onClick={function onClick}
                               onMouseEnter={function onMouseEnter}
@@ -519,8 +183,8 @@ It can also happen if the client has a browser extension installed which messes 
                             <a
                               data-text="play"
                               className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"0.98deg"}}
--                             style={{--nav-rotation:"-1.00deg"}}
++                             style={{--nav-rotation:"-1.22deg"}}
+-                             style={{--nav-rotation:"1.36deg"}}
                               ref={function}
                               onClick={function onClick}
                               onMouseEnter={function onMouseEnter}
@@ -531,10 +195,7 @@ It can also happen if the client has a browser extension installed which messes 
                 ...
           ...
 
-[00:12:42.099] Server  LOG     {}
-[00:12:47.697] Server  LOG     {}
-[00:12:53.818] Server  LOG     {}
-[00:12:55.635] Server  LOG     {}
-[00:12:58.832] Server  LOG     {}
-[00:13:10.767] Server  LOG     null
-[00:13:11.497] Server  LOG     [{...},{...},{...},{...}]
+[00:07:21.904] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:07:28.027] Server  LOG     [{...},{...},{...},{...}]
+[00:09:08.772] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:09:22.649] Server  LOG     [{...},{...},{...},{...}]
