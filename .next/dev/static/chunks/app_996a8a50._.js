@@ -1,7 +1,7 @@
 (globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push([typeof document === "object" ? document.currentScript : undefined,
 "[project]/app/assets/logos/full_both_logo.svg (static in ecmascript, tag client)", ((__turbopack_context__) => {
 
-__turbopack_context__.v("/_next/static/media/full_both_logo.2be72305.svg");}),
+__turbopack_context__.v("/_next/static/media/full_both_logo.29a3f444.svg");}),
 "[project]/app/assets/logos/full_both_logo.svg.mjs { IMAGE => \"[project]/app/assets/logos/full_both_logo.svg (static in ecmascript, tag client)\" } [app-client] (structured image object with data url, ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
