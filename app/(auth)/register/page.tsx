@@ -2,6 +2,7 @@
 
 import ErrorList from "@/app/components/error/ErrorList";
 import BoxButton from "@/app/components/ui/BoxButton";
+import HoneypotField from "@/app/components/ui/HoneypotField";
 import { AuthState, registerAction } from "@/app/lib/actions/register";
 import Image from "next/image";
 import Link from "next/link";
@@ -72,6 +73,8 @@ const RegisterPage = () => {
           )}
         </div>
 
+        <HoneypotField />
+
         <div>
           <div className="checkbox">
             <input type="checkbox" id="remember-me" className="check" />
@@ -107,7 +110,7 @@ const RegisterPage = () => {
                 className="text-border text-border-sm text-20 text-white"
                 data-text="Remember me?"
               >
-                Remember me?
+                4 Remember me?
               </span>
             </label>
           </div>

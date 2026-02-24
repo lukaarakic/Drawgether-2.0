@@ -1,0 +1,83 @@
+import ArtistCircle from "@/app/components/ui/ArtistCircle";
+import BoxButton from "@/app/components/ui/BoxButton";
+import Modal from "@/app/components/ui/Modal";
+import { logoutAction } from "@/app/lib/actions/logout";
+import { getSession, logout } from "@/app/lib/auth-utils";
+import prisma from "@/app/lib/db";
+import { maskEmail } from "@/app/utils/misc";
+import { notFound, redirect } from "next/navigation";
+
+const Settings = async ({
+  params,
+}: {
+  params: Promise<{ artistId: string }>;
+}) => {
+  const { artistId } = await params;
+
+  const artist = await prisma.artist.findUnique({
+    where: { username: artistId },
+    select: { id: true, username: true, email: true, emailVerified: true },
+  });
+
+  if (!artist) {
+    notFound();
+  }
+
+  const session = await getSession();
+  if (!session) redirect("/login");
+  if (session.sub !== artist?.id) redirect("/feed");
+
+  const maskedEmail = maskEmail(artist.email);
+
+  return (
+    <Modal>
+      <div className="mt-12 flex flex-col items-center">
+        <p
+          className="text-border mb-12 text-center text-32 text-blue"
+          data-text="Settings"
+        >
+          Settings
+        </p>
+        <ArtistCircle size="large" username={artist.username} />
+        <p className="mt-8 text-29 text-black">Username: @{artist.username}</p>
+        <p className="text-29 text-black">Email: {maskedEmail}</p>
+        {artist.emailVerified ? (
+          <p
+            className={`mb-10 mt-8 cursor-default text-29 capitalize text-blue`}
+          >
+            Email verified
+          </p>
+        ) : (
+          // <Form method="POST" id="email-form">
+          //   <AuthenticityTokenInput />
+          //   <button
+          //     type="submit"
+          //     className={`mb-10 mt-8 text-29 capitalize text-pink underline`}
+          //   >
+          //     Email not verified!
+          //   </button>
+          // </Form>
+          <button
+            type="submit"
+            className={`mb-10 mt-8 text-29 capitalize text-pink underline`}
+          >
+            Email not verified!
+          </button>
+        )}
+
+        <form action={logoutAction}>
+          <BoxButton>
+            <p
+              className="text-border px-12 py-2 font-zyzol text-38 uppercase cursor-pointer"
+              data-text="Log out"
+            >
+              Log out
+            </p>
+          </BoxButton>
+        </form>
+      </div>
+    </Modal>
+  );
+};
+
+export default Settings;
