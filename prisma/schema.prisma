@@ -44,7 +44,18 @@ model Artist {
 model Password {
   hash     String
   artistId String @unique
-  artist   Artist @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  artist   Artist @relation(fields: [artistId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model VerificationToken {
+  id        String   @id @default(cuid())
+  target    String
+  type      String
+  token     String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@unique([target, type])
 }
 
 // --- GAME & ARTWORK ---
@@ -86,17 +97,17 @@ model Comment {
   id         String   @id @default(cuid())
   content    String
   artistId   String
-  artist     Artist   @relation(fields: [artistId], references: [id])
+  artist     Artist   @relation(fields: [artistId], references: [id], onDelete: Cascade)
   artworkId  String
-  artwork    Artwork  @relation(fields: [artworkId], references: [id])
+  artwork    Artwork  @relation(fields: [artworkId], references: [id], onDelete: Cascade)
   created_at DateTime @default(now())
 }
 
 model Follows {
   followerId  String
-  follower    Artist   @relation("follower", fields: [followerId], references: [id])
+  follower    Artist   @relation("follower", fields: [followerId], references: [id], onDelete: Cascade)
   followingId String
-  following   Artist   @relation("following", fields: [followingId], references: [id])
+  following   Artist   @relation("following", fields: [followingId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())
 
   @@id([followerId, followingId])
@@ -105,8 +116,8 @@ model Follows {
 model Like {
   artistId  String
   artworkId String
-  artist    Artist   @relation(fields: [artistId], references: [id])
-  artwork   Artwork  @relation(fields: [artworkId], references: [id])
+  artist    Artist   @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  artwork   Artwork  @relation(fields: [artworkId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
   @@id([artistId, artworkId])

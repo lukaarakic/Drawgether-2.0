@@ -11,6 +11,7 @@ import { getPasswordHash } from "../auth-utils";
 import { signJWT } from "../jwt";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { validateHoneypot } from "../security";
 
 export type AuthState = {
   errors: { username?: string[]; email?: string[]; password?: string[] };
@@ -22,6 +23,10 @@ const RegisterSchema = z
     username: UsernameSchema,
     email: EmailSchema,
     password: PasswordSchema,
+    rememberMe: z
+      .literal("on")
+      .optional()
+      .transform((val) => val === "on"),
   })
   .superRefine(async (data, ctx) => {
     const [existingUsername, existingEmail] = await prisma.$transaction([
@@ -57,6 +62,12 @@ export async function registerAction(
   prevState: AuthState,
   formData: FormData,
 ): Promise<AuthState> {
+  if (!validateHoneypot(formData))
+    return {
+      errors: {},
+      message: "Unkown error occurred. Please try again.",
+    };
+
   const data = Object.fromEntries(formData.entries());
   const result = await RegisterSchema.safeParseAsync(data);
 
@@ -85,7 +96,12 @@ export async function registerAction(
       select: { id: true, role: { select: { name: true } } },
     });
 
-    const token = await signJWT({ sub: artist.id, role: artist.role.name });
+    const token = await signJWT(
+      { sub: artist.id, role: artist.role.name },
+      result.data.rememberMe ? "30d" : "24h",
+    );
+
+    const maxAge = 60 * 60 * 24 * 30;
 
     const cookieStore = await cookies();
     cookieStore.set("dg_session_token", token, {
@@ -93,7 +109,9 @@ export async function registerAction(
       secure: process.env.NODE_ENV === "production",
       path: "/",
       sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7,
+      expires: result.data.rememberMe
+        ? new Date(Date.now() + maxAge * 1000)
+        : undefined,
     });
   } catch (error) {
     console.error("Registration error:", error);

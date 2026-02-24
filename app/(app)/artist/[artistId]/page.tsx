@@ -4,6 +4,10 @@ import SmallArtworkContainer from "@/app/components/artwork-module/profile-artwo
 import ArtworksContainer from "@/app/components/artwork-module/profile-artworks/ArtworksContainer";
 import { notFound } from "next/navigation";
 import prisma from "@/app/lib/db";
+import { getArtist, logout } from "@/app/lib/auth-utils";
+import Link from "next/link";
+import Image from "next/image";
+import SettingsIcon from "@/app/assets/misc/settings.svg";
 
 const Profile = async ({
   params,
@@ -41,50 +45,67 @@ const Profile = async ({
     },
   });
 
-  console.log(artist);
-
   if (!artist) {
     notFound();
   }
 
+  const loggedInArtistId = await getArtist();
+
+  if (!loggedInArtistId) {
+    return logout();
+  }
+
+  const isLoggedInArtist = loggedInArtistId.id === artist.id;
   const hasArtworks = artist.artworks.length > 0;
 
   return (
-    <div className="mx-auto w-[90%] xs:w-7xl">
-      <div className="mb-32 flex flex-col items-center justify-center gap-16 md:flex-row">
-        <ArtistCircle username={artist.username} size="large" />
-        <BoxLabel degree={-2}>
-          <div className="flex h-40 w-[41.3rem] items-center justify-between gap-20 px-4">
-            <p
-              className="text-border text-border-lg text-32"
-              data-text={`@${artist.username}`}
-            >
-              @{artist.username}
-            </p>
-          </div>
-        </BoxLabel>
-      </div>
+    <>
+      <div className="mx-auto w-[90%] xs:w-7xl">
+        <div className="mb-32 flex flex-col items-center justify-center gap-16 md:flex-row">
+          <ArtistCircle username={artist.username} size="large" />
+          <BoxLabel degree={-2}>
+            <div className="flex h-40 items-center justify-between gap-20 px-4">
+              <p
+                className="text-border text-border-lg text-32"
+                data-text={`@${artist.username}`}
+              >
+                @{artist.username}
+              </p>
 
-      {hasArtworks ? (
-        <>
-          <div className="hidden md:block">
-            <SmallArtworkContainer artist={artist} />
-          </div>
-          <div className="md:hidden">
-            <ArtworksContainer artworks={artist.artworks} />
-          </div>
-        </>
-      ) : (
-        <BoxLabel>
-          <p
-            className="text-border text-border-sm w-full text-center text-32 text-white"
-            data-text="No artworks available"
-          >
-            No artworks available
-          </p>
-        </BoxLabel>
-      )}
-    </div>
+              {isLoggedInArtist ? (
+                <Link href={`/artist/${artist.username}/settings`}>
+                  <Image
+                    src={SettingsIcon}
+                    alt=""
+                    className="pointer-events-none w-20"
+                  />
+                </Link>
+              ) : null}
+            </div>
+          </BoxLabel>
+        </div>
+
+        {hasArtworks ? (
+          <>
+            <div className="hidden md:block">
+              <SmallArtworkContainer artist={artist} />
+            </div>
+            <div className="md:hidden">
+              <ArtworksContainer artworks={artist.artworks} />
+            </div>
+          </>
+        ) : (
+          <BoxLabel>
+            <p
+              className="text-border text-border-sm w-full text-center text-32 text-white"
+              data-text="No artworks available"
+            >
+              No artworks available
+            </p>
+          </BoxLabel>
+        )}
+      </div>
+    </>
   );
 };
 

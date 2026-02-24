@@ -6,6 +6,7 @@ import { useActionState } from "react";
 import ErrorList from "@/app/components/error/ErrorList";
 import BoxButton from "@/app/components/ui/BoxButton";
 import Spinner from "@/app/components/ui/Spinner/Spinner";
+import HoneypotField from "@/app/components/ui/HoneypotField";
 
 const LoginForm = () => {
   const initalState: AuthState = { errors: {}, message: "" };
@@ -20,7 +21,7 @@ const LoginForm = () => {
     >
       <input
         placeholder="lets@drawgether.com"
-        className="input rotate-[1.4deg]"
+        className="input rotat`e-[1.4deg]"
         name="email"
       />
       {state.errors.email && <ErrorList errors={state.errors.email} />}
@@ -32,9 +33,17 @@ const LoginForm = () => {
         name="password"
       />
       {state.errors.password && <ErrorList errors={state.errors.password} />}
+
+      <HoneypotField />
+
       <div>
         <div className="checkbox">
-          <input type="checkbox" id="remember-me" className="check" />
+          <input
+            type="checkbox"
+            name="rememberMe"
+            id="remember-me"
+            className="check"
+          />
           <label
             htmlFor="remember-me"
             className="flex items-center justify-center"

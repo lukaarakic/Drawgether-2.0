@@ -1,5 +1,35 @@
 {
   "node": {
+    "404e9627f05133d8f675bec962330fccafb93832ec": {
+      "workers": {
+        "app/(app)/search/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/search/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/searchArtists.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "$$RSC_SERVER_ACTION_0",
+          "filename": "app/lib/searchArtists.ts"
+        }
+      },
+      "layer": {
+        "app/(app)/search/page": "rsc"
+      },
+      "filename": "app/lib/searchArtists.ts",
+      "exportedName": "$$RSC_SERVER_ACTION_0"
+    },
+    "00ea691f0c42b1a7768e5dcfc97fe3171a48238ca8": {
+      "workers": {
+        "app/(app)/artist/[artistId]/@settings/settings/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/artist/[artistId]/@settings/settings/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/logout.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "logoutAction",
+          "filename": "app/lib/actions/logout.ts"
+        }
+      },
+      "layer": {
+        "app/(app)/artist/[artistId]/@settings/settings/page": "rsc"
+      },
+      "filename": "app/lib/actions/logout.ts",
+      "exportedName": "logoutAction"
+    },
     "6031dbbe662ef0bec950b6d09558449e5713a53383": {
       "workers": {
         "app/(auth)/login/page": {
@@ -14,21 +44,6 @@
       },
       "filename": "app/lib/actions/login.ts",
       "exportedName": "loginAction"
-    },
-    "60e28b45f9dc79c72e34d9ad5e23575925047736e1": {
-      "workers": {
-        "app/(auth)/register/page": {
-          "moduleId": "[project]/.next-internal/server/app/(auth)/register/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/register.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
-          "async": true,
-          "exportedName": "registerAction",
-          "filename": "app/lib/actions/register.ts"
-        }
-      },
-      "layer": {
-        "app/(auth)/register/page": "action-browser"
-      },
-      "filename": "app/lib/actions/register.ts",
-      "exportedName": "registerAction"
     }
   },
   "edge": {},
