@@ -1,5 +1,8 @@
-import crypto from "crypto";
+import { generate, generateSecret } from "otplib";
 
-export function generateOTP() {
-  return crypto.randomInt(100000, 999999).toString();
+export async function generateSecretAndTOTP() {
+  const secret = generateSecret();
+  const token = await generate({ secret });
+
+  return { secret, token };
 }

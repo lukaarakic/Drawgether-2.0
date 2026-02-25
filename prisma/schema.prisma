@@ -48,14 +48,20 @@ model Password {
 }
 
 model VerificationToken {
-  id        String   @id @default(cuid())
+  id        String        @id @default(cuid())
   target    String
-  type      String
+  type      AuthTokenType
   token     String
+  secret    String
   expiresAt DateTime
-  createdAt DateTime @default(now())
+  createdAt DateTime      @default(now())
 
   @@unique([target, type])
+}
+
+enum AuthTokenType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
 }
 
 // --- GAME & ARTWORK ---
