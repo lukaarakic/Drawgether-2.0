@@ -1,8 +1,21 @@
+"use client";
+
+import ErrorList from "@/app/components/error/ErrorList";
 /* eslint-disable react/no-unescaped-entities */
 import BoxButton from "@/app/components/ui/BoxButton";
 import HoneypotField from "@/app/components/ui/HoneypotField";
+import Spinner from "@/app/components/ui/Spinner/Spinner";
+import { VerifyState, verifyTOTPAction } from "@/app/lib/actions/verify";
+import { useActionState } from "react";
 
 const Verify = () => {
+  const initialState: VerifyState = { errors: {}, message: "" };
+
+  const [state, action, isPending] = useActionState(
+    verifyTOTPAction,
+    initialState,
+  );
+
   return (
     <div className="flex flex-col items-center md:-mt-20">
       <div className="mb-20 text-center">
@@ -20,27 +33,34 @@ const Verify = () => {
         </p>
       </div>
 
-      <form>
-        <HoneypotField />
+      <form action={action}>
+        {/* <HoneypotField /> */}
         <div className="flex flex-col items-center xs:flex-row">
           <div className="text-center">
             <input
               type="text"
               className="input mb-4 w-full md:w-220"
               placeholder="Your code goes here"
+              name="token"
             />
           </div>
 
           <BoxButton
             type="submit"
-            className="ml-8 h-min w-min"
-            // disabled={isPending}
+            className="ml-8 h-min w-min cursor-pointer"
+            disabled={isPending}
           >
-            <p className="px-8 py-1 text-40">Submit</p>
+            {isPending ? (
+              <Spinner />
+            ) : (
+              <p className="px-8 py-1 text-40">Submit</p>
+            )}
           </BoxButton>
+
+          <ErrorList errors={state.errors.token ?? []} id="token" />
         </div>
       </form>
-      {/* <ErrorList errors={form.errors} id={form.errorId} /> */}
+      <ErrorList errors={[state.message ?? ""]} />
     </div>
   );
 };

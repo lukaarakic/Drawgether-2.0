@@ -1,63 +1,24 @@
 "use server";
 
 import { AuthTokenType } from "@/app/generated/prisma/enums";
+import { getArtist, logout } from "../auth-utils";
 import { generateSecretAndTOTP } from "../totp";
 import prisma from "../db";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import z from "zod";
 
-export type ForgotPasswordState = {
-  errors: { identifier?: string[] };
-  message?: string;
-};
-
-const ForgotPasswordSchema = z.object({
-  identifier: z.string().min(1, "Username or email is required"),
-});
-
-export async function ForgotPasswordAction(
-  prevState: ForgotPasswordState,
-  formData: FormData,
-) {
-  const result = ForgotPasswordSchema.safeParse({
-    identifier: formData.get("identifier") as string,
-  });
-
-  if (!result.success) {
-    return {
-      errors: result.error.flatten().fieldErrors,
-      message: "Invalid input",
-    };
-  }
-
-  const artist = await prisma.artist.findFirst({
-    where: {
-      OR: [
-        { email: result.data.identifier },
-        { username: result.data.identifier },
-      ],
-    },
-    select: {
-      id: true,
-      email: true,
-    },
-  });
-
+export async function verifyEmail() {
+  const artist = await getArtist();
   if (!artist) {
-    return {
-      errors: { identifier: ["No artist found with that username or email"] },
-      message: "",
-    };
+    return logout();
   }
-
   const { secret, token } = await generateSecretAndTOTP();
 
   await prisma.verificationToken.upsert({
     where: {
       target_type: {
         target: artist.email,
-        type: AuthTokenType.PASSWORD_RESET,
+        type: AuthTokenType.EMAIL_VERIFICATION,
       },
     },
     update: {
@@ -67,7 +28,7 @@ export async function ForgotPasswordAction(
     },
     create: {
       target: artist.email,
-      type: AuthTokenType.PASSWORD_RESET,
+      type: AuthTokenType.EMAIL_VERIFICATION,
       token,
       secret,
       expiresAt: new Date(Date.now() + 15 * 60 * 1000),
@@ -83,7 +44,7 @@ export async function ForgotPasswordAction(
     expires: new Date(Date.now() + 15 * 60 * 1000),
   });
 
-  cookieStore.set("dg_verify_type", AuthTokenType.PASSWORD_RESET, {
+  cookieStore.set("dg_verify_type", AuthTokenType.EMAIL_VERIFICATION, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
