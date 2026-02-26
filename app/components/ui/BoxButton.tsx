@@ -1,12 +1,12 @@
-import { FC, ReactNode } from "react"
+import { FC, ReactNode } from "react";
 
 interface BoxButtonProps {
-  children: ReactNode
-  type?: "submit" | "reset" | "button" | undefined
-  degree?: number
-  className?: string
-  disabled?: boolean
-  onClick?: () => void
+  children: ReactNode;
+  type?: "submit" | "reset" | "button" | undefined;
+  degree?: number;
+  className?: string;
+  disabled?: boolean;
+  onClick?: () => void;
 }
 
 const BoxButton: FC<BoxButtonProps> = ({
@@ -19,7 +19,7 @@ const BoxButton: FC<BoxButtonProps> = ({
 }) => {
   return (
     <button
-      className={`${className} box-shadow inline-block transform bg-pink font-zyzolOutline text-white transition-transform hover:scale-105 active:scale-90`}
+      className={`${className} box-shadow cursor-pointer inline-block transform bg-pink font-zyzolOutline text-white transition-transform hover:scale-105 active:scale-90`}
       type={type}
       disabled={disabled}
       style={{
@@ -29,7 +29,7 @@ const BoxButton: FC<BoxButtonProps> = ({
     >
       {children}
     </button>
-  )
-}
+  );
+};
 
-export default BoxButton
+export default BoxButton;
