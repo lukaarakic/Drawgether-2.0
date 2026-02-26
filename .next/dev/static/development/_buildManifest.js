@@ -7,6 +7,127 @@ self.__BUILD_MANIFEST = {
           {
             "type": "header",
             "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
             "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
           }
         ],
@@ -133,6 +254,2569 @@ self.__BUILD_MANIFEST = {
         ],
         "source": "/feed/artwork/:nxtPartworkId",
         "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/feed(?:/.*)?"
+          }
+        ],
+        "source": "/feed/artwork/:nxtPartworkId",
+        "destination": "/feed/(.)artwork/:nxtPartworkId"
+      },
+      {
+        "has": [
+          {
+            "type": "header",
+            "key": "next-url",
+            "value": "/artist/(?<nxtPartistId>[^/]+?)(?:/.*)?"
+          }
+        ],
+        "source": "/artist/:nxtPartistId/artwork/:nxtPartworkId",
+        "destination": "/artist/:nxtPartistId/(.)artwork/:nxtPartworkId"
       }
     ],
     "fallback": []

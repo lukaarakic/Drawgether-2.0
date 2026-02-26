@@ -2,10 +2,15 @@
   "app": {
     "[project]/app/(app)/artist/[artistId]/@settings/settings/page": [],
     "[project]/app/(app)/artist/[artistId]/page": [],
-    "[project]/app/(app)/feed/@modal/(.)artwork/[artworkId]/page": [],
     "[project]/app/(app)/feed/page": [],
+    "[project]/app/(app)/play/page": [],
     "[project]/app/(app)/search/page": [],
-    "[project]/app/(auth)/login/page": []
+    "[project]/app/(auth)/forgot-password/page": [],
+    "[project]/app/(auth)/login/page": [],
+    "[project]/app/(auth)/register/page": [],
+    "[project]/app/(auth)/reset-password/page": [],
+    "[project]/app/(auth)/verify/page": [],
+    "[project]/app/page": []
   },
   "appUsingSizeAdjust": false,
   "pages": {},
