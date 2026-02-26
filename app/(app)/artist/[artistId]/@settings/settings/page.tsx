@@ -2,7 +2,8 @@ import ArtistCircle from "@/app/components/ui/ArtistCircle";
 import BoxButton from "@/app/components/ui/BoxButton";
 import Modal from "@/app/components/ui/Modal";
 import { logoutAction } from "@/app/lib/actions/logout";
-import { getSession, logout } from "@/app/lib/auth-utils";
+import { verifyEmail } from "@/app/lib/actions/verify-email";
+import { getSession } from "@/app/lib/auth-utils";
 import prisma from "@/app/lib/db";
 import { maskEmail } from "@/app/utils/misc";
 import { notFound, redirect } from "next/navigation";
@@ -48,21 +49,14 @@ const Settings = async ({
             Email verified
           </p>
         ) : (
-          // <Form method="POST" id="email-form">
-          //   <AuthenticityTokenInput />
-          //   <button
-          //     type="submit"
-          //     className={`mb-10 mt-8 text-29 capitalize text-pink underline`}
-          //   >
-          //     Email not verified!
-          //   </button>
-          // </Form>
-          <button
-            type="submit"
-            className={`mb-10 mt-8 text-29 capitalize text-pink underline`}
-          >
-            Email not verified!
-          </button>
+          <form action={verifyEmail}>
+            <button
+              type="submit"
+              className={`mb-10 mt-8 text-29 capitalize text-pink underline cursor-pointer`}
+            >
+              Email not verified!
+            </button>
+          </form>
         )}
 
         <form action={logoutAction}>
