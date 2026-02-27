@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import CommentIcon from "@/app/assets/misc/comment.svg";
 import { Prisma } from "@/app/generated/prisma/client";
+import { getArtistId } from "@/app/lib/auth-utils";
 
 type ArtworkWithArtists = Prisma.ArtworkGetPayload<{
   include: {
@@ -25,17 +26,21 @@ function generateRandomRotation(seed: number): number {
   return ((seed * 7) % 5) - 2.5;
 }
 
-const ArtworkPost = ({
+const ArtworkPost = async ({
   artwork,
   index,
   className,
   showComments = true,
+  isLiked,
 }: {
   artwork: ArtworkWithArtists;
   index: number;
   className?: string;
   showComments?: boolean;
+  isLiked: boolean;
 }) => {
+  const loggedInArtist = await getArtistId();
+
   return (
     <article className={`${className}`}>
       <BoxLabel degree={generateRandomRotation((index % 12) + 1)}>
@@ -62,17 +67,24 @@ const ArtworkPost = ({
         />
 
         <div className="absolute -bottom-12 -left-5 flex">
-          <ArtworkLikeButton likesCount={artwork.likesCount} isLiked={false} />
+          <ArtworkLikeButton
+            artworkId={artwork.id}
+            likeCount={artwork.likesCount}
+            isLiked={isLiked}
+          />
           {showComments && (
             <Link
-              href={`/artwork/${artwork.id}/comments`}
+              href={`/feed/artwork/${artwork.id}`}
               className="flex items-end"
             >
               <Image src={CommentIcon} alt="Comments" className="h-24 w-24" />
             </Link>
           )}
 
-          <ArtworkDeleteButton artworkId={artwork.id} />
+          {(loggedInArtist.role === "admin" ||
+            artwork.artists.some(
+              (artist) => artist.id === loggedInArtist.artistId,
+            )) && <ArtworkDeleteButton artworkId={artwork.id} />}
         </div>
 
         <div className="absolute -bottom-10 -right-8 flex items-baseline">

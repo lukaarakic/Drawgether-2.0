@@ -1,10 +1,12 @@
 import Link from "next/link";
 import ArtistCircle from "../ui/ArtistCircle";
 import BoxLabel from "../ui/BoxLabel";
-import TrashSVG from "~/assets/misc/trash.svg";
+import { getArtistId } from "@/app/lib/auth-utils";
+import DeleteCommentButton from "./DeleteCommentButton";
 
-export default function Comment({
+export default async function Comment({
   comment,
+  artworkId,
 }: {
   comment: {
     id: string;
@@ -14,7 +16,10 @@ export default function Comment({
       username: string;
     };
   };
+  artworkId: string;
 }) {
+  const loggedInArtistId = await getArtistId();
+
   return (
     <div className="mb-24 flex items-start gap-5">
       <Link href={`/artist/${comment.artist.username}`} className="shrink-0">
@@ -36,6 +41,11 @@ export default function Comment({
           {comment.content}
         </p>
       </div>
+
+      {(loggedInArtistId.artistId === comment.artist.id ||
+        loggedInArtistId.role === "admin") && (
+        <DeleteCommentButton commentId={comment.id} artworkId={artworkId} />
+      )}
     </div>
   );
 }

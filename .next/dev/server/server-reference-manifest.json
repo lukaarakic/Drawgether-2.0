@@ -1,34 +1,134 @@
 {
   "node": {
-    "6031dbbe662ef0bec950b6d09558449e5713a53383": {
+    "6064486c608f4e8419a9df872e6c5977bb5c24adb0": {
       "workers": {
-        "app/(auth)/login/page": {
-          "moduleId": "[project]/.next-internal/server/app/(auth)/login/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/login.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+        "app/(app)/artist/[artistId]/@modal/(.)artwork/[artworkId]/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/artist/[artistId]/@modal/(.)artwork/[artworkId]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/like.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/lib/actions/delete-artwork.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/lib/actions/comment.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": true,
-          "exportedName": "loginAction",
-          "filename": "app/lib/actions/login.ts"
+          "exportedName": "likeArtwork",
+          "filename": "app/lib/actions/like.ts"
+        },
+        "app/(app)/artist/[artistId]/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/artist/[artistId]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/like.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/lib/actions/delete-artwork.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "likeArtwork",
+          "filename": "app/lib/actions/like.ts"
+        },
+        "app/(app)/feed/artwork/[artworkId]/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/feed/artwork/[artworkId]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/like.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/lib/actions/delete-artwork.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/lib/actions/comment.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "likeArtwork",
+          "filename": "app/lib/actions/like.ts"
+        },
+        "app/(app)/feed/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/feed/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/like.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/lib/actions/delete-artwork.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "likeArtwork",
+          "filename": "app/lib/actions/like.ts"
         }
       },
       "layer": {
-        "app/(auth)/login/page": "action-browser"
+        "app/(app)/artist/[artistId]/@modal/(.)artwork/[artworkId]/page": "action-browser",
+        "app/(app)/artist/[artistId]/page": "action-browser",
+        "app/(app)/feed/artwork/[artworkId]/page": "action-browser",
+        "app/(app)/feed/page": "action-browser"
       },
-      "filename": "app/lib/actions/login.ts",
-      "exportedName": "loginAction"
+      "filename": "app/lib/actions/like.ts",
+      "exportedName": "likeArtwork"
     },
-    "404e9627f05133d8f675bec962330fccafb93832ec": {
+    "600e879a0bba572bc5a9c750d97e12a33e1b2034dd": {
       "workers": {
-        "app/(app)/search/page": {
-          "moduleId": "[project]/.next-internal/server/app/(app)/search/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/searchArtists.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+        "app/(app)/artist/[artistId]/@modal/(.)artwork/[artworkId]/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/artist/[artistId]/@modal/(.)artwork/[artworkId]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/like.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/lib/actions/delete-artwork.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/lib/actions/comment.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": true,
-          "exportedName": "$$RSC_SERVER_ACTION_0",
-          "filename": "app/lib/searchArtists.ts"
+          "exportedName": "deleteArtworkAction",
+          "filename": "app/lib/actions/delete-artwork.ts"
+        },
+        "app/(app)/artist/[artistId]/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/artist/[artistId]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/like.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/lib/actions/delete-artwork.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "deleteArtworkAction",
+          "filename": "app/lib/actions/delete-artwork.ts"
+        },
+        "app/(app)/feed/artwork/[artworkId]/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/feed/artwork/[artworkId]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/like.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/lib/actions/delete-artwork.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/lib/actions/comment.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "deleteArtworkAction",
+          "filename": "app/lib/actions/delete-artwork.ts"
+        },
+        "app/(app)/feed/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/feed/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/like.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/lib/actions/delete-artwork.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "deleteArtworkAction",
+          "filename": "app/lib/actions/delete-artwork.ts"
         }
       },
       "layer": {
-        "app/(app)/search/page": "rsc"
+        "app/(app)/artist/[artistId]/@modal/(.)artwork/[artworkId]/page": "action-browser",
+        "app/(app)/artist/[artistId]/page": "action-browser",
+        "app/(app)/feed/artwork/[artworkId]/page": "action-browser",
+        "app/(app)/feed/page": "action-browser"
       },
-      "filename": "app/lib/searchArtists.ts",
-      "exportedName": "$$RSC_SERVER_ACTION_0"
+      "filename": "app/lib/actions/delete-artwork.ts",
+      "exportedName": "deleteArtworkAction"
+    },
+    "70b5612801f37b6f3a4a5a32779c45caf6b49f603d": {
+      "workers": {
+        "app/(app)/artist/[artistId]/@modal/(.)artwork/[artworkId]/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/artist/[artistId]/@modal/(.)artwork/[artworkId]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/like.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/lib/actions/delete-artwork.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/lib/actions/comment.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "addCommentAction",
+          "filename": "app/lib/actions/comment.ts"
+        },
+        "app/(app)/feed/@modal/(.)artwork/[artworkId]/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/feed/@modal/(.)artwork/[artworkId]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/comment.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "addCommentAction",
+          "filename": "app/lib/actions/comment.ts"
+        },
+        "app/(app)/feed/artwork/[artworkId]/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/feed/artwork/[artworkId]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/like.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/lib/actions/delete-artwork.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/lib/actions/comment.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "addCommentAction",
+          "filename": "app/lib/actions/comment.ts"
+        }
+      },
+      "layer": {
+        "app/(app)/artist/[artistId]/@modal/(.)artwork/[artworkId]/page": "action-browser",
+        "app/(app)/feed/@modal/(.)artwork/[artworkId]/page": "action-browser",
+        "app/(app)/feed/artwork/[artworkId]/page": "action-browser"
+      },
+      "filename": "app/lib/actions/comment.ts",
+      "exportedName": "addCommentAction"
+    },
+    "70304f0e4fb7a555a4e7853fcbf664d447fe25ea9f": {
+      "workers": {
+        "app/(app)/artist/[artistId]/@modal/(.)artwork/[artworkId]/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/artist/[artistId]/@modal/(.)artwork/[artworkId]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/like.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/lib/actions/delete-artwork.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/lib/actions/comment.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "deleteCommentAction",
+          "filename": "app/lib/actions/comment.ts"
+        },
+        "app/(app)/feed/@modal/(.)artwork/[artworkId]/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/feed/@modal/(.)artwork/[artworkId]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/comment.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "deleteCommentAction",
+          "filename": "app/lib/actions/comment.ts"
+        },
+        "app/(app)/feed/artwork/[artworkId]/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/feed/artwork/[artworkId]/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/like.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/lib/actions/delete-artwork.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE2 => \"[project]/app/lib/actions/comment.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "deleteCommentAction",
+          "filename": "app/lib/actions/comment.ts"
+        }
+      },
+      "layer": {
+        "app/(app)/artist/[artistId]/@modal/(.)artwork/[artworkId]/page": "action-browser",
+        "app/(app)/feed/@modal/(.)artwork/[artworkId]/page": "action-browser",
+        "app/(app)/feed/artwork/[artworkId]/page": "action-browser"
+      },
+      "filename": "app/lib/actions/comment.ts",
+      "exportedName": "deleteCommentAction"
     },
     "00ea691f0c42b1a7768e5dcfc97fe3171a48238ca8": {
       "workers": {
@@ -60,65 +160,35 @@
       "filename": "app/lib/actions/verify-email.ts",
       "exportedName": "verifyEmail"
     },
-    "60485196d2bf8a6658e1967cbc90c83083bfdd5db0": {
+    "404e9627f05133d8f675bec962330fccafb93832ec": {
       "workers": {
-        "app/(auth)/verify/page": {
-          "moduleId": "[project]/.next-internal/server/app/(auth)/verify/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/verify.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+        "app/(app)/search/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/search/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/searchArtists.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": true,
-          "exportedName": "verifyTOTPAction",
-          "filename": "app/lib/actions/verify.ts"
+          "exportedName": "$$RSC_SERVER_ACTION_0",
+          "filename": "app/lib/searchArtists.ts"
         }
       },
       "layer": {
-        "app/(auth)/verify/page": "action-browser"
+        "app/(app)/search/page": "rsc"
       },
-      "filename": "app/lib/actions/verify.ts",
-      "exportedName": "verifyTOTPAction"
+      "filename": "app/lib/searchArtists.ts",
+      "exportedName": "$$RSC_SERVER_ACTION_0"
     },
-    "60e28b45f9dc79c72e34d9ad5e23575925047736e1": {
+    "6031dbbe662ef0bec950b6d09558449e5713a53383": {
       "workers": {
-        "app/(auth)/register/page": {
-          "moduleId": "[project]/.next-internal/server/app/(auth)/register/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/register.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+        "app/(auth)/login/page": {
+          "moduleId": "[project]/.next-internal/server/app/(auth)/login/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/login.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": true,
-          "exportedName": "registerAction",
-          "filename": "app/lib/actions/register.ts"
+          "exportedName": "loginAction",
+          "filename": "app/lib/actions/login.ts"
         }
       },
       "layer": {
-        "app/(auth)/register/page": "action-browser"
+        "app/(auth)/login/page": "action-browser"
       },
-      "filename": "app/lib/actions/register.ts",
-      "exportedName": "registerAction"
-    },
-    "60261ad9c0a08ce727687c21834ca9d5ca597e3f7d": {
-      "workers": {
-        "app/(auth)/forgot-password/page": {
-          "moduleId": "[project]/.next-internal/server/app/(auth)/forgot-password/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/forgot-password.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
-          "async": true,
-          "exportedName": "ForgotPasswordAction",
-          "filename": "app/lib/actions/forgot-password.ts"
-        }
-      },
-      "layer": {
-        "app/(auth)/forgot-password/page": "action-browser"
-      },
-      "filename": "app/lib/actions/forgot-password.ts",
-      "exportedName": "ForgotPasswordAction"
-    },
-    "60c89fa5f2ff4162dd334d31409ff501f1d1fff7ed": {
-      "workers": {
-        "app/(auth)/reset-password/page": {
-          "moduleId": "[project]/.next-internal/server/app/(auth)/reset-password/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/reset-passoword.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
-          "async": true,
-          "exportedName": "resetPassword",
-          "filename": "app/lib/actions/reset-passoword.ts"
-        }
-      },
-      "layer": {
-        "app/(auth)/reset-password/page": "action-browser"
-      },
-      "filename": "app/lib/actions/reset-passoword.ts",
-      "exportedName": "resetPassword"
+      "filename": "app/lib/actions/login.ts",
+      "exportedName": "loginAction"
     }
   },
   "edge": {},

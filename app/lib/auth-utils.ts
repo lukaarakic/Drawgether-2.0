@@ -12,10 +12,21 @@ export async function getSession() {
 
   try {
     const payload = await verifyJWT(token);
-    return payload || null;
+
+    if (!payload) logout();
+
+    return payload;
   } catch (error) {
     return null;
   }
+}
+
+export async function getArtistId() {
+  const session = await getSession();
+
+  if (!session) redirect("/login");
+
+  return { artistId: session.sub, role: session.role };
 }
 
 export async function getArtist() {
