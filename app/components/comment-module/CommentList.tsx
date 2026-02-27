@@ -2,6 +2,7 @@ import Comment from "./Comment";
 
 const CommentList = ({
   comments,
+  artworkId,
 }: {
   comments: {
     id: string;
@@ -11,14 +12,19 @@ const CommentList = ({
       username: string;
     };
   }[];
+  artworkId: string;
 }) => {
   return (
-    <div className="mx-auto w-full overflow-y-auto" data-lenis-prevent>
+    <div
+      className="mx-auto w-full overflow-y-auto max-h-230"
+      data-lenis-prevent
+    >
       {comments.length > 0 ? (
         comments.map((comment) => (
           <Comment
             comment={comment}
             key={`${comment.id}${comment.artist.id}`}
+            artworkId={artworkId}
           />
         ))
       ) : (

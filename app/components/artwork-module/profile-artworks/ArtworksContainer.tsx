@@ -1,5 +1,7 @@
 import { Prisma } from "@/app/generated/prisma/client";
 import ArtworkPost from "../ArtworkPost";
+import prisma from "@/app/lib/db";
+import { getSession, logout } from "@/app/lib/auth-utils";
 
 type ArtworkWithArtists = Prisma.ArtworkGetPayload<{
   include: {
@@ -18,11 +20,38 @@ type ArtworksContainerProps = {
   artworks: ArtworkWithArtists[];
 };
 
-const ArtworksContainer = ({ artworks }: ArtworksContainerProps) => {
+const ArtworksContainer = async ({ artworks }: ArtworksContainerProps) => {
+  const session = await getSession();
+
+  if (!session) {
+    logout();
+    return null;
+  }
+
+  const artistId = session.sub;
+  let likedArtworkIds = new Set<string>();
+
+  const artistLikes = await prisma.like.findMany({
+    where: {
+      artistId,
+      artworkId: { in: artworks.map((artwork) => artwork.id) },
+    },
+    select: {
+      artworkId: true,
+    },
+  });
+
+  likedArtworkIds = new Set(artistLikes.map((like) => like.artworkId));
+
   return (
     <div className="flex flex-col">
       {artworks.map((artwork, index) => (
-        <ArtworkPost artwork={artwork} index={index} key={artwork.id} />
+        <ArtworkPost
+          artwork={artwork}
+          index={index}
+          key={artwork.id}
+          isLiked={likedArtworkIds.has(artwork.id)}
+        />
       ))}
     </div>
   );

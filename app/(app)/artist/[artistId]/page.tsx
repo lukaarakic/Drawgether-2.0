@@ -27,9 +27,10 @@ const Profile = async ({
           theme: true,
           artworkImage: true,
           likesCount: true,
-          commentsCount: true,
+          createdAt: true,
+          updatedAt: true,
           roomId: true,
-          created_at: true,
+          commentsCount: true,
           artists: {
             select: { id: true, username: true },
           },
