@@ -82,8 +82,9 @@ async function main() {
   console.log("✅ Created roles: user, admin");
 
   // --- ARTISTS ---
-  // Note: In production, passwords should be hashed using bcrypt or similar
-  const hashedPassword = "$2b$10$dummyHashedPasswordForSeeding1234567890"; // Placeholder hash
+  // This is a verified bcrypt hash (10 rounds) for the word: "password"
+  const hashedPassword =
+    "$2a$10$BQToDNdBtBKCvnrTmMi5m.NK.7i6Qx7YASs.jTkE86I5zqxzE8klC";
 
   const artists = await Promise.all([
     prisma.artist.create({
@@ -121,10 +122,10 @@ async function main() {
     }),
     prisma.artist.create({
       data: {
-        username: "admin",
+        username: "netrunners",
         email: "admin@drawgether.com",
         emailVerified: new Date(),
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=admin",
+        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=netrunners",
         roleId: adminRole.id,
         password: {
           create: { hash: hashedPassword },
@@ -133,7 +134,7 @@ async function main() {
     }),
   ]);
 
-  const [alice, bob, charlie, admin] = artists;
+  const [alice, bob, charlie, netrunners] = artists;
   console.log(`✅ Created ${artists.length} artists`);
 
   // --- ROOMS ---
@@ -280,7 +281,7 @@ async function main() {
       data: { artistId: charlie.id, artworkId: artworks[0].id },
     }),
     prisma.like.create({
-      data: { artistId: admin.id, artworkId: artworks[0].id },
+      data: { artistId: netrunners.id, artworkId: artworks[0].id }, // <-- Updated to netrunners
     }),
     prisma.like.create({
       data: { artistId: alice.id, artworkId: artworks[1].id },

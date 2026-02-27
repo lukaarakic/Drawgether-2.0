@@ -1,95 +1,81 @@
-[00:00:00.719] Server  WARN    ⚠ Turbopack's filesystem cache has been deleted because we previously detected an internal error in Turbopack. Builds or page loads may be slower as a result.
-[00:00:01.068] Server  LOG     ✓ Ready in 873ms
-[00:00:08.611] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:08.797] Browser WARN    Image with src "/_next/static/media/full_pink_logo.e74f6058.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:00:12.438] Server  LOG     [{...},{...},{...},{...}]
-[00:00:20.776] Server  LOG     Verification token for netrunners.work@gmail.com: 740252
-[00:00:36.951] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:02:33.102] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:02:41.443] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:03:47.263] Server  LOG     ✓ Compiled in 81ms
-[00:04:16.235] Browser ERROR   ./app/(auth)/verify/page.tsx:5:10
-Ecmascript file had an error
-  3 | import HoneypotField from "@/app/components/ui/HoneypotField";
-  4 | import { verifyTOTPAction } from "@/app/lib/actions/verify";
-> 5 | import { useActionState } from "react";
-    |          ^^^^^^^^^^^^^^
-  6 |
-  7 | const Verify = () => {
-  8 |   const [state, action, isPending] = useActionState(
-
-You're importing a component that needs `useActionState`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
-
- Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
-[00:04:52.398] Server  LOG     ✓ Finished filesystem cache database compaction in 20.0s
-[00:04:59.076] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:06:11.378] Server  LOG     ✓ Compiled in 28ms
-[00:06:35.956] Server  LOG     ✓ Compiled in 25ms
-[00:06:44.658] Server  LOG     ✓ Compiled in 25ms
-[00:07:26.561] Server  LOG     ✓ Compiled in 23ms
-[00:07:31.371] Server  LOG     ✓ Compiled in 20ms
-[00:08:41.379] Server  LOG     Verifying TOTP for: "netrunners.work@gmail.com" "Type:" "EMAIL_VERIFICATION"
-[00:11:17.348] Server  LOG     ✓ Compiled in 20ms
-[00:11:18.234] Browser ERROR   uncaughtError: ReferenceError: initialState is not defined
-[00:11:28.899] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:11:29.009] Server  LOG     ✓ Compiled in 22ms
-[00:11:29.173] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:11:54.079] Server  LOG     ✓ Compiled in 28ms
-[00:12:59.673] Server  LOG     ✓ Compiled in 29ms
-[00:14:08.520] Server  LOG     ✓ Compiled in 22ms
-[00:14:13.441] Server  LOG     ✓ Compiled in 21ms
-[00:14:20.183] Server  LOG     ✓ Compiled in 24ms
-[00:15:02.214] Server  LOG     ✓ Compiled in 24ms
-[00:15:10.532] Server  LOG     ✓ Compiled in 18ms
-[00:15:27.517] Server  LOG     ✓ Compiled in 20ms
-[00:15:46.623] Server  LOG     ✓ Compiled in 19ms
-[00:15:55.621] Server  LOG     ✓ Compiled in 21ms
-[00:16:10.626] Server  LOG     ✓ Compiled in 20ms
-[00:16:25.114] Server  LOG     ✓ Compiled in 23ms
-[00:16:30.176] Server  LOG     ✓ Compiled in 24ms
-[00:16:35.678] Browser WARN    Image with src "/_next/static/media/right_white.3a8d8fc1.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:16:42.329] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:16:47.346] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:16:48.786] Server  LOG     [{...},{...},{...},{...}]
-[00:16:50.636] Browser WARN    Image with src "http://localhost:3000/_next/static/media/full_both_logo.29a3f444.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
-[00:16:53.812] Server  ERROR   ⨯ PrismaClientKnownRequestError: 
-Invalid `{imported module ./app/lib/db.ts}["default"].verificationToken.create()` invocation in
-D:\drawgether_2.0\.next\dev\server\chunks\ssr\_91c81dac._.js:86:153
-
-  83     return (0, {imported module ./app/lib/auth-utils.ts}["logout"])();
-  84 }
-  85 const { secret, token } = await (0, {imported module ./app/lib/totp.ts}["generateSecretAndTOTP"])();
-→ 86 await {imported module ./app/lib/db.ts}["default"].verificationToken.create(
-Unique constraint failed on the fields: (`target`, `type`)
-[00:16:53.933] Browser ERROR   uncaughtError: PrismaClientKnownRequestError: 
-Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].verificationToken.create()` invocation in
-D:\drawgether_2.0\.next\dev\server\chunks\ssr\_91c81dac._.js:86:153
-
-  83     return (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$auth$2d$utils$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["logout"])();
-  84 }
-  85 const { secret, token } = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$totp$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["generateSecretAndTOTP"])();
-→ 86 await __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].verificationToken.create(
-Unique constraint failed on the fields: (`target`, `type`)
-[00:18:29.081] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:18:33.707] Server  LOG     [{...},{...},{...},{...}]
-[00:18:36.890] Server  LOG     Verification token for netrunners.work@gmail.com: 076329
-[00:18:48.213] Server  LOG     Verifying TOTP for: "netrunners.work@gmail.com" "Type:" "EMAIL_VERIFICATION"
-[00:19:02.909] Server  LOG     ✓ Compiled in 21ms
-[00:19:27.481] Server  LOG     Verifying TOTP for: "netrunners.work@gmail.com" "Type:" "EMAIL_VERIFICATION"
-[00:19:27.482] Server  LOG     TOTP code received: "076329"
-[00:19:27.633] Server  LOG     TOTP code verified successfully for: "netrunners.work@gmail.com"
-[00:19:27.664] Server  LOG     Associated artist found: "cmly69it70001usvaljhqsz6l"
-[00:19:27.699] Server  LOG     Verification tokens cleaned up for: "netrunners.work@gmail.com"
-[00:19:27.729] Server  LOG     Artist email marked as verified: "cmly69it70001usvaljhqsz6l"
-[00:19:34.542] Server  LOG     [{...},{...},{...},{...}]
-[00:19:51.840] Server  LOG     ✓ Compiled in 35ms
-[00:20:20.542] Server  LOG     ✓ Compiled in 24ms
-[00:20:38.334] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:20:38.514] Browser WARN    Image with src "/_next/static/media/logo_only.9b790824.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:20:38.514] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+[00:00:00.881] Server  LOG     ✓ Ready in 650ms
+[00:00:01.598] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:14.235] Browser LOG     Current path: /feed
+[00:00:14.235] Browser LOG     Current path: /feed
+[00:00:16.461] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:00:16.461] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:00:16.461] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:00:16.461] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:00:16.461] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:00:16.461] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:00:16.461] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:00:16.461] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:00:46.906] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:00:46.906] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:01:58.760] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:01:58.760] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:02:03.204] Browser LOG     Current path: /feed
+[00:02:03.204] Browser LOG     Current path: /feed
+[00:02:03.204] Browser LOG     Current path: /feed
+[00:02:03.204] Browser LOG     Current path: /feed
+[00:02:03.204] Browser LOG     Current path: /feed
+[00:02:03.204] Browser LOG     Current path: /feed
+[00:02:03.204] Browser LOG     Current path: /feed
+[00:02:03.204] Browser LOG     Current path: /feed
+[00:02:03.204] Browser LOG     Current path: /feed
+[00:02:03.204] Browser LOG     Current path: /feed
+[00:02:04.825] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:02:04.825] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:02:04.825] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:02:04.825] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:02:04.825] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:02:04.825] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:02:08.155] Browser LOG     Current path: /feed
+[00:02:08.155] Browser LOG     Current path: /feed
+[00:02:26.704] Browser WARN    Image with src "http://localhost:3000/_next/static/media/full_both_logo.29a3f444.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:02:33.765] Browser LOG     Current path: /feed
+[00:02:33.765] Browser LOG     Current path: /feed
+[00:02:36.298] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:02:36.298] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:02:36.298] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:02:36.298] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:02:36.298] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:02:36.298] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:03:42.130] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:03:42.130] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:08:26.671] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:08:26.671] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:35.947] Server  LOG     ✓ Compiled in 26ms
+[00:10:36.669] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:36.669] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:40.092] Server  ERROR   ⨯ ReferenceError: Image is not defined
+[00:10:40.660] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:40.660] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:40.660] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:40.660] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:40.660] Browser ERROR   uncaughtError: ReferenceError: Image is not defined
+[00:10:42.574] Server  LOG     ✓ Compiled in 22ms
+[00:10:43.126] Server  ERROR   ⨯ ReferenceError: Image is not defined
+[00:10:43.162] Server  LOG     Current path: "/feed/artwork/cmm4ykfma000liwvaoac0whtf"
+[00:10:43.302] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:10:43.673] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:43.673] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:43.673] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:43.673] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:43.673] Browser ERROR   uncaughtError: ReferenceError: Image is not defined
+[00:10:50.398] Server  ERROR   ⨯ ReferenceError: TrashSVG is not defined
+[00:10:50.435] Server  LOG     Current path: "/feed/artwork/cmm4ykfma000liwvaoac0whtf"
+[00:10:50.542] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:10:51.658] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:51.658] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:51.658] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:51.658] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:51.658] Browser ERROR   uncaughtError: ReferenceError: TrashSVG is not defined
+[00:10:52.607] Server  LOG     Current path: "/feed/artwork/cmm4ykfma000liwvaoac0whtf"
+[00:10:52.725] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:10:53.663] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:53.663] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:10:53.663] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
 - A server/client branch `if (typeof window !== 'undefined')`.
 - Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
@@ -102,10 +88,10 @@ It can also happen if the client has a browser extension installed which messes 
 %s%s https://react.dev/link/hydration-mismatch 
 
   ...
-    <HTTPAccessFallbackErrorBoundary pathname="/artist/ne..." notFound={<SegmentViewNode>} forbidden={undefined} ...>
+    <HTTPAccessFallbackErrorBoundary pathname="/feed/artw..." notFound={<SegmentViewNode>} forbidden={undefined} ...>
       <RedirectBoundary>
         <RedirectErrorBoundary router={{...}}>
-          <InnerLayoutRouter url="/artist/ne..." tree={[...]} params={{}} cacheNode={{...}} segmentPath={[...]} ...>
+          <InnerLayoutRouter url="/feed/artw..." tree={[...]} params={{}} cacheNode={{...}} segmentPath={[...]} ...>
             <SegmentViewNode type="layout" pagePath="(app)/layo...">
               <SegmentTrieNode>
               <script>
@@ -114,16 +100,16 @@ It can also happen if the client has a browser extension installed which messes 
               <Layout>
                 <Layout>
                   <header>
-                    <Navbar username="netrunners...">
+                    <Navbar username="charlie_cr...">
                       <div>
                         <div>
                         <nav className="box-shadow...">
-                          <LinkComponent data-text="HOME" href="/feed" className={"text-bor..."} style={{...}} ...>
+                          <LinkComponent data-text="HOME" href="/feed" className="text-borde..." style={{...}} ...>
                             <a
                               data-text="HOME"
-                              className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"0.41deg"}}
--                             style={{--nav-rotation:"2.21deg"}}
+                              className="text-border md:text-border-lg uppercase text-white activeNavLink"
++                             style={{--nav-rotation:"-0.67deg"}}
+-                             style={{--nav-rotation:"1.28deg"}}
                               ref={function}
                               onClick={function onClick}
                               onMouseEnter={function onMouseEnter}
@@ -135,8 +121,8 @@ It can also happen if the client has a browser extension installed which messes 
                             <a
                               data-text="SEARCH"
                               className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"1.80deg"}}
--                             style={{--nav-rotation:"-0.61deg"}}
++                             style={{--nav-rotation:"-0.56deg"}}
+-                             style={{--nav-rotation:"1.77deg"}}
                               ref={function}
                               onClick={function onClick}
                               onMouseEnter={function onMouseEnter}
@@ -145,25 +131,25 @@ It can also happen if the client has a browser extension installed which messes 
                             >
 +                             Search
                           <LinkComponent>
-                          <LinkComponent data-text="profile" href="/artist/ne..." className="text-borde..." style={{...}} ...>
+                          <LinkComponent data-text="profile" href="/artist/ch..." className={"text-bor..."} style={{...}} ...>
                             <a
                               data-text="profile"
-                              className="text-border md:text-border-lg uppercase text-white activeNavLink"
-+                             style={{--nav-rotation:"2.17deg"}}
--                             style={{--nav-rotation:"0.58deg"}}
+                              className={"text-border md:text-border-lg uppercase text-white "}
++                             style={{--nav-rotation:"-2.40deg"}}
+-                             style={{--nav-rotation:"-0.30deg"}}
                               ref={function}
                               onClick={function onClick}
                               onMouseEnter={function onMouseEnter}
                               onTouchStart={function onTouchStart}
-                              href="/artist/netrunners.work"
+                              href="/artist/charlie_creative"
                             >
 +                             Profile
                           <LinkComponent data-text="play" href="/play" className={"text-bor..."} style={{...}} ...>
                             <a
                               data-text="play"
                               className={"text-border md:text-border-lg uppercase text-white "}
-+                             style={{--nav-rotation:"-0.47deg"}}
--                             style={{--nav-rotation:"-1.86deg"}}
++                             style={{--nav-rotation:"0.52deg"}}
+-                             style={{--nav-rotation:"1.61deg"}}
                               ref={function}
                               onClick={function onClick}
                               onMouseEnter={function onMouseEnter}
@@ -174,285 +160,795 @@ It can also happen if the client has a browser extension installed which messes 
                 ...
           ...
 
-[00:21:19.296] Server  LOG     Verification token for netrunners.work@gmail.com: 539629
-[00:21:45.545] Server  LOG     ✓ Compiled in 20ms
-[00:22:07.141] Server  LOG     ✓ Compiled in 23ms
-[00:22:12.886] Server  LOG     Verifying TOTP for: "netrunners.work@gmail.com" "Type:" "EMAIL_VERIFICATION"
-[00:22:12.887] Server  LOG     TOTP code received: "538629"
-[00:22:30.674] Server  LOG     Verifying TOTP for: "netrunners.work@gmail.com" "Type:" "EMAIL_VERIFICATION"
-[00:22:30.674] Server  LOG     TOTP code received: "539629"
-[00:22:30.820] Server  LOG     TOTP code verified successfully for: "netrunners.work@gmail.com"
-[00:22:30.850] Server  LOG     Associated artist found: "cmly69it70001usvaljhqsz6l"
-[00:22:30.879] Server  LOG     Verification tokens cleaned up for: "netrunners.work@gmail.com"
-[00:22:30.908] Server  LOG     Artist email marked as verified: "cmly69it70001usvaljhqsz6l"
-[00:22:53.538] Server  LOG     ✓ Compiled in 22ms
-[00:22:55.255] Server  LOG     ✓ Compiled in 23ms
-[00:24:13.918] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:24:14.479] Browser WARN    Image with src "/_next/static/media/full_pink_logo.e74f6058.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:24:21.238] Browser ERROR   uncaughtError: Error: Failed prop type: The prop `href` expects a `string` or `object` in `<Link>`, but got `undefined` instead.
-Open your browser's console to view the Component stack trace.
-[00:24:24.984] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:24:27.387] Browser WARN    Image with src "/_next/static/media/full_pink_logo.e74f6058.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:24:47.980] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:24:48.104] Browser WARN    Image with src "/_next/static/media/full_pink_logo.e74f6058.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:25:03.660] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:25:03.793] Browser WARN    Image with src "/_next/static/media/full_pink_logo.e74f6058.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:25:08.128] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:25:08.261] Browser WARN    Image with src "/_next/static/media/full_pink_logo.e74f6058.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
-Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
-[00:26:48.134] Server  ERROR   ⨯ The file "./proxy.ts" must export a function, either as a default export or as a named "proxy" export.
-This function is what Next.js runs for every request handled by this proxy (previously called middleware).
+[00:11:37.667] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:11:37.667] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:12:17.673] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:12:17.673] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:26.666] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:26.666] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:32.663] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:32.663] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:38.711] Server  ERROR   ⨯ ReferenceError: artworkId is not defined
+[00:13:38.731] Server  ERROR   ⨯ ReferenceError: artworkId is not defined
+[00:13:39.673] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:39.673] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:39.673] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:39.673] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:39.673] Browser ERROR   uncaughtError: ReferenceError: artworkId is not defined
+[00:13:44.676] Server  ERROR   ⨯ ReferenceError: artworkId is not defined
+[00:13:44.856] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:13:45.666] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:45.666] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:45.666] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:45.666] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:45.666] Browser ERROR   uncaughtError: ReferenceError: artworkId is not defined
+[00:13:55.372] Server  ERROR   ⨯ ReferenceError: artworkId is not defined
+[00:13:55.464] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:13:55.669] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:55.669] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:55.669] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:55.669] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:55.669] Browser ERROR   uncaughtError: ReferenceError: artworkId is not defined
+[00:13:58.934] Server  LOG     Current path: "/feed/artwork/cmm4ykfma000liwvaoac0whtf"
+[00:13:59.026] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:13:59.668] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:59.668] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:13:59.668] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
-Why this happens:
-- You are migrating from `middleware` to `proxy`, but haven't updated the exported function.
-- The file exists but doesn't export a function.
-- The export is not a function (e.g., an object or constant).
-- There's a syntax error preventing the export from being recognized.
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
 
-To fix it:
-- Ensure this file has either a default or "proxy" function export.
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
 
-Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
-[00:26:48.193] Server  LOG     ✓ Compiled in 19ms
-[00:26:49.237] Browser ERROR   ./proxy.ts
-Proxy is missing expected function export name
-This function is what Next.js runs for every request handled by this proxy (previously called middleware).
+%s%s https://react.dev/link/hydration-mismatch 
 
-Why this happens:
-- You are migrating from `middleware` to `proxy`, but haven't updated the exported function.
-- The file exists but doesn't export a function.
-- The export is not a function (e.g., an object or constant).
-- There's a syntax error preventing the export from being recognized.
+  ...
+    <HTTPAccessFallbackErrorBoundary pathname="/feed/artw..." notFound={<SegmentViewNode>} forbidden={undefined} ...>
+      <RedirectBoundary>
+        <RedirectErrorBoundary router={{...}}>
+          <InnerLayoutRouter url="/feed/artw..." tree={[...]} params={{}} cacheNode={{...}} segmentPath={[...]} ...>
+            <SegmentViewNode type="layout" pagePath="(app)/layo...">
+              <SegmentTrieNode>
+              <script>
+              <script>
+              <script>
+              <Layout>
+                <Layout>
+                  <header>
+                    <Navbar username="charlie_cr...">
+                      <div>
+                        <div>
+                        <nav className="box-shadow...">
+                          <LinkComponent data-text="HOME" href="/feed" className="text-borde..." style={{...}} ...>
+                            <a
+                              data-text="HOME"
+                              className="text-border md:text-border-lg uppercase text-white activeNavLink"
++                             style={{--nav-rotation:"2.11deg"}}
+-                             style={{--nav-rotation:"-0.39deg"}}
+                              ref={function}
+                              onClick={function onClick}
+                              onMouseEnter={function onMouseEnter}
+                              onTouchStart={function onTouchStart}
+                              href="/feed"
+                            >
++                             Home
+                          <LinkComponent data-text="SEARCH" href="/search" className={"text-bor..."} style={{...}} ...>
+                            <a
+                              data-text="SEARCH"
+                              className={"text-border md:text-border-lg uppercase text-white "}
++                             style={{--nav-rotation:"-1.63deg"}}
+-                             style={{--nav-rotation:"1.10deg"}}
+                              ref={function}
+                              onClick={function onClick}
+                              onMouseEnter={function onMouseEnter}
+                              onTouchStart={function onTouchStart}
+                              href="/search"
+                            >
++                             Search
+                          <LinkComponent>
+                          <LinkComponent data-text="profile" href="/artist/ch..." className={"text-bor..."} style={{...}} ...>
+                            <a
+                              data-text="profile"
+                              className={"text-border md:text-border-lg uppercase text-white "}
++                             style={{--nav-rotation:"-2.24deg"}}
+-                             style={{--nav-rotation:"2.23deg"}}
+                              ref={function}
+                              onClick={function onClick}
+                              onMouseEnter={function onMouseEnter}
+                              onTouchStart={function onTouchStart}
+                              href="/artist/charlie_creative"
+                            >
++                             Profile
+                          <LinkComponent data-text="play" href="/play" className={"text-bor..."} style={{...}} ...>
+                            <a
+                              data-text="play"
+                              className={"text-border md:text-border-lg uppercase text-white "}
++                             style={{--nav-rotation:"-0.72deg"}}
+-                             style={{--nav-rotation:"-0.01deg"}}
+                              ref={function}
+                              onClick={function onClick}
+                              onMouseEnter={function onMouseEnter}
+                              onTouchStart={function onTouchStart}
+                              href="/play"
+                            >
++                             Play
+                ...
+          ...
 
-To fix it:
-- Ensure this file has either a default or "proxy" function export.
-
-Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
-[00:26:50.228] Browser ERROR   ./proxy.ts
-Proxy is missing expected function export name
-This function is what Next.js runs for every request handled by this proxy (previously called middleware).
-
-Why this happens:
-- You are migrating from `middleware` to `proxy`, but haven't updated the exported function.
-- The file exists but doesn't export a function.
-- The export is not a function (e.g., an object or constant).
-- There's a syntax error preventing the export from being recognized.
-
-To fix it:
-- Ensure this file has either a default or "proxy" function export.
-
-Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
-[00:26:57.923] Server  LOG     ✓ Compiled in 17ms
-[00:26:59.927] Server  LOG     ✓ Compiled in 20ms
-[00:31:54.235] Browser ERROR   ./app/(auth)/forgot-password/page.tsx:4:10
+[00:14:03.674] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:14:03.674] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:14:17.671] Browser ERROR   ./app/components/comment-module/DeleteCommentButton.tsx:3:10
 Ecmascript file had an error
-  2 | import { Metadata } from "next";
-  3 | import Link from "next/link";
-> 4 | import { useState } from "react";
-    |          ^^^^^^^^
+  1 | import Image from "next/image";
+  2 | import TrashSVG from "@/app/assets/misc/trash.svg";
+> 3 | import { useTransition } from "react";
+    |          ^^^^^^^^^^^^^
+  4 | import { deleteCommentAction } from "@/app/lib/actions/comment";
   5 |
-  6 | export const metadata: Metadata = {
-  7 |   title: "Password Recovery for Drawgether",
+  6 | const DeleteCommentButton = ({
 
-You're importing a component that needs `useState`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+You're importing a component that needs `useTransition`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
 
  Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
-[00:32:03.231] Browser ERROR   ./app/(auth)/forgot-password/page.tsx:4:10
+
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/@modal/(.)artwork/[artworkId]/page.tsx
+[00:14:31.662] Browser ERROR   ./app/components/comment-module/DeleteCommentButton.tsx:5:10
 Ecmascript file had an error
-  2 | import { Metadata } from "next";
-  3 | import Link from "next/link";
-> 4 | import { useActionState } from "react";
-    |          ^^^^^^^^^^^^^^
-  5 |
-  6 | export const metadata: Metadata = {
-  7 |   title: "Password Recovery for Drawgether",
-
-You're importing a component that needs `useActionState`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
-
- Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
-[00:32:59.239] Browser ERROR   ./app/(auth)/forgot-password/page.tsx:4:10
-Ecmascript file had an error
-  2 | import { Metadata } from "next";
-  3 | import Link from "next/link";
-> 4 | import { useActionState } from "react";
-    |          ^^^^^^^^^^^^^^
-  5 |
-  6 | export const metadata: Metadata = {
-  7 |   title: "Password Recovery for Drawgether",
-
-You're importing a component that needs `useActionState`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
-
- Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
-[00:33:13.229] Browser ERROR   ./app/(auth)/forgot-password/page.tsx:4:10
-Ecmascript file had an error
-  2 | import { Metadata } from "next";
-  3 | import Link from "next/link";
-> 4 | import { useActionState } from "react";
-    |          ^^^^^^^^^^^^^^
-  5 |
-  6 | export const metadata: Metadata = {
-  7 |   title: "Password Recovery for Drawgether",
-
-You're importing a component that needs `useActionState`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
-
- Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
-[00:33:17.229] Browser ERROR   ./app/(auth)/forgot-password/page.tsx:4:10
-Ecmascript file had an error
-  2 | import { Metadata } from "next";
-  3 | import Link from "next/link";
-> 4 | import { useActionState } from "react";
-    |          ^^^^^^^^^^^^^^
-  5 |
-  6 | export const metadata: Metadata = {
-  7 |   title: "Password Recovery for Drawgether",
-
-You're importing a component that needs `useActionState`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
-
- Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
-[00:33:31.237] Browser ERROR   ./app/(auth)/forgot-password/page.tsx:5:10
-Ecmascript file had an error
-  3 | import { Metadata } from "next";
-  4 | import Link from "next/link";
-> 5 | import { useActionState } from "react";
-    |          ^^^^^^^^^^^^^^
+  3 | import { useTransition } from "react";
+  4 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+> 5 | import { usePathname } from "next/navigation";
+    |          ^^^^^^^^^^^
   6 |
-  7 | export const metadata: Metadata = {
-  8 |   title: "Password Recovery for Drawgether",
+  7 | const DeleteCommentButton = ({
+  8 |   commentId,
 
-You're importing a component that needs `useActionState`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+You're importing a component that needs `usePathname`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
 
  Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
-[00:34:11.227] Browser ERROR   ./app/(auth)/forgot-password/page.tsx:9:14
+
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/@modal/(.)artwork/[artworkId]/page.tsx
+[00:14:31.662] Browser ERROR   ./app/components/comment-module/DeleteCommentButton.tsx:3:10
 Ecmascript file had an error
-   7 | import { useActionState } from "react";
+  1 | import Image from "next/image";
+  2 | import TrashSVG from "@/app/assets/misc/trash.svg";
+> 3 | import { useTransition } from "react";
+    |          ^^^^^^^^^^^^^
+  4 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+  5 | import { usePathname } from "next/navigation";
+  6 |
+
+You're importing a component that needs `useTransition`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/@modal/(.)artwork/[artworkId]/page.tsx
+[00:14:38.672] Browser ERROR   ./app/components/comment-module/DeleteCommentButton.tsx:5:10
+Ecmascript file had an error
+  3 | import { useTransition } from "react";
+  4 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+> 5 | import { usePathname } from "next/navigation";
+    |          ^^^^^^^^^^^
+  6 |
+  7 | const DeleteCommentButton = ({
+  8 |   commentId,
+
+You're importing a component that needs `usePathname`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/@modal/(.)artwork/[artworkId]/page.tsx
+[00:14:38.672] Browser ERROR   ./app/components/comment-module/DeleteCommentButton.tsx:3:10
+Ecmascript file had an error
+  1 | import Image from "next/image";
+  2 | import TrashSVG from "@/app/assets/misc/trash.svg";
+> 3 | import { useTransition } from "react";
+    |          ^^^^^^^^^^^^^
+  4 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+  5 | import { usePathname } from "next/navigation";
+  6 |
+
+You're importing a component that needs `useTransition`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/@modal/(.)artwork/[artworkId]/page.tsx
+[00:14:43.668] Server  ERROR   ⨯ ./app/components/comment-module/DeleteCommentButton.tsx:5:10
+Ecmascript file had an error
+  3 | import { useTransition } from "react";
+  4 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+> 5 | import { usePathname } from "next/navigation";
+    |          ^^^^^^^^^^^
+  6 |
+  7 | const DeleteCommentButton = ({
+  8 |   commentId,
+
+You're importing a component that needs `usePathname`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+
+
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/artwork/[artworkId]/page.tsx
+
+
+
+./app/components/comment-module/DeleteCommentButton.tsx:3:10
+Ecmascript file had an error
+  1 | import Image from "next/image";
+  2 | import TrashSVG from "@/app/assets/misc/trash.svg";
+> 3 | import { useTransition } from "react";
+    |          ^^^^^^^^^^^^^
+  4 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+  5 | import { usePathname } from "next/navigation";
+  6 |
+
+You're importing a component that needs `useTransition`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+
+
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/artwork/[artworkId]/page.tsx
+
+
+[00:14:43.930] Browser ERROR   ./app/components/comment-module/DeleteCommentButton.tsx:5:10
+Ecmascript file had an error
+  3 | import { useTransition } from "react";
+  4 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+> 5 | import { usePathname } from "next/navigation";
+    |          ^^^^^^^^^^^
+  6 |
+  7 | const DeleteCommentButton = ({
+  8 |   commentId,
+
+You're importing a component that needs `usePathname`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/@modal/(.)artwork/[artworkId]/page.tsx
+[00:14:43.930] Browser ERROR   ./app/components/comment-module/DeleteCommentButton.tsx:3:10
+Ecmascript file had an error
+  1 | import Image from "next/image";
+  2 | import TrashSVG from "@/app/assets/misc/trash.svg";
+> 3 | import { useTransition } from "react";
+    |          ^^^^^^^^^^^^^
+  4 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+  5 | import { usePathname } from "next/navigation";
+  6 |
+
+You're importing a component that needs `useTransition`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/@modal/(.)artwork/[artworkId]/page.tsx
+[00:14:44.011] Browser ERROR   uncaughtError: Error: ./app/components/comment-module/DeleteCommentButton.tsx:5:10
+Ecmascript file had an error
+  3 | import { useTransition } from "react";
+  4 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+> 5 | import { usePathname } from "next/navigation";
+    |          ^^^^^^^^^^^
+  6 |
+  7 | const DeleteCommentButton = ({
+  8 |   commentId,
+
+You're importing a component that needs `usePathname`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+
+
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/@modal/(.)artwork/[artworkId]/page.tsx
+
+
+[00:14:44.159] Browser ERROR   ./app/components/comment-module/DeleteCommentButton.tsx:5:10
+Ecmascript file had an error
+  3 | import { useTransition } from "react";
+  4 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+> 5 | import { usePathname } from "next/navigation";
+    |          ^^^^^^^^^^^
+  6 |
+  7 | const DeleteCommentButton = ({
+  8 |   commentId,
+
+You're importing a component that needs `usePathname`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/@modal/(.)artwork/[artworkId]/page.tsx
+[00:14:44.159] Browser ERROR   ./app/components/comment-module/DeleteCommentButton.tsx:3:10
+Ecmascript file had an error
+  1 | import Image from "next/image";
+  2 | import TrashSVG from "@/app/assets/misc/trash.svg";
+> 3 | import { useTransition } from "react";
+    |          ^^^^^^^^^^^^^
+  4 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+  5 | import { usePathname } from "next/navigation";
+  6 |
+
+You're importing a component that needs `useTransition`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/@modal/(.)artwork/[artworkId]/page.tsx
+[00:14:44.159] Browser ERROR   ./app/components/comment-module/DeleteCommentButton.tsx:5:10
+Ecmascript file had an error
+  3 | import { useTransition } from "react";
+  4 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+> 5 | import { usePathname } from "next/navigation";
+    |          ^^^^^^^^^^^
+  6 |
+  7 | const DeleteCommentButton = ({
+  8 |   commentId,
+
+You're importing a component that needs `usePathname`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/artwork/[artworkId]/page.tsx
+[00:14:44.159] Browser ERROR   ./app/components/comment-module/DeleteCommentButton.tsx:3:10
+Ecmascript file had an error
+  1 | import Image from "next/image";
+  2 | import TrashSVG from "@/app/assets/misc/trash.svg";
+> 3 | import { useTransition } from "react";
+    |          ^^^^^^^^^^^^^
+  4 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+  5 | import { usePathname } from "next/navigation";
+  6 |
+
+You're importing a component that needs `useTransition`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/artwork/[artworkId]/page.tsx
+[00:14:44.159] Browser ERROR   ./app/components/comment-module/DeleteCommentButton.tsx:5:10
+Ecmascript file had an error
+  3 | import { useTransition } from "react";
+  4 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+> 5 | import { usePathname } from "next/navigation";
+    |          ^^^^^^^^^^^
+  6 |
+  7 | const DeleteCommentButton = ({
+  8 |   commentId,
+
+You're importing a component that needs `usePathname`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/@modal/(.)artwork/[artworkId]/page.tsx
+[00:14:44.159] Browser ERROR   ./app/components/comment-module/DeleteCommentButton.tsx:3:10
+Ecmascript file had an error
+  1 | import Image from "next/image";
+  2 | import TrashSVG from "@/app/assets/misc/trash.svg";
+> 3 | import { useTransition } from "react";
+    |          ^^^^^^^^^^^^^
+  4 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+  5 | import { usePathname } from "next/navigation";
+  6 |
+
+You're importing a component that needs `useTransition`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
+
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
+
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/@modal/(.)artwork/[artworkId]/page.tsx
+[00:14:54.858] Browser ERROR   ./app/components/comment-module/DeleteCommentButton.tsx:7:10
+Ecmascript file had an error
+   5 | import { useTransition } from "react";
+   6 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+>  7 | import { usePathname } from "next/navigation";
+     |          ^^^^^^^^^^^
    8 |
->  9 | export const metadata: Metadata = {
-     |              ^^^^^^^^
-  10 |   title: "Password Recovery for Drawgether",
-  11 | };
-  12 |
+   9 | const DeleteCommentButton = ({
+  10 |   commentId,
 
-You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+You're importing a component that needs `usePathname`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
 
-Import traces:
-  Client Component Browser:
-    ./app/(auth)/forgot-password/page.tsx [Client Component Browser]
-    ./app/(auth)/forgot-password/page.tsx [Server Component]
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
 
-  Client Component SSR:
-    ./app/(auth)/forgot-password/page.tsx [Client Component SSR]
-    ./app/(auth)/forgot-password/page.tsx [Server Component]
-[00:34:28.237] Browser ERROR   ./app/(auth)/forgot-password/page.tsx:10:14
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/@modal/(.)artwork/[artworkId]/page.tsx
+[00:14:54.858] Browser ERROR   ./app/components/comment-module/DeleteCommentButton.tsx:5:10
 Ecmascript file had an error
-   8 | import { useActionState } from "react";
-   9 |
-> 10 | export const metadata: Metadata = {
-     |              ^^^^^^^^
-  11 |   title: "Password Recovery for Drawgether",
-  12 | };
-  13 |
+  3 | import Image from "next/image";
+  4 | import TrashSVG from "@/app/assets/misc/trash.svg";
+> 5 | import { useTransition } from "react";
+    |          ^^^^^^^^^^^^^
+  6 | import { deleteCommentAction } from "@/app/lib/actions/comment";
+  7 | import { usePathname } from "next/navigation";
+  8 |
 
-You are attempting to export "metadata" from a component marked with "use client", which is disallowed. Either remove the export, or the "use client" directive. Read more: https://nextjs.org/docs/app/api-reference/directives/use-client
+You're importing a component that needs `useTransition`. This React Hook only works in a Client Component. To fix, mark the file (or its parent) with the `"use client"` directive.
 
-Import traces:
-  Client Component Browser:
-    ./app/(auth)/forgot-password/page.tsx [Client Component Browser]
-    ./app/(auth)/forgot-password/page.tsx [Server Component]
+ Learn more: https://nextjs.org/docs/app/api-reference/directives/use-client
 
-  Client Component SSR:
-    ./app/(auth)/forgot-password/page.tsx [Client Component SSR]
-    ./app/(auth)/forgot-password/page.tsx [Server Component]
-[00:36:03.375] Server  LOG     ✓ Compiled in 23ms
-[00:36:12.776] Server  LOG     ✓ Compiled in 26ms
-[00:38:56.104] Server  LOG     ✓ Compiled in 24ms
-[00:41:03.973] Server  LOG     ✓ Compiled in 21ms
-[00:42:54.553] Server  LOG     ✓ Compiled in 24ms
-[00:43:56.637] Server  ERROR   ⨯ ./app/(app)/artist/[artistId]/@settings/settings/page.tsx:5:1
-Module not found: Can't resolve '@/app/lib/actions/verifyEmail'
-  3 | import Modal from "@/app/components/ui/Modal";
-  4 | import { logoutAction } from "@/app/lib/actions/logout";
-> 5 | import { verifyEmail } from "@/app/lib/actions/verifyEmail";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  6 | import { getSession, logout } from "@/app/lib/auth-utils";
-  7 | import prisma from "@/app/lib/db";
-  8 | import { maskEmail } from "@/app/utils/misc";
+Import trace:
+  Server Component:
+    ./app/components/comment-module/DeleteCommentButton.tsx
+    ./app/components/comment-module/Comment.tsx
+    ./app/components/comment-module/CommentList.tsx
+    ./app/components/comment-module/CommentsContainer.tsx
+    ./app/(app)/feed/@modal/(.)artwork/[artworkId]/page.tsx
+[00:14:57.359] Server  LOG     ✓ Compiled in 66ms
+[00:14:58.068] Server  LOG     Current path: "/feed/artwork/cmm4ykfma000liwvaoac0whtf"
+[00:14:58.179] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:14:58.304] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:14:58.304] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:14:58.304] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
-Import map: aliased to relative './app/lib/actions/verifyEmail' inside of [project]/
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
 
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
 
-https://nextjs.org/docs/messages/module-not-found
+%s%s https://react.dev/link/hydration-mismatch 
 
+  ...
+    <HTTPAccessFallbackErrorBoundary pathname="/feed/artw..." notFound={<SegmentViewNode>} forbidden={undefined} ...>
+      <RedirectBoundary>
+        <RedirectErrorBoundary router={{...}}>
+          <InnerLayoutRouter url="/feed/artw..." tree={[...]} params={{}} cacheNode={{...}} segmentPath={[...]} ...>
+            <SegmentViewNode type="layout" pagePath="(app)/layo...">
+              <SegmentTrieNode>
+              <script>
+              <script>
+              <script>
+              <Layout>
+                <Layout>
+                  <header>
+                    <Navbar username="charlie_cr...">
+                      <div>
+                        <div>
+                        <nav className="box-shadow...">
+                          <LinkComponent data-text="HOME" href="/feed" className="text-borde..." style={{...}} ...>
+                            <a
+                              data-text="HOME"
+                              className="text-border md:text-border-lg uppercase text-white activeNavLink"
++                             style={{--nav-rotation:"2.04deg"}}
+-                             style={{--nav-rotation:"-0.76deg"}}
+                              ref={function}
+                              onClick={function onClick}
+                              onMouseEnter={function onMouseEnter}
+                              onTouchStart={function onTouchStart}
+                              href="/feed"
+                            >
++                             Home
+                          <LinkComponent data-text="SEARCH" href="/search" className={"text-bor..."} style={{...}} ...>
+                            <a
+                              data-text="SEARCH"
+                              className={"text-border md:text-border-lg uppercase text-white "}
++                             style={{--nav-rotation:"-1.06deg"}}
+-                             style={{--nav-rotation:"1.75deg"}}
+                              ref={function}
+                              onClick={function onClick}
+                              onMouseEnter={function onMouseEnter}
+                              onTouchStart={function onTouchStart}
+                              href="/search"
+                            >
++                             Search
+                          <LinkComponent>
+                          <LinkComponent data-text="profile" href="/artist/ch..." className={"text-bor..."} style={{...}} ...>
+                            <a
+                              data-text="profile"
+                              className={"text-border md:text-border-lg uppercase text-white "}
++                             style={{--nav-rotation:"0.04deg"}}
+-                             style={{--nav-rotation:"-0.15deg"}}
+                              ref={function}
+                              onClick={function onClick}
+                              onMouseEnter={function onMouseEnter}
+                              onTouchStart={function onTouchStart}
+                              href="/artist/charlie_creative"
+                            >
++                             Profile
+                          <LinkComponent data-text="play" href="/play" className={"text-bor..."} style={{...}} ...>
+                            <a
+                              data-text="play"
+                              className={"text-border md:text-border-lg uppercase text-white "}
++                             style={{--nav-rotation:"1.31deg"}}
+-                             style={{--nav-rotation:"-2.12deg"}}
+                              ref={function}
+                              onClick={function onClick}
+                              onMouseEnter={function onMouseEnter}
+                              onTouchStart={function onTouchStart}
+                              href="/play"
+                            >
++                             Play
+                ...
+          ...
 
-[00:43:56.638] Server  ERROR   ⨯ ./app/(app)/artist/[artistId]/@settings/settings/page.tsx:5:1
-Module not found: Can't resolve '@/app/lib/actions/verifyEmail'
-  3 | import Modal from "@/app/components/ui/Modal";
-  4 | import { logoutAction } from "@/app/lib/actions/logout";
-> 5 | import { verifyEmail } from "@/app/lib/actions/verifyEmail";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  6 | import { getSession, logout } from "@/app/lib/auth-utils";
-  7 | import prisma from "@/app/lib/db";
-  8 | import { maskEmail } from "@/app/utils/misc";
+[00:14:58.304] Browser WARN    Image with src "/_next/static/media/logo_only.9b790824.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[00:14:59.721] Browser LOG     Current path: /feed
+[00:14:59.721] Browser LOG     Current path: /feed
+[00:15:00.970] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:00.970] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:00.970] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:00.970] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:00.970] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:00.970] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:00.970] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:00.970] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:03.063] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:03.063] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:07.795] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:07.795] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:10.459] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:10.459] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:11.625] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:11.625] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:12.520] Browser LOG     Current path: /feed
+[00:15:12.520] Browser LOG     Current path: /feed
+[00:15:12.520] Browser LOG     Current path: /feed
+[00:15:12.520] Browser LOG     Current path: /feed
+[00:15:12.520] Browser LOG     Current path: /feed
+[00:15:12.520] Browser LOG     Current path: /feed
+[00:15:12.520] Browser LOG     Current path: /feed
+[00:15:12.520] Browser LOG     Current path: /feed
+[00:15:12.520] Browser LOG     Current path: /feed
+[00:15:12.520] Browser LOG     Current path: /feed
+[00:15:15.118] Browser LOG     Current path: /feed
+[00:15:15.119] Browser LOG     Current path: /feed
+[00:15:15.850] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:15.850] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:15.850] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:15.850] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:15.850] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:15.851] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:17.048] Server  LOG     Current path: "/feed/artwork/cmm4ykfma000liwvaoac0whtf"
+[00:15:17.150] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:15:17.276] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:17.276] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:17.276] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
 
-Import map: aliased to relative './app/lib/actions/verifyEmail' inside of [project]/
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
 
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
 
-https://nextjs.org/docs/messages/module-not-found
+%s%s https://react.dev/link/hydration-mismatch 
 
+  ...
+    <HTTPAccessFallbackErrorBoundary pathname="/feed/artw..." notFound={<SegmentViewNode>} forbidden={undefined} ...>
+      <RedirectBoundary>
+        <RedirectErrorBoundary router={{...}}>
+          <InnerLayoutRouter url="/feed/artw..." tree={[...]} params={{}} cacheNode={{...}} segmentPath={[...]} ...>
+            <SegmentViewNode type="layout" pagePath="(app)/layo...">
+              <SegmentTrieNode>
+              <script>
+              <script>
+              <script>
+              <Layout>
+                <Layout>
+                  <header>
+                    <Navbar username="charlie_cr...">
+                      <div>
+                        <div>
+                        <nav className="box-shadow...">
+                          <LinkComponent data-text="HOME" href="/feed" className="text-borde..." style={{...}} ...>
+                            <a
+                              data-text="HOME"
+                              className="text-border md:text-border-lg uppercase text-white activeNavLink"
++                             style={{--nav-rotation:"-0.55deg"}}
+-                             style={{--nav-rotation:"1.43deg"}}
+                              ref={function}
+                              onClick={function onClick}
+                              onMouseEnter={function onMouseEnter}
+                              onTouchStart={function onTouchStart}
+                              href="/feed"
+                            >
++                             Home
+                          <LinkComponent data-text="SEARCH" href="/search" className={"text-bor..."} style={{...}} ...>
+                            <a
+                              data-text="SEARCH"
+                              className={"text-border md:text-border-lg uppercase text-white "}
++                             style={{--nav-rotation:"1.99deg"}}
+-                             style={{--nav-rotation:"1.40deg"}}
+                              ref={function}
+                              onClick={function onClick}
+                              onMouseEnter={function onMouseEnter}
+                              onTouchStart={function onTouchStart}
+                              href="/search"
+                            >
++                             Search
+                          <LinkComponent>
+                          <LinkComponent data-text="profile" href="/artist/ch..." className={"text-bor..."} style={{...}} ...>
+                            <a
+                              data-text="profile"
+                              className={"text-border md:text-border-lg uppercase text-white "}
++                             style={{--nav-rotation:"-1.67deg"}}
+-                             style={{--nav-rotation:"1.85deg"}}
+                              ref={function}
+                              onClick={function onClick}
+                              onMouseEnter={function onMouseEnter}
+                              onTouchStart={function onTouchStart}
+                              href="/artist/charlie_creative"
+                            >
++                             Profile
+                          <LinkComponent data-text="play" href="/play" className={"text-bor..."} style={{...}} ...>
+                            <a
+                              data-text="play"
+                              className={"text-border md:text-border-lg uppercase text-white "}
++                             style={{--nav-rotation:"1.33deg"}}
+-                             style={{--nav-rotation:"2.39deg"}}
+                              ref={function}
+                              onClick={function onClick}
+                              onMouseEnter={function onMouseEnter}
+                              onTouchStart={function onTouchStart}
+                              href="/play"
+                            >
++                             Play
+                ...
+          ...
 
-[00:43:57.229] Browser ERROR   ./app/(app)/artist/[artistId]/@settings/settings/page.tsx:5:1
-Module not found: Can't resolve '@/app/lib/actions/verifyEmail'
-  3 | import Modal from "@/app/components/ui/Modal";
-  4 | import { logoutAction } from "@/app/lib/actions/logout";
-> 5 | import { verifyEmail } from "@/app/lib/actions/verifyEmail";
-    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  6 | import { getSession, logout } from "@/app/lib/auth-utils";
-  7 | import prisma from "@/app/lib/db";
-  8 | import { maskEmail } from "@/app/utils/misc";
-
-Import map: aliased to relative './app/lib/actions/verifyEmail' inside of [project]/
-
-https://nextjs.org/docs/messages/module-not-found
-[00:44:18.527] Server  LOG     ✓ Compiled in 23ms
-[00:50:17.199] Server  LOG     Verification token for netrunners.work@gmail.com: 697132
-[00:50:43.998] Server  LOG     Verifying TOTP for: "netrunners.work@gmail.com" "Type:" "PASSWORD_RESET"
-[00:50:44.000] Server  LOG     TOTP code received: "697132"
-[00:51:20.471] Server  LOG     ✓ Compiled in 27ms
-[00:51:22.792] Server  LOG     ✓ Compiled in 26ms
-[00:51:28.732] Server  LOG     Verification token for netrunners.work@gmail.com: 779359
-[00:51:41.920] Server  LOG     Verifying TOTP for: "netrunners.work@gmail.com" "Type:" "PASSWORD_RESET"
-[00:51:41.920] Server  LOG     TOTP code received: "779359"
-[00:51:42.067] Server  LOG     TOTP code verified successfully for: "netrunners.work@gmail.com"
-[00:51:42.096] Server  LOG     Associated artist found: "cmly69it70001usvaljhqsz6l"
-[00:51:42.125] Server  LOG     Verification tokens cleaned up for: "netrunners.work@gmail.com"
-[00:51:42.126] Server  LOG     Artist username stored for password reset: "netrunners.work"
-[00:53:43.784] Server  LOG     ✓ Compiled in 111ms
-[00:53:48.274] Server  LOG     ✓ Compiled in 20ms
-[00:55:20.305] Server  LOG     ✓ Compiled in 21ms
-[00:55:22.683] Server  LOG     ✓ Compiled in 19ms
-[00:55:38.882] Server  ERROR   ⨯ PrismaClientKnownRequestError: 
-Invalid `{imported module ./app/lib/db.ts}["default"].artist.update()` invocation in
-D:\drawgether_2.0\.next\dev\server\chunks\ssr\[root-of-the-server]__428aa150._.js:571:164
-
-  568     };
-  569 }
-  570 const hash = await (0, {imported module ./app/lib/auth-utils.ts}["getPasswordHash"])(result.data.newPassword);
-→ 571 const updatedArtist = await {imported module ./app/lib/db.ts}["default"].artist.update(
-The change you are trying to make would violate the required relation 'ArtistToPassword' between the `Password` and `Artist` models.
-[00:55:38.997] Browser ERROR   uncaughtError: PrismaClientKnownRequestError: 
-Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].artist.update()` invocation in
-D:\drawgether_2.0\.next\dev\server\chunks\ssr\[root-of-the-server]__428aa150._.js:571:164
-
-  568     };
-  569 }
-  570 const hash = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$auth$2d$utils$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getPasswordHash"])(result.data.newPassword);
-→ 571 const updatedArtist = await __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"].artist.update(
-The change you are trying to make would violate the required relation 'ArtistToPassword' between the `Password` and `Artist` models.
-[00:56:24.286] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:56:24.412] Server  LOG     ✓ Compiled in 21ms
-[00:56:24.530] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:57:14.316] Server  LOG     [{...},{...},{...},{...}]
-[00:57:17.173] Browser WARN    Image with src "http://localhost:3000/_next/static/media/full_both_logo.29a3f444.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:15:17.276] Browser WARN    Image with src "/_next/static/media/logo_only.9b790824.svg" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[00:15:18.708] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:18.708] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:20.900] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:20.900] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:22.223] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:22.223] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:23.218] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:23.218] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:26.305] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:26.305] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:27.381] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:27.381] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:28.473] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:15:28.473] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:21.342] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:21.342] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:26.413] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:26.413] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:32.630] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:32.630] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:35.265] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:35.266] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:40.335] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:40.335] Browser LOG     Current path: /feed/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:53.129] Browser LOG     Current path: /feed
+[00:16:53.129] Browser LOG     Current path: /feed
+[00:16:54.234] Browser LOG     Current path: /artist/alice_draws
+[00:16:54.234] Browser LOG     Current path: /artist/alice_draws
+[00:16:55.313] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:55.313] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:55.313] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:55.313] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:55.523] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:55.523] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:55.523] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:55.523] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:58.168] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:58.168] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:58.168] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:58.168] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:58.168] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:16:58.168] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:17:00.201] Server  LOG     Toggling like for artwork: "cmm4ykfma000liwvaoac0whtf" "by artist:" "cmm4ykfhb000diwva70v0i4pi"
+[00:17:00.273] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:17:00.273] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:17:00.821] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:17:00.822] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:17:00.822] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:17:00.822] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:17:00.822] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:17:00.822] Browser LOG     Current path: /artist/alice_draws/artwork/cmm4ykfma000liwvaoac0whtf
+[00:17:01.913] Browser LOG     Current path: /artist/alice_draws
+[00:17:01.913] Browser LOG     Current path: /artist/alice_draws
+[00:17:01.914] Browser LOG     Current path: /artist/alice_draws
+[00:17:01.914] Browser LOG     Current path: /artist/alice_draws
+[00:17:01.914] Browser LOG     Current path: /artist/alice_draws
+[00:17:01.914] Browser LOG     Current path: /artist/alice_draws
+[00:17:02.823] Browser LOG     Current path: /feed
+[00:17:02.823] Browser LOG     Current path: /feed
+[00:17:17.656] Server  LOG     ✓ Compiled in 45ms
+[00:17:18.021] Browser LOG     Current path: /feed
+[00:17:18.021] Browser LOG     Current path: /feed

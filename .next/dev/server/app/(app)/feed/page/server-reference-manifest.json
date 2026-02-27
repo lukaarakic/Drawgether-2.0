@@ -1,4 +1,35 @@
 {
-  "node": {},
+  "node": {
+    "6064486c608f4e8419a9df872e6c5977bb5c24adb0": {
+      "workers": {
+        "app/(app)/feed/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/feed/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/like.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/lib/actions/delete-artwork.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "likeArtwork",
+          "filename": "app/lib/actions/like.ts"
+        }
+      },
+      "layer": {
+        "app/(app)/feed/page": "action-browser"
+      },
+      "exportedName": "likeArtwork",
+      "filename": "app/lib/actions/like.ts"
+    },
+    "600e879a0bba572bc5a9c750d97e12a33e1b2034dd": {
+      "workers": {
+        "app/(app)/feed/page": {
+          "moduleId": "[project]/.next-internal/server/app/(app)/feed/page/actions.js { ACTIONS_MODULE0 => \"[project]/app/lib/actions/like.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/app/lib/actions/delete-artwork.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true,
+          "exportedName": "deleteArtworkAction",
+          "filename": "app/lib/actions/delete-artwork.ts"
+        }
+      },
+      "layer": {
+        "app/(app)/feed/page": "action-browser"
+      },
+      "exportedName": "deleteArtworkAction",
+      "filename": "app/lib/actions/delete-artwork.ts"
+    }
+  },
   "edge": {}
 }
