@@ -1,6 +1,7 @@
 import ArtworkPost from "@/app/components/artwork-module/ArtworkPost";
 import CommentContainer from "@/app/components/comment-module/CommentsContainer";
 import Modal from "@/app/components/ui/Modal";
+import { getArtist, logout } from "@/app/lib/auth-utils";
 import prisma from "@/app/lib/db";
 
 const ShowArtwork = async ({
@@ -9,6 +10,9 @@ const ShowArtwork = async ({
   params: Promise<{ artistId: string; artworkId: string }>;
 }) => {
   const { artworkId } = await params;
+  const loggedInArtistId = await getArtist();
+
+  if (!loggedInArtistId) return logout();
 
   const artwork = await prisma.artwork.findUnique({
     where: { id: artworkId },
@@ -34,6 +38,19 @@ const ShowArtwork = async ({
     );
   }
 
+  let isLiked = false;
+
+  const existingLike = await prisma.like.findUnique({
+    where: {
+      artistId_artworkId: {
+        artistId: loggedInArtistId.id,
+        artworkId: artworkId,
+      },
+    },
+  });
+
+  isLiked = !!existingLike;
+
   return (
     <Modal
       boxClassName="w-max h-min top-[52.5%]"
@@ -44,9 +61,10 @@ const ShowArtwork = async ({
         index={1}
         className="w-full"
         showComments={false}
+        isLiked={isLiked}
       />
 
-      <CommentContainer artwork={artwork} artworkId={artwork.id} />
+      <CommentContainer artwork={artwork} />
     </Modal>
   );
 };

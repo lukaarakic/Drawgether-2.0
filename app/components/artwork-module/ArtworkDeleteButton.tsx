@@ -1,24 +1,26 @@
+"use client";
+
 import Image from "next/image";
 import TrashIcon from "@/app/assets/misc/trash.svg";
+import { usePathname } from "next/navigation";
+import { deleteArtworkAction } from "@/app/lib/actions/delete-artwork";
 
 const ArtworkDeleteButton = ({ artworkId }: { artworkId: string }) => {
+  const path = usePathname();
+
   return (
-    <form
-      method="POST"
-      id={`delete-${artworkId}`}
-      action={`/delete/${artworkId}`}
+    <button
+      onClick={() => deleteArtworkAction(artworkId, path)}
+      className="cursor-pointer"
     >
-      <input type="hidden" name="artworkId" value={artworkId} />
-      <button type="submit" name="intent" value="delete">
-        <Image
-          src={TrashIcon}
-          alt=""
-          width={60}
-          height={60}
-          className="h-24 w-24"
-        />
-      </button>
-    </form>
+      <Image
+        src={TrashIcon}
+        alt=""
+        width={60}
+        height={60}
+        className="h-24 w-24"
+      />
+    </button>
   );
 };
 export default ArtworkDeleteButton;

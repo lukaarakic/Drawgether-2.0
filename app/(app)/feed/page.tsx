@@ -1,4 +1,5 @@
 import ArtworkPost from "@/app/components/artwork-module/ArtworkPost";
+import { getSession, logout } from "@/app/lib/auth-utils";
 import prisma from "@/app/lib/db";
 import { Metadata } from "next";
 
@@ -8,6 +9,12 @@ export const metadata: Metadata = {
 };
 
 const Home = async () => {
+  const session = await getSession();
+
+  if (!session) return logout();
+
+  const artistId = session.sub;
+
   const artworks = await prisma.artwork.findMany({
     include: {
       artists: {
@@ -30,9 +37,22 @@ const Home = async () => {
         },
       },
     },
+    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
   });
 
-  console.log(artworks);
+  let likedArtworkIds = new Set<string>();
+
+  const artistLikes = await prisma.like.findMany({
+    where: {
+      artistId,
+      artworkId: { in: artworks.map((artwork) => artwork.id) },
+    },
+    select: {
+      artworkId: true,
+    },
+  });
+
+  likedArtworkIds = new Set(artistLikes.map((like) => like.artworkId));
 
   return (
     <div>
@@ -42,6 +62,7 @@ const Home = async () => {
             key={artwork.id}
             index={index}
             artwork={artwork}
+            isLiked={likedArtworkIds.has(artwork.id)}
             className="mb-50"
           />
         ))}
