@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Drawgether 2.0
 
-## Getting Started
+Drawgether 2.0 is a collaborative digital art platform designed for artists to create, share, and interact in real-time. Built with a modern full-stack architecture, it focuses on community engagement and seamless artistic collaboration.
 
-First, run the development server:
+## 📋 Project Roadmap
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+I use Trello to manage our development sprint and feature backlog.
+**[View the Drawgether Trello Board](https://trello.com/b/aYQQtL0V/drawgether)**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework:** Next.js (App Router)
+- **Database:** PostgreSQL
+- **ORM:** Prisma
+- **Language:** TypeScript/JavaScript
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ⚙️ Setup & Installation
 
-## Learn More
+1.  **Clone the repository:**
 
-To learn more about Next.js, take a look at the following resources:
+    ```bash
+    git clone [https://github.com/lukaarakic/drawgether_2.0.git](https://github.com/lukaarakic/drawgether_2.0.git)
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2.  **Install dependencies:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    ```bash
+    npm install
+    ```
 
-## Deploy on Vercel
+3.  **Environment Configuration:**
+    Create a `.env` file in the root directory and add your PostgreSQL connection string:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ```env
+    DATABASE_URL="your_postgresql_url_here"
+    JWT_SECRET="your_jwt_secret"
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4.  **Database Sync:**
+
+    ```bash
+    npx prisma generate
+    npx prisma db push
+    ```
+
+5.  **Run Development Server:**
+    ```bash
+    npm run dev
+    ```
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
