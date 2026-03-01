@@ -8,6 +8,7 @@ import { getArtist, logout } from "@/app/lib/auth-utils";
 import Link from "next/link";
 import Image from "next/image";
 import SettingsIcon from "@/app/assets/misc/settings.svg";
+import Follow from "./Follow";
 
 const Profile = async ({
   params,
@@ -43,6 +44,13 @@ const Profile = async ({
           },
         },
       },
+      followerCount: true,
+      followingCount: true,
+      followers: {
+        select: {
+          followerId: true,
+        },
+      },
     },
   });
 
@@ -56,34 +64,51 @@ const Profile = async ({
     return logout();
   }
 
+  const isOwner = loggedInArtistId.id === artist.id;
   const isLoggedInArtist = loggedInArtistId.id === artist.id;
   const hasArtworks = artist.artworks.length > 0;
+
+  const isFollowing = artist.followers.some(
+    (follower) => follower.followerId === loggedInArtistId.id,
+  );
 
   return (
     <>
       <div className="mx-auto w-[90%] xs:w-7xl">
-        <div className="mb-32 flex flex-col items-center justify-center gap-16 md:flex-row">
-          <ArtistCircle username={artist.username} size="large" />
-          <BoxLabel degree={-2}>
-            <div className="flex h-40 items-center justify-between gap-20 px-4">
-              <p
-                className="text-border text-border-lg text-32"
-                data-text={`@${artist.username}`}
-              >
-                @{artist.username}
-              </p>
+        <div className="flex flex-col items-center justify-center gap-16 mb-32">
+          <div className="flex flex-col items-center justify-center gap-16 md:flex-row">
+            <ArtistCircle username={artist.username} size="large" />
+            <BoxLabel degree={-2}>
+              <div className="flex h-40 items-center justify-between gap-20 px-4">
+                <p
+                  className="text-border text-border-lg text-32"
+                  data-text={`@${artist.username}`}
+                >
+                  @{artist.username}
+                </p>
 
-              {isLoggedInArtist ? (
-                <Link href={`/artist/${artist.username}/settings`}>
-                  <Image
-                    src={SettingsIcon}
-                    alt=""
-                    className="pointer-events-none w-20"
-                  />
-                </Link>
-              ) : null}
-            </div>
-          </BoxLabel>
+                {isLoggedInArtist ? (
+                  <Link href={`/artist/${artist.username}/settings`}>
+                    <Image
+                      src={SettingsIcon}
+                      alt=""
+                      className="pointer-events-none w-20"
+                    />
+                  </Link>
+                ) : null}
+              </div>
+            </BoxLabel>
+          </div>
+
+          <div className="flex items-center justify-between gap-16">
+            <Follow
+              isOwner={isOwner}
+              isFollowing={isFollowing}
+              artistId={artist.id}
+              followerCount={artist.followerCount}
+              followingCount={artist.followingCount}
+            />
+          </div>
         </div>
 
         {hasArtworks ? (

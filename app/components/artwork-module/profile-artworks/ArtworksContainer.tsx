@@ -1,7 +1,7 @@
 import { Prisma } from "@/app/generated/prisma/client";
 import ArtworkPost from "../ArtworkPost";
 import prisma from "@/app/lib/db";
-import { getSession, logout } from "@/app/lib/auth-utils";
+import { getArtistId } from "@/app/lib/auth-utils";
 
 type ArtworkWithArtists = Prisma.ArtworkGetPayload<{
   include: {
@@ -21,14 +21,7 @@ type ArtworksContainerProps = {
 };
 
 const ArtworksContainer = async ({ artworks }: ArtworksContainerProps) => {
-  const session = await getSession();
-
-  if (!session) {
-    logout();
-    return null;
-  }
-
-  const artistId = session.sub;
+  const { artistId } = await getArtistId();
   let likedArtworkIds = new Set<string>();
 
   const artistLikes = await prisma.like.findMany({

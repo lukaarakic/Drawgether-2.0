@@ -1,18 +1,23 @@
-import { FC, ReactNode } from "react"
+import { FC, ReactNode } from "react";
 
 interface BoxLabelProps {
-  className?: string
-  children: ReactNode
-  degree?: number
-  blue?: boolean
+  className?: string;
+  children: ReactNode;
+  degree?: number;
+  blue?: boolean;
+  white?: boolean;
 }
 
 const BoxLabel: FC<BoxLabelProps> = ({
   blue,
+  white,
   children,
   degree = 0,
   className,
 }) => {
+  const bgColor = blue ? "bg-blue" : white ? "bg-white" : "bg-pink";
+  const textColor = white ? "text-black" : "text-white";
+
   return (
     <div
       className={`drop-shadow-filter-lg bg-black p-2 ${className}`}
@@ -20,11 +25,9 @@ const BoxLabel: FC<BoxLabelProps> = ({
         rotate: `${degree}deg`,
       }}
     >
-      <div className={`${blue ? "bg-blue" : "bg-pink"} px-2 text-white`}>
-        {children}
-      </div>
+      <div className={`${bgColor} px-2 ${textColor}`}>{children}</div>
     </div>
-  )
-}
+  );
+};
 
-export default BoxLabel
+export default BoxLabel;

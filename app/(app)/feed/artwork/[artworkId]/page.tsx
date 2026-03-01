@@ -38,7 +38,7 @@ const ArtworkPage = async ({
         className="w-full"
         showComments={false}
       />
-      <CommentContainer artwork={artwork} artworkId={artwork.id} />
+      <CommentContainer artwork={artwork} />
     </div>
   );
 };

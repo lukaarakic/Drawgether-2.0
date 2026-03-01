@@ -1,6 +1,6 @@
 import ArtworkPost from "@/app/components/artwork-module/ArtworkPost";
 import CommentContainer from "@/app/components/comment-module/CommentsContainer";
-import { getSession, logout } from "@/app/lib/auth-utils";
+import { getArtistId } from "@/app/lib/auth-utils";
 import prisma from "@/app/lib/db";
 import { notFound } from "next/navigation";
 
@@ -31,10 +31,7 @@ const ArtworkPage = async ({
     notFound();
   }
 
-  const session = await getSession();
-  if (!session) return logout();
-
-  const artistId = session.sub;
+  const { artistId } = await getArtistId();
 
   const existingLike = await prisma.like.findUnique({
     where: { artistId_artworkId: { artistId, artworkId } },
