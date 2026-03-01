@@ -4,7 +4,7 @@ Drawgether 2.0 is a collaborative digital art platform designed for artists to c
 
 ## 📋 Project Roadmap
 
-I use Trello to manage our development sprint and feature backlog.
+As a solo developer, I use Trello to organize my workflow and manage the feature backlog.
 **[View the Drawgether Trello Board](https://trello.com/b/aYQQtL0V/drawgether)**
 
 ## 🛠️ Tech Stack
