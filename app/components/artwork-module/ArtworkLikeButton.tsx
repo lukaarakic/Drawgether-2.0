@@ -25,7 +25,6 @@ const ArtworkLikeButton = ({
     }),
   );
   const path = usePathname();
-  console.log("Current path:", path);
 
   const handleLike = async () => {
     startTransition(() => {
