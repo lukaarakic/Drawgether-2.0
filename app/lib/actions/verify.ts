@@ -29,8 +29,6 @@ export async function verifyTOTPAction(
     };
   }
 
-  console.log("Verifying TOTP for:", verifyTarget, "Type:", verifyType);
-
   const result = VerifySchema.safeParse(Object.fromEntries(formData));
   if (!result.success) {
     return {
@@ -38,8 +36,6 @@ export async function verifyTOTPAction(
       message: "Please check the code and try again.",
     };
   }
-
-  console.log("TOTP code received:", result.data.token);
 
   const verificationToken = await prisma.verificationToken.findUnique({
     where: {
@@ -66,8 +62,6 @@ export async function verifyTOTPAction(
     };
   }
 
-  console.log("TOTP code verified successfully for:", verifyTarget);
-
   const artist = await prisma.artist.findFirst({
     where: {
       OR: [{ email: verifyTarget }, { username: verifyTarget }],
@@ -79,8 +73,6 @@ export async function verifyTOTPAction(
     return { errors: {}, message: "Account not found." };
   }
 
-  console.log("Associated artist found:", artist.id);
-
   await prisma.verificationToken.delete({
     where: { id: verificationToken.id },
   });
@@ -88,15 +80,11 @@ export async function verifyTOTPAction(
   cookieStore.delete("dg_verify_target");
   cookieStore.delete("dg_verify_type");
 
-  console.log("Verification tokens cleaned up for:", verifyTarget);
-
   if (verifyType === AuthTokenType.EMAIL_VERIFICATION) {
     await prisma.artist.update({
       where: { id: artist.id },
       data: { emailVerified: new Date() },
     });
-
-    console.log("Artist email marked as verified:", artist.id);
 
     redirect(`/artist/${artist.username}`);
   }
@@ -108,8 +96,6 @@ export async function verifyTOTPAction(
       sameSite: "lax",
       expires: new Date(Date.now() + 15 * 60 * 1000),
     });
-
-    console.log("Artist username stored for password reset:", artist.username);
 
     redirect("/reset-password");
   }

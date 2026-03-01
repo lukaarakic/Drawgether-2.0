@@ -6,6 +6,7 @@ import prisma from "../db";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import z from "zod";
+import { sendVerificationEmail } from "./email";
 
 export type ForgotPasswordState = {
   errors: { identifier?: string[] };
@@ -41,6 +42,7 @@ export async function ForgotPasswordAction(
     select: {
       id: true,
       email: true,
+      username: true,
     },
   });
 
@@ -74,6 +76,8 @@ export async function ForgotPasswordAction(
     },
   });
 
+  await sendVerificationEmail(artist.email, token, "reset", artist.username);
+
   const cookieStore = await cookies();
 
   cookieStore.set("dg_verify_target", artist.email, {
@@ -89,8 +93,6 @@ export async function ForgotPasswordAction(
     sameSite: "lax",
     expires: new Date(Date.now() + 15 * 60 * 1000),
   });
-
-  console.log(`Verification token for ${artist.email}: ${token}`);
 
   redirect("/verify");
 }
