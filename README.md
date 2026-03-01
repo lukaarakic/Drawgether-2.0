@@ -19,7 +19,7 @@ I use Trello to manage our development sprint and feature backlog.
 1.  **Clone the repository:**
 
     ```bash
-    git clone [https://github.com/lukaarakic/drawgether_2.0.git](https://github.com/lukaarakic/drawgether_2.0.git)
+    git clone https://github.com/lukaarakic/drawgether_2.0.git
     ```
 
 2.  **Install dependencies:**
