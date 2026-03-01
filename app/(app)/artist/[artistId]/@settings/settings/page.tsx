@@ -3,7 +3,7 @@ import BoxButton from "@/app/components/ui/BoxButton";
 import Modal from "@/app/components/ui/Modal";
 import { logoutAction } from "@/app/lib/actions/logout";
 import { verifyEmail } from "@/app/lib/actions/verify-email";
-import { getSession } from "@/app/lib/auth-utils";
+import { getArtistId } from "@/app/lib/auth-utils";
 import prisma from "@/app/lib/db";
 import { maskEmail } from "@/app/utils/misc";
 import { notFound, redirect } from "next/navigation";
@@ -24,9 +24,8 @@ const Settings = async ({
     notFound();
   }
 
-  const session = await getSession();
-  if (!session) redirect("/login");
-  if (session.sub !== artist?.id) redirect("/feed");
+  const loggedInArtist = await getArtistId();
+  if (loggedInArtist.artistId !== artist.id) redirect("/feed");
 
   const maskedEmail = maskEmail(artist.email);
 

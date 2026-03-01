@@ -10,15 +10,19 @@ const publicRoutes = [
   "/login",
   "/register",
   "/forgot-password",
-  "/verify",
   "/reset-password",
 ];
+
+const alwaysPublicRoutes = ["/verify"];
 
 export async function proxy(request: NextRequest) {
   const token = request.cookies.get("dg_session_token")?.value;
   const { pathname } = request.nextUrl;
-
   const isPublicRoute = publicRoutes.includes(pathname);
+
+  if (alwaysPublicRoutes.includes(pathname)) {
+    return NextResponse.next();
+  }
 
   if (isPublicRoute) {
     if (token) {

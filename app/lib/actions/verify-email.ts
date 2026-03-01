@@ -6,6 +6,7 @@ import { generateSecretAndTOTP } from "../totp";
 import prisma from "../db";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { sendVerificationEmail } from "./email";
 
 export async function verifyEmail() {
   const artist = await getArtist();
@@ -35,6 +36,13 @@ export async function verifyEmail() {
     },
   });
 
+  await sendVerificationEmail(
+    artist.email,
+    token,
+    "verification",
+    artist.username,
+  );
+
   const cookieStore = await cookies();
 
   cookieStore.set("dg_verify_target", artist.email, {
@@ -50,8 +58,6 @@ export async function verifyEmail() {
     sameSite: "lax",
     expires: new Date(Date.now() + 15 * 60 * 1000),
   });
-
-  console.log(`Verification token for ${artist.email}: ${token}`);
 
   redirect("/verify");
 }
