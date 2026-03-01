@@ -1,5 +1,5 @@
 import ArtworkPost from "@/app/components/artwork-module/ArtworkPost";
-import { getSession, logout } from "@/app/lib/auth-utils";
+import { getArtistId } from "@/app/lib/auth-utils";
 import prisma from "@/app/lib/db";
 import { Metadata } from "next";
 
@@ -9,11 +9,7 @@ export const metadata: Metadata = {
 };
 
 const Home = async () => {
-  const session = await getSession();
-
-  if (!session) return logout();
-
-  const artistId = session.sub;
+  const { artistId } = await getArtistId();
 
   const artworks = await prisma.artwork.findMany({
     include: {
