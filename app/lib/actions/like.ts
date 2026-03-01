@@ -1,19 +1,13 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getSession, logout } from "../auth-utils";
+import { getArtistId } from "../auth-utils";
 import prisma from "../db";
 
 export async function likeArtwork(artworkId: string, path: string) {
-  const session = await getSession();
+  const { artistId: id } = await getArtistId();
 
-  if (!session || !session.sub) {
-    return logout();
-  }
-
-  const artistId = session.sub;
-
-  console.log("Toggling like for artwork:", artworkId, "by artist:", artistId);
+  const artistId = id;
 
   try {
     const existingLike = await prisma.like.findFirst({
