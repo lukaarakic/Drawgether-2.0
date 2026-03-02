@@ -3,8 +3,10 @@
 import FullLogo from "@/app/assets/logos/full_both_logo.svg";
 import Image from "next/image";
 import Link from "next/link";
+import LeftCloud from "@/app/assets/clouds/left_blue.svg";
+import RightCloud from "@/app/assets/clouds/right_blue.svg";
 
-const Index = () => {
+const Room = () => {
   function play() {
     new Audio("/audio/start.wav").play();
   }
@@ -16,7 +18,7 @@ const Index = () => {
         <Link
           onClick={play}
           className="box-shadow flex h-[17svh] w-[17svh] items-center justify-center rounded-full bg-pink uppercase transition-transform hover:scale-105 active:scale-90"
-          href={`/play/starting`}
+          href={`/room/123`}
         >
           <div className="rotate-10 text-[3.5svh] text-white">Draw!</div>
         </Link>
@@ -27,6 +29,7 @@ const Index = () => {
         >
           Tutorial
         </Link>
+
         <noscript>
           <h1 className="text-25">
             This game will not work properly without javascript 😢
@@ -36,4 +39,4 @@ const Index = () => {
     </>
   );
 };
-export default Index;
+export default Room;

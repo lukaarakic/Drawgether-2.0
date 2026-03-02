@@ -84,8 +84,8 @@ const Navbar = ({ username, isMobile = false }: NavbarProps) => {
         {!isMobile && (
           <Link
             data-text="play"
-            href="/play"
-            className={linkClass("/play")}
+            href="/room"
+            className={linkClass("/room")}
             style={linkStyle(rotations.play)}
             onClick={play}
           >
