@@ -1,9 +1,9 @@
-import { ReactNode } from "react"
+import { ReactNode } from "react";
 
 interface TextProps {
-  children: ReactNode
-  className?: string
-  largeShadow?: boolean
+  children: ReactNode;
+  className?: string;
+  largeShadow?: boolean;
 }
 
 const Text = ({ children, className, largeShadow }: TextProps) => {
@@ -14,6 +14,6 @@ const Text = ({ children, className, largeShadow }: TextProps) => {
     >
       {children}
     </p>
-  )
-}
-export default Text
+  );
+};
+export default Text;
