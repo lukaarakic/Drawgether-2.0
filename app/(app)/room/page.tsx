@@ -3,8 +3,6 @@
 import FullLogo from "@/app/assets/logos/full_both_logo.svg";
 import Image from "next/image";
 import Link from "next/link";
-import LeftCloud from "@/app/assets/clouds/left_blue.svg";
-import RightCloud from "@/app/assets/clouds/right_blue.svg";
 
 const Room = () => {
   function play() {
