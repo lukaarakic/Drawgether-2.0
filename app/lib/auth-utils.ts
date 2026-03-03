@@ -13,7 +13,7 @@ export async function getSession() {
   try {
     const payload = await verifyJWT(token);
 
-    if (!payload) logout();
+    if (!payload) return;
 
     return payload;
   } catch (error) {
@@ -39,7 +39,7 @@ export async function getArtist() {
     select: { id: true, username: true, email: true, emailVerified: true },
   });
 
-  if (!artist) return logout();
+  if (!artist) return;
 
   return artist;
 }
@@ -47,7 +47,7 @@ export async function getArtist() {
 export async function requireArtist() {
   const artist = await getArtist();
 
-  if (!artist) return logout();
+  if (!artist) return;
 
   return artist;
 }

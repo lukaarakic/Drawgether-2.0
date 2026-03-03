@@ -137,42 +137,6 @@ async function main() {
   const [alice, bob, charlie, netrunners] = artists;
   console.log(`✅ Created ${artists.length} artists`);
 
-  // --- ROOMS ---
-  const rooms = await Promise.all([
-    prisma.room.create({
-      data: {
-        theme: "sunset landscape",
-        status: "FINISHED",
-        startsAt: new Date(Date.now() - 3600000 * 2),
-        expiresAt: new Date(Date.now() - 3600000),
-      },
-    }),
-    prisma.room.create({
-      data: {
-        theme: "cute cat",
-        status: "FINISHED",
-        startsAt: new Date(Date.now() - 3600000 * 4),
-        expiresAt: new Date(Date.now() - 3600000 * 3),
-      },
-    }),
-    prisma.room.create({
-      data: {
-        theme: "space adventure",
-        status: "ACTIVE",
-        startsAt: new Date(),
-        expiresAt: new Date(Date.now() + 3600000),
-      },
-    }),
-    prisma.room.create({
-      data: {
-        theme: "underwater world",
-        status: "WAITING",
-      },
-    }),
-  ]);
-
-  console.log(`✅ Created ${rooms.length} rooms`);
-
   // --- ARTWORKS ---
   const artworks = await Promise.all([
     prisma.artwork.create({
@@ -181,7 +145,6 @@ async function main() {
         artworkImage:
           "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==",
         artists: { connect: [{ id: alice.id }] },
-        roomId: rooms[0].id,
       },
     }),
     prisma.artwork.create({
@@ -190,7 +153,6 @@ async function main() {
         artworkImage:
           "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==",
         artists: { connect: [{ id: bob.id }, { id: charlie.id }] },
-        roomId: rooms[1].id,
       },
     }),
     prisma.artwork.create({
