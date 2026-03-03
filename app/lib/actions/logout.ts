@@ -1,7 +1,12 @@
 "use server";
 
 import { logout } from "@/app/lib/auth-utils";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function logoutAction() {
-  await logout();
+  const cookieStore = await cookies();
+  cookieStore.delete("dg_session_token");
+
+  redirect("/login");
 }

@@ -38,6 +38,11 @@ model Artist {
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  roomOwner Room[] @relation("RoomOwner")
+
+  roomId      String?
+  roomArtists Room?   @relation("RoomArtists", fields: [roomId], references: [id])
 }
 
 // --- AUTHENTICATION ---
@@ -85,12 +90,18 @@ model Artwork {
 
 model Room {
   id        String     @id @default(cuid())
-  theme     String
+  theme     String?
   status    RoomStatus @default(WAITING)
+  code      String     @unique @db.VarChar(6)
   startsAt  DateTime?
   expiresAt DateTime?
 
+  ownerId String
+  owner   Artist   @relation("RoomOwner", fields: [ownerId], references: [id], onDelete: Cascade)
   artwork Artwork?
+  artists Artist[] @relation("RoomArtists")
+
+  @@map("rooms")
 }
 
 enum RoomStatus {
