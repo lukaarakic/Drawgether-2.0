@@ -95,3 +95,22 @@ export async function kickPlayerAction(roomId: string, targetArtistId: string) {
     console.error("Failed to kick player:", err);
   }
 }
+
+export async function leaveRoomAction() {
+  const { artistId } = await getArtistId();
+
+  try {
+    await prisma.artist.update({
+      where: { id: artistId },
+      data: {
+        roomId: null,
+      },
+    });
+  } catch (err) {
+    return {
+      message: "Failed to leave room. Please try again.",
+    };
+  }
+
+  redirect("/room");
+}
