@@ -10,7 +10,7 @@ const Room = () => {
         <Image src={FullLogo} alt="" className="h-[30svh]" />
 
         <form action={createRoom}>
-          <button className="box-shadow flex h-[17svh] w-[17svh] items-center justify-center rounded-full bg-pink uppercase transition-transform hover:scale-105 active:scale-90">
+          <button className="box-shadow cursor-pointer flex h-[17svh] w-[17svh] items-center justify-center rounded-full bg-pink uppercase transition-transform hover:scale-105 active:scale-90">
             <div className="rotate-10 text-[3.5svh] text-white">Draw!</div>
           </button>
         </form>

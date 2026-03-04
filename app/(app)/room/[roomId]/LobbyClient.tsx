@@ -13,6 +13,7 @@ import { createClient } from "@supabase/supabase-js";
 import { useActionState, useEffect, useState } from "react";
 import { joinRoomAction, kickPlayerAction } from "@/app/lib/actions/room";
 import { useRouter } from "next/navigation";
+import LeaveButton from "./components/LeaveButton";
 
 interface LobbyClientProps {
   roomId: string;
@@ -57,6 +58,10 @@ const LobbyClient = ({
               return prev.filter((artist) => artist.id !== payload.old.id);
             }
 
+            if (!newArtists.roomId || newArtists.roomId !== roomDatabaseId) {
+              return prev.filter((artist) => artist.id !== newArtists.id);
+            }
+
             const exists = prev.find((artist) => artist.id === newArtists.id);
             if (exists) {
               return prev.map((artist) =>
@@ -86,7 +91,6 @@ const LobbyClient = ({
           const isNoLongerInRoom = !updatedArtist.roomId;
 
           if (isNoLongerInRoom) {
-            alert("You have been removed from the lobby.");
             router.push("/room");
             router.refresh();
           }
@@ -197,9 +201,7 @@ const LobbyClient = ({
             <div className="rotate-10 text-7xl text-white">Start</div>
           </button>
         ) : (
-          <BoxButton className="font-outline text-7xl px-8 py-4 rotate-3! uppercase">
-            Leave
-          </BoxButton>
+          <LeaveButton />
         )}
       </div>
     </div>
