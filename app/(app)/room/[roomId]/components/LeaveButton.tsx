@@ -5,10 +5,10 @@ import { leaveRoomAction } from "@/app/lib/actions/room";
 import { useActionState } from "react";
 
 const LeaveButton = () => {
-  const initalState = { message: "" };
+  const initialState = { message: "" };
   const [state, action, isPending] = useActionState(
     leaveRoomAction,
-    initalState,
+    initialState,
   );
 
   return (
