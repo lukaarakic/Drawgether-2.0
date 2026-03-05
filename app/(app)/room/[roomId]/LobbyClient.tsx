@@ -28,6 +28,8 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 );
 
+const MAX_PLAYERS = 5;
+
 const LobbyClient = ({
   roomId,
   initialArtists,
@@ -36,6 +38,7 @@ const LobbyClient = ({
   roomDatabaseId,
 }: LobbyClientProps) => {
   const [artists, setArtists] = useState<Artist[]>(initialArtists);
+  const [copied, setCopied] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -48,7 +51,6 @@ const LobbyClient = ({
           event: "*",
           schema: "public",
           table: "Artist",
-          filter: `roomId=eq.${roomDatabaseId}`,
         },
         (payload) => {
           setArtists((prev) => {
@@ -105,26 +107,52 @@ const LobbyClient = ({
   }, [currentArtistId, roomDatabaseId, roomId, router]);
 
   useEffect(() => {
+    const refresh = () => {
+      if (document.visibilityState === "visible") {
+        router.refresh();
+      }
+    };
+
+    const intervalId = setInterval(refresh, 5000);
+    window.addEventListener("focus", refresh);
+
+    return () => {
+      clearInterval(intervalId);
+      window.removeEventListener("focus", refresh);
+    };
+  }, [router]);
+
+  useEffect(() => {
     setArtists(initialArtists);
   }, [initialArtists]);
 
   const handleCopyCode = () => {
-    navigator.clipboard.writeText(roomId);
-    alert("Lobby code copied to clipboard!");
+    if (typeof window !== "undefined" && navigator.clipboard) {
+      navigator.clipboard
+        .writeText(roomId)
+        .then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        })
+        .catch((err) => {
+          console.error("Failed to copy!", err);
+        });
+    } else {
+      console.warn("Clipboard API not available");
+    }
   };
 
-  const initalState = { message: "" };
+  const initialState = { message: "" };
   const [state, action, isPending] = useActionState(
     joinRoomAction,
-    initalState,
+    initialState,
   );
 
-  const MAX_PLAYERS = 5;
   const emptySlots = Math.max(0, MAX_PLAYERS - artists.length);
 
   return (
-    <div className="grid grid-cols-2 mt-50 gap-16">
-      <div className="box-shadow bg-pink rotate-2 px-10 py-5 min-w-2xl max-w-3xl">
+    <div className="grid grid-cols-2 mt-[3vh] gap-16">
+      <div className="box-shadow bg-pink rotate-2 px-10 py-5 h-fit min-w-2xl max-w-3xl">
         {artists.map((artist) => (
           <div
             key={artist.id}
@@ -140,8 +168,11 @@ const LobbyClient = ({
             )}
 
             {isHost && artist.id !== currentArtistId && (
-              <form action={kickPlayerAction.bind(null, roomId, artist.id)}>
-                <button className="ml-auto cursor-pointer">
+              <form
+                className="ml-auto"
+                action={kickPlayerAction.bind(null, roomId, artist.id)}
+              >
+                <button className="cursor-pointer">
                   <Image src={ExitIcon} alt="Exit icon" />
                 </button>
               </form>
@@ -159,8 +190,8 @@ const LobbyClient = ({
         ))}
       </div>
 
-      <div className="flex flex-col items-center justify-between">
-        <form action={action} className="flex items-center gap-8">
+      <div className="flex flex-col items-center mb-40">
+        <form action={action} className="flex items-center gap-8 mb-40">
           <input
             className="input -rotate-2 w-fit"
             placeholder="Insert lobby code"
@@ -170,30 +201,45 @@ const LobbyClient = ({
           {state.message && (
             <p className="text-red text-4xl">{state.message}</p>
           )}
-          <BoxButton className="font-outline text-7xl px-8 py-4 rotate-3! uppercase">
-            Join
+          <BoxButton
+            className="font-outline text-7xl px-8 py-4 rotate-3! uppercase disabled:opacity-50"
+            disabled={isPending}
+          >
+            {isPending ? "Joining..." : "Join"}
           </BoxButton>
         </form>
 
-        <div>
-          <Text
-            className="uppercase text-blue! text-[5rem] leading-tight"
-            largeShadow
-          >
-            Lobby code:
-          </Text>
-          <div className="flex items-center">
-            <Text className="text-[5rem] leading-tight" largeShadow>
-              {"#".concat(roomId)}
+        <div className="mb-8">
+          {isHost ? (
+            <>
+              <Text
+                className="uppercase text-blue! text-[5rem] leading-tight"
+                largeShadow
+              >
+                Lobby code:
+              </Text>
+              <div className="flex items-center">
+                <Text className="text-[5rem] leading-tight" largeShadow>
+                  {"#".concat(roomId)}
+                </Text>
+                <button onClick={handleCopyCode} aria-label="Copy lobby code">
+                  {copied ? (
+                    <Text className="text-20 ml-4 text-blue!">Copied!</Text>
+                  ) : (
+                    <Image
+                      src={CopyIcon}
+                      alt="Copy icon"
+                      className="inline-block ml-4 cursor-pointer"
+                    />
+                  )}
+                </button>
+              </div>
+            </>
+          ) : (
+            <Text className="text-blue! text-[5rem]">
+              Waiting for the host...
             </Text>
-            <button onClick={handleCopyCode}>
-              <Image
-                src={CopyIcon}
-                alt="Copy icon"
-                className="inline-block ml-4 cursor-pointer"
-              />
-            </button>
-          </div>
+          )}
         </div>
 
         {isHost ? (
