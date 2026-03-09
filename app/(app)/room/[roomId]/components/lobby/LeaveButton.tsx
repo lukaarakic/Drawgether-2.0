@@ -6,10 +6,7 @@ import { useActionState } from "react";
 
 const LeaveButton = () => {
   const initialState = { message: "" };
-  const [state, action, isPending] = useActionState(
-    leaveRoomAction,
-    initialState,
-  );
+  const [state, action] = useActionState(leaveRoomAction, initialState);
 
   return (
     <form action={action}>

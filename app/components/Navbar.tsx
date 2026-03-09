@@ -35,7 +35,7 @@ const Navbar = ({ username, isMobile = false }: NavbarProps) => {
       "--nav-rotation": `${rotation.toFixed(2)}deg`,
     }) as React.CSSProperties;
 
-  if (pathname.includes("play/")) {
+  if (pathname.includes("room/")) {
     return null;
   }
 

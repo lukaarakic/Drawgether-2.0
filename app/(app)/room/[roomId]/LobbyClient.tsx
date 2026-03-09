@@ -2,18 +2,18 @@
 
 import Text from "@/app/components/Text";
 import ArtistCircle from "@/app/components/ui/ArtistCircle";
-import BoxButton from "@/app/components/ui/BoxButton";
 import Image from "next/image";
 
-import CopyIcon from "@/app/assets/misc/copy.svg";
 import ExitIcon from "@/app/assets/misc/exit.svg";
 
 import { Artist } from "@/app/generated/prisma/client";
 import { createClient } from "@supabase/supabase-js";
-import { useActionState, useEffect, useState } from "react";
-import { joinRoomAction, kickPlayerAction } from "@/app/lib/actions/room";
+import { useEffect, useState } from "react";
+import { kickPlayerAction } from "@/app/lib/actions/room";
 import { useRouter } from "next/navigation";
-import LeaveButton from "./components/LeaveButton";
+import LobbyForm from "./components/lobby/LobbyForm";
+import LobbyStatusPannel from "./components/lobby/LobbyStatusPannel";
+import LobbyStartButton from "./components/lobby/LobbyStartButton";
 
 interface LobbyClientProps {
   roomId: string;
@@ -38,7 +38,6 @@ const LobbyClient = ({
   roomDatabaseId,
 }: LobbyClientProps) => {
   const [artists, setArtists] = useState<Artist[]>(initialArtists);
-  const [copied, setCopied] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -126,28 +125,6 @@ const LobbyClient = ({
     setArtists(initialArtists);
   }, [initialArtists]);
 
-  const handleCopyCode = () => {
-    if (typeof window !== "undefined" && navigator.clipboard) {
-      navigator.clipboard
-        .writeText(roomId)
-        .then(() => {
-          setCopied(true);
-          setTimeout(() => setCopied(false), 2000);
-        })
-        .catch((err) => {
-          console.error("Failed to copy!", err);
-        });
-    } else {
-      console.warn("Clipboard API not available");
-    }
-  };
-
-  const initialState = { message: "" };
-  const [state, action, isPending] = useActionState(
-    joinRoomAction,
-    initialState,
-  );
-
   const emptySlots = Math.max(0, MAX_PLAYERS - artists.length);
 
   return (
@@ -191,64 +168,17 @@ const LobbyClient = ({
       </div>
 
       <div className="flex flex-col items-center mb-40">
-        <form action={action} className="flex items-center gap-8 mb-40">
-          <input
-            className="input -rotate-2 w-fit"
-            placeholder="Insert lobby code"
-            name="roomId"
-          />
-
-          {state.message && (
-            <p className="text-red text-4xl">{state.message}</p>
-          )}
-          <BoxButton
-            className="font-outline text-7xl px-8 py-4 rotate-3! uppercase disabled:opacity-50"
-            disabled={isPending}
-          >
-            {isPending ? "Joining..." : "Join"}
-          </BoxButton>
-        </form>
+        <LobbyForm />
 
         <div className="mb-8">
-          {isHost ? (
-            <>
-              <Text
-                className="uppercase text-blue! text-[5rem] leading-tight"
-                largeShadow
-              >
-                Lobby code:
-              </Text>
-              <div className="flex items-center">
-                <Text className="text-[5rem] leading-tight" largeShadow>
-                  {"#".concat(roomId)}
-                </Text>
-                <button onClick={handleCopyCode} aria-label="Copy lobby code">
-                  {copied ? (
-                    <Text className="text-20 ml-4 text-blue!">Copied!</Text>
-                  ) : (
-                    <Image
-                      src={CopyIcon}
-                      alt="Copy icon"
-                      className="inline-block ml-4 cursor-pointer"
-                    />
-                  )}
-                </button>
-              </div>
-            </>
-          ) : (
-            <Text className="text-blue! text-[5rem]">
-              Waiting for the host...
-            </Text>
-          )}
+          <LobbyStatusPannel isHost={isHost} roomId={roomId} />
         </div>
 
-        {isHost ? (
-          <button className="box-shadow flex aspect-square px-10 items-center justify-center rounded-full bg-pink uppercase transition-transform hover:scale-105 active:scale-90">
-            <div className="rotate-10 text-7xl text-white">Start</div>
-          </button>
-        ) : (
-          <LeaveButton />
-        )}
+        <LobbyStartButton
+          isHost={isHost}
+          roomId={roomId}
+          roomDatabaseId={roomDatabaseId}
+        />
       </div>
     </div>
   );
