@@ -6,6 +6,7 @@ import prisma from "../db";
 import { redirect } from "next/navigation";
 import z from "zod";
 import { revalidatePath } from "next/cache";
+import { RoomStatus } from "@/app/generated/prisma/enums";
 
 export async function createRoom() {
   const { artistId } = await getArtistId();
@@ -113,4 +114,16 @@ export async function leaveRoomAction() {
   }
 
   redirect("/room");
+}
+
+export async function startGameAction(roomDatabaseId: string, roomId: string) {
+  await prisma.room.update({
+    where: { id: roomDatabaseId },
+    data: {
+      status: RoomStatus.ACTIVE,
+      theme: "A dog eating pizza",
+    },
+  });
+
+  revalidatePath(`/room/${roomId}`);
 }
