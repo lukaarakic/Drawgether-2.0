@@ -121,7 +121,6 @@ export async function startGameAction(roomDatabaseId: string, roomId: string) {
     where: { id: roomDatabaseId },
     data: {
       status: RoomStatus.ACTIVE,
-      theme: "A dog eating pizza",
     },
   });
 

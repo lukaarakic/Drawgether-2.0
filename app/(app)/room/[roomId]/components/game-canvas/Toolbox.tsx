@@ -26,18 +26,15 @@ const Toolbox = ({
   onFill,
 }: ToolboxProps) => {
   return (
-    <aside className="flex self-start flex-col">
+    <aside className="flex flex-col">
       <ToolActions
         activeTool={activeTool}
         onSelectPencil={onSelectPencil}
         onSelectEraser={onSelectEraser}
         onFill={onFill}
       />
-
-      <div className="mb-6 flex flex-col items-center justify-center gap-3">
-        <BrushSizeControl brushSize={brushSize} setBrushSize={setBrushSize} />
-        <ColorPickerControl color={color} setColor={setColor} />
-      </div>
+      <BrushSizeControl brushSize={brushSize} setBrushSize={setBrushSize} />
+      <ColorPickerControl color={color} setColor={setColor} />
     </aside>
   );
 };

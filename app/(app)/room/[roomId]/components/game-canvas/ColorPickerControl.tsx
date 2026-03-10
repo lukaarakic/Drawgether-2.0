@@ -9,12 +9,12 @@ const ColorPickerControl = ({ color, setColor }: ColorPickerControlProps) => {
   const hsva = hexToHsva(color);
 
   return (
-    <div className="fix-pointer flex flex-col items-center gap-3">
+    <div className="fix-pointer flex flex-col items-center gap-3 mt-auto">
       <Wheel
         color={color}
         onChange={(c) => setColor(c.hex)}
-        width={220}
-        height={220}
+        width={180}
+        height={180}
       />
       <ShadeSlider
         className="game-slider"
