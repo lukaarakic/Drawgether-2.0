@@ -1,9 +1,7 @@
 import { getArtistId } from "@/app/lib/auth-utils";
-import LobbyClient from "./LobbyClient";
 import prisma from "@/app/lib/db";
 import { notFound } from "next/navigation";
-import { RoomStatus } from "@/app/generated/prisma/enums";
-import GameCanvas from "./GameCanvas";
+import RoomManager from "./RoomManager";
 
 const Lobby = async ({ params }: { params: Promise<{ roomId: string }> }) => {
   const { roomId } = await params;
@@ -23,19 +21,14 @@ const Lobby = async ({ params }: { params: Promise<{ roomId: string }> }) => {
   const isHost = room.ownerId === artistId;
 
   return (
-    <>
-      {room.status === RoomStatus.WAITING && (
-        <LobbyClient
-          roomId={roomId}
-          roomDatabaseId={room.id}
-          initialArtists={room.artists}
-          currentArtistId={artistId}
-          isHost={isHost}
-        />
-      )}
-
-      {room.status === RoomStatus.ACTIVE && <GameCanvas roomId={roomId} />}
-    </>
+    <RoomManager
+      roomId={room.code}
+      roomDatabaseId={room.id}
+      initialArtists={room.artists}
+      currentArtistId={artistId}
+      isHost={isHost}
+      initialRoomStatus={room.status}
+    />
   );
 };
 
