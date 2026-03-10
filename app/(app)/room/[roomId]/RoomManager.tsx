@@ -141,7 +141,9 @@ const RoomManager = ({
         />
       )}
 
-      {roomStatus === RoomStatus.ACTIVE && <GameCanvas roomId={roomId} />}
+      {roomStatus === RoomStatus.ACTIVE && (
+        <GameCanvas artists={artists} roomId={roomId} />
+      )}
     </>
   );
 };
