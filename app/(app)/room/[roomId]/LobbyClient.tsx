@@ -120,9 +120,14 @@ const LobbyClient = ({
     const timeRemaining = countdownEndsAt - Date.now();
 
     const finalize = async () => {
-      finalizedCountdown.current = startsAt;
-      await finalizeGameCountdownAction(roomDatabaseId, roomId);
-      router.refresh();
+      try {
+        await finalizeGameCountdownAction(roomDatabaseId, roomId);
+        finalizedCountdown.current = startsAt;
+        router.refresh();
+      } catch (error) {
+        finalizedCountdown.current = null;
+        console.error("Failed to finalize game countdown:", error);
+      }
     };
 
     if (timeRemaining <= 0) {

@@ -34,6 +34,7 @@ As a solo developer, I use Trello to organize my workflow and manage the feature
     ```env
     DATABASE_URL="your_postgresql_url_here"
     JWT_SECRET="your_jwt_secret"
+    OPENAI_API_KEY="your_openai_api_key"
     ```
 
 4.  **Database Sync:**
