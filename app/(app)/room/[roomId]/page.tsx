@@ -28,6 +28,7 @@ const Lobby = async ({ params }: { params: Promise<{ roomId: string }> }) => {
       currentArtistId={artistId}
       isHost={isHost}
       initialRoomStatus={room.status}
+      initialStartsAt={room.startsAt?.toISOString() ?? null}
     />
   );
 };

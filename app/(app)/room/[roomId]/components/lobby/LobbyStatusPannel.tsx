@@ -6,9 +6,13 @@ import { useState } from "react";
 const LobbyStatusPannel = ({
   isHost,
   roomId,
+  isCountdownActive,
+  countdownSeconds,
 }: {
   isHost: boolean;
   roomId: string;
+  isCountdownActive: boolean;
+  countdownSeconds: number | null;
 }) => {
   const [copied, setCopied] = useState(false);
 
@@ -32,31 +36,61 @@ const LobbyStatusPannel = ({
     <>
       {isHost ? (
         <>
-          <Text
-            className="uppercase text-blue! text-[5rem] leading-tight"
-            largeShadow
-          >
-            Lobby code:
-          </Text>
-          <div className="flex items-center">
-            <Text className="text-[5rem] leading-tight" largeShadow>
-              {"#".concat(roomId)}
-            </Text>
-            <button onClick={handleCopyCode} aria-label="Copy lobby code">
-              {copied ? (
-                <Text className="text-20 ml-4 text-blue!">Copied!</Text>
-              ) : (
-                <Image
-                  src={CopyIcon}
-                  alt="Copy icon"
-                  className="inline-block ml-4 cursor-pointer"
-                />
-              )}
-            </button>
-          </div>
+          {isCountdownActive && countdownSeconds !== null && (
+            <>
+              <Text
+                className="uppercase text-blue! text-[4rem] leading-tight"
+                largeShadow
+              >
+                Starting in:
+              </Text>
+              <Text className="text-[7rem] leading-none mb-4" largeShadow>
+                {countdownSeconds}
+              </Text>
+            </>
+          )}
+
+          {!isCountdownActive && (
+            <>
+              <Text
+                className="uppercase text-blue! text-[5rem] leading-tight"
+                largeShadow
+              >
+                Lobby code:
+              </Text>
+              <div className="flex items-center">
+                <Text className="text-[5rem] leading-tight" largeShadow>
+                  {"#".concat(roomId)}
+                </Text>
+                <button onClick={handleCopyCode} aria-label="Copy lobby code">
+                  {copied ? (
+                    <Text className="text-20 ml-4 text-blue!">Copied!</Text>
+                  ) : (
+                    <Image
+                      src={CopyIcon}
+                      alt="Copy icon"
+                      className="inline-block ml-4 cursor-pointer"
+                    />
+                  )}
+                </button>
+              </div>
+            </>
+          )}
         </>
       ) : (
-        <Text className="text-blue! text-[5rem]">Waiting for the host...</Text>
+        <>
+          <Text className="text-blue! text-[5rem]">
+            {isCountdownActive
+              ? "Game starts in..."
+              : "Waiting for the host..."}
+          </Text>
+
+          {isCountdownActive && countdownSeconds !== null && (
+            <Text className="text-[7rem] leading-none mt-4" largeShadow>
+              {countdownSeconds}
+            </Text>
+          )}
+        </>
       )}
     </>
   );

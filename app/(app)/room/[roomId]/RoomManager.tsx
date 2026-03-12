@@ -3,10 +3,11 @@
 import LobbyClient from "./LobbyClient";
 import { RoomStatus } from "@/app/generated/prisma/enums";
 import GameCanvas from "./GameCanvas";
-import { Artist, Room } from "@/app/generated/prisma/client";
+import { Artist } from "@/app/generated/prisma/client";
 import { createClient } from "@supabase/supabase-js";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import LobbyStartingPanel from "./components/lobby/LobbyStartingPanel";
 
 interface RoomManagerProps {
   roomId: string;
@@ -15,6 +16,12 @@ interface RoomManagerProps {
   currentArtistId: string;
   isHost: boolean;
   initialRoomStatus: RoomStatus;
+  initialStartsAt: string | null;
+}
+
+interface RoomRealtimeState {
+  status: RoomStatus;
+  startsAt: string | null;
 }
 
 const supabase = createClient(
@@ -29,9 +36,14 @@ const RoomManager = ({
   currentArtistId,
   isHost,
   initialRoomStatus,
+  initialStartsAt,
 }: RoomManagerProps) => {
   const [artists, setArtists] = useState<Artist[]>(initialArtists);
-  const [roomStatus, setRoomStatus] = useState(initialRoomStatus);
+  const [roomState, setRoomState] = useState<RoomRealtimeState>({
+    status: initialRoomStatus,
+    startsAt: initialStartsAt,
+  });
+  const previousRoomStatus = useRef(initialRoomStatus);
   const router = useRouter();
 
   useEffect(() => {
@@ -39,8 +51,22 @@ const RoomManager = ({
   }, [initialArtists]);
 
   useEffect(() => {
-    setRoomStatus(initialRoomStatus);
-  }, [initialRoomStatus]);
+    setRoomState({
+      status: initialRoomStatus,
+      startsAt: initialStartsAt,
+    });
+  }, [initialRoomStatus, initialStartsAt]);
+
+  useEffect(() => {
+    if (
+      roomState.status === RoomStatus.STARTING &&
+      previousRoomStatus.current !== RoomStatus.STARTING
+    ) {
+      router.refresh();
+    }
+
+    previousRoomStatus.current = roomState.status;
+  }, [roomState.status, router]);
 
   useEffect(() => {
     const roomArtistsChannel = supabase.channel(`room_${roomId}`);
@@ -116,8 +142,15 @@ const RoomManager = ({
           filter: `id=eq.${roomDatabaseId}`,
         },
         (payload) => {
-          const updatedRoom = payload.new as Room;
-          setRoomStatus(updatedRoom.status as RoomStatus);
+          const updatedRoom = payload.new as {
+            status: RoomStatus;
+            startsAt: string | null;
+          };
+
+          setRoomState({
+            status: updatedRoom.status as RoomStatus,
+            startsAt: updatedRoom.startsAt ?? null,
+          });
         },
       )
       .subscribe();
@@ -131,17 +164,20 @@ const RoomManager = ({
 
   return (
     <>
-      {roomStatus === RoomStatus.WAITING && (
+      {roomState.status === RoomStatus.WAITING && (
         <LobbyClient
           roomId={roomId}
           roomDatabaseId={roomDatabaseId}
           artists={artists}
           currentArtistId={currentArtistId}
           isHost={isHost}
+          startsAt={roomState.startsAt}
         />
       )}
 
-      {roomStatus === RoomStatus.ACTIVE && (
+      {roomState.status === RoomStatus.STARTING && <LobbyStartingPanel />}
+
+      {roomState.status === RoomStatus.ACTIVE && (
         <GameCanvas artists={artists} roomId={roomId} />
       )}
     </>
