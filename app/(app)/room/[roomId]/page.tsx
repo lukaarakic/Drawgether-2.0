@@ -29,6 +29,10 @@ const Lobby = async ({ params }: { params: Promise<{ roomId: string }> }) => {
       isHost={isHost}
       initialRoomStatus={room.status}
       initialStartsAt={room.startsAt?.toISOString() ?? null}
+      initialStartingExpiresAt={room.startingExpiresAt?.toISOString() ?? null}
+      initialIntroMessage={room.introMessage}
+      initialTheme={room.theme}
+      initialExpiresAt={room.expiresAt?.toISOString() ?? null}
     />
   );
 };

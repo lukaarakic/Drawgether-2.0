@@ -89,12 +89,14 @@ model Artwork {
 }
 
 model Room {
-  id        String     @id @default(cuid())
-  theme     String?
-  status    RoomStatus @default(WAITING)
-  code      String     @unique @db.VarChar(6)
-  startsAt  DateTime?
-  expiresAt DateTime?
+  id                String     @id @default(cuid())
+  introMessage      String?
+  theme             String?
+  status            RoomStatus @default(WAITING)
+  code              String     @unique @db.VarChar(6)
+  startsAt          DateTime?
+  startingExpiresAt DateTime?
+  expiresAt         DateTime?
 
   ownerId String
   owner   Artist   @relation("RoomOwner", fields: [ownerId], references: [id], onDelete: Cascade)

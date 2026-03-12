@@ -7,6 +7,113 @@ import { redirect } from "next/navigation";
 import z from "zod";
 import { revalidatePath } from "next/cache";
 import { RoomStatus } from "@/app/generated/prisma/enums";
+import OpenAI from "openai";
+
+const STARTING_COUNTDOWN_MS = 10000;
+const GAME_DURATION_MS = 5 * 60 * 1000;
+const FALLBACK_INTRO_MESSAGE =
+  "We hope you'll have fun playing our game! Get your ideas ready.";
+const FALLBACK_TOPICS = [
+  "A blue man wearing a purple jacket",
+  "A sleepy dragon curled up on a library rug",
+  "A glowing jellyfish floating above a city park",
+  "A robot chef making pancakes in the rain",
+  "A tiny castle balanced on top of a mushroom",
+];
+
+type RoomOpening = {
+  introMessage: string;
+  topic: string;
+};
+
+const openAIClient = process.env.OPENAI_API_KEY
+  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  : null;
+
+function getFallbackOpening(roomId: string): RoomOpening {
+  const topicIndex =
+    roomId.split("").reduce((total, char) => total + char.charCodeAt(0), 0) %
+    FALLBACK_TOPICS.length;
+
+  return {
+    introMessage: FALLBACK_INTRO_MESSAGE,
+    topic: FALLBACK_TOPICS[topicIndex],
+  };
+}
+
+function getRoomOpeningPrompt() {
+  return {
+    system:
+      'You generate short, family-friendly drawing game openings. Return valid JSON only with exactly two keys: "introMessage" and "topic".',
+    user: `Create an intro message and a drawing topic for a multiplayer drawing game.
+
+Rules:
+- introMessage: 1 short upbeat sentences
+- topic: short (3-4 words max), visual, imaginative, and easy to draw
+- family-friendly only
+- no copyrighted characters, brands, or celebrities
+- no politics, violence, gore, or sexual content
+- output raw JSON only
+
+Example shape:
+{
+  "introMessage": "We hope you'll have fun playing our game!",
+  "topic": "A blue man wearing a purple jacket"
+}`,
+  };
+}
+
+async function generateRoomOpening(roomId: string): Promise<RoomOpening> {
+  if (!openAIClient) {
+    return getFallbackOpening(roomId);
+  }
+
+  const prompt = getRoomOpeningPrompt();
+
+  try {
+    const response = await openAIClient.responses.create({
+      model: "gpt-4o-mini",
+      input: [
+        {
+          role: "system",
+          content: [{ type: "input_text", text: prompt.system }],
+        },
+        {
+          role: "user",
+          content: [{ type: "input_text", text: prompt.user }],
+        },
+      ],
+      text: {
+        format: {
+          type: "json_schema",
+          name: "room_opening",
+          schema: {
+            type: "object",
+            additionalProperties: false,
+            properties: {
+              introMessage: { type: "string" },
+              topic: { type: "string" },
+            },
+            required: ["introMessage", "topic"],
+          },
+        },
+      },
+    });
+
+    const parsed = JSON.parse(response.output_text) as Partial<RoomOpening>;
+    const introMessage = parsed.introMessage?.trim();
+    const topic = parsed.topic?.trim();
+
+    if (!introMessage || !topic) {
+      throw new Error("OpenAI returned an incomplete room opening");
+    }
+
+    return { introMessage, topic };
+  } catch (error) {
+    console.error("Failed to generate room opening:", error);
+    return getFallbackOpening(roomId);
+  }
+}
 
 export async function createRoom() {
   const { artistId } = await getArtistId();
@@ -126,6 +233,10 @@ async function getHostRoom(roomDatabaseId: string, roomId: string) {
       code: true,
       status: true,
       startsAt: true,
+      startingExpiresAt: true,
+      introMessage: true,
+      theme: true,
+      expiresAt: true,
     },
   });
 
@@ -199,6 +310,8 @@ export async function finalizeGameCountdownAction(
     return;
   }
 
+  const roomOpening = await generateRoomOpening(roomId);
+
   const result = await prisma.room.updateMany({
     where: {
       id: roomDatabaseId,
@@ -208,12 +321,109 @@ export async function finalizeGameCountdownAction(
     data: {
       status: RoomStatus.STARTING,
       startsAt: null,
+      startingExpiresAt: new Date(Date.now() + STARTING_COUNTDOWN_MS),
+      introMessage: roomOpening.introMessage,
+      theme: roomOpening.topic,
     },
   });
 
   if (!result.count) {
     return;
   }
+
+  revalidatePath(`/room/${roomId}`);
+}
+
+export async function activateRoomAction(
+  roomDatabaseId: string,
+  roomId: string,
+) {
+  const room = await prisma.room.findUnique({
+    where: { id: roomDatabaseId },
+    select: {
+      status: true,
+      startingExpiresAt: true,
+      expiresAt: true,
+    },
+  });
+
+  if (
+    !room ||
+    room.status !== RoomStatus.STARTING ||
+    !room.startingExpiresAt ||
+    room.startingExpiresAt.getTime() > Date.now()
+  ) {
+    return;
+  }
+
+  const result = await prisma.room.updateMany({
+    where: {
+      id: roomDatabaseId,
+      status: RoomStatus.STARTING,
+      startingExpiresAt: room.startingExpiresAt,
+    },
+    data: {
+      status: RoomStatus.ACTIVE,
+      startingExpiresAt: null,
+      expiresAt: new Date(Date.now() + 10000),
+    },
+  });
+
+  if (!result.count) {
+    return;
+  }
+
+  revalidatePath(`/room/${roomId}`);
+}
+
+export async function finishGameAction(
+  roomDatabaseId: string,
+  roomId: string,
+  artwork: string,
+) {
+  const room = await prisma.room.findUnique({
+    where: { id: roomDatabaseId },
+    select: {
+      status: true,
+      startingExpiresAt: true,
+      expiresAt: true,
+    },
+  });
+
+  if (!room || room.status !== RoomStatus.ACTIVE || !room.expiresAt) {
+    return;
+  }
+
+  if (room.expiresAt.getTime() > Date.now()) {
+    return;
+  }
+
+  const roomWithArtists = await prisma.room.findUnique({
+    where: { id: roomDatabaseId },
+    select: {
+      artists: {
+        select: {
+          id: true,
+        },
+      },
+      theme: true,
+    },
+  });
+
+  if (!roomWithArtists) {
+    return;
+  }
+
+  await prisma.artwork.create({
+    data: {
+      artworkImage: artwork,
+      roomId: roomDatabaseId,
+      artists: {
+        connect: roomWithArtists.artists.map((artist) => ({ id: artist.id })),
+      },
+      theme: roomWithArtists.theme ?? "Unknown Theme",
+    },
+  });
 
   revalidatePath(`/room/${roomId}`);
 }

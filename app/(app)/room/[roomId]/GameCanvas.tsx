@@ -10,10 +10,14 @@ import BoxLabel from "@/app/components/ui/BoxLabel";
 import Text from "@/app/components/Text";
 import { Artist } from "@/app/generated/prisma/client";
 import { createClient, RealtimeChannel } from "@supabase/supabase-js";
+import { finishGameAction } from "@/app/lib/actions/room";
 
 interface GameCanvasProps {
   roomId: string;
   artists: Artist[];
+  theme: string | null;
+  expiresAt: string | null;
+  roomDatabaseId: string;
 }
 
 const MAX_UNDO_STEPS = 20;
@@ -23,7 +27,13 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 );
 
-export default function GameCanvas({ roomId, artists }: GameCanvasProps) {
+export default function GameCanvas({
+  roomId,
+  artists,
+  theme,
+  expiresAt,
+  roomDatabaseId,
+}: GameCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const channelRef = useRef<RealtimeChannel | null>(null);
   const historyRef = useRef<ImageData[]>([]);
@@ -35,6 +45,19 @@ export default function GameCanvas({ roomId, artists }: GameCanvasProps) {
   const [activeTool, setActiveTool] = useState<"pencil" | "eraser">("pencil");
 
   const prevPos = useRef<{ x: number; y: number } | null>(null);
+  const [gameNow, setGameNow] = useState(() => Date.now());
+  const [artworkSaved, setArtworkSaved] = useState(false);
+
+  const gamesEndsAt = expiresAt ? new Date(expiresAt).getTime() : null;
+  const remainingSeconds = gamesEndsAt
+    ? Math.max(0, Math.ceil((gamesEndsAt - gameNow) / 1000))
+    : 5 * 60;
+  const isTimeUp = gamesEndsAt !== null && remainingSeconds <= 0;
+  const formattedTime = `${Math.floor(remainingSeconds / 60)
+    .toString()
+    .padStart(2, "0")}:${(remainingSeconds % 60).toString().padStart(2, "0")}`;
+
+  console.log(gamesEndsAt, remainingSeconds, isTimeUp, gameNow);
 
   const executeStroke = (
     x0: number,
@@ -187,6 +210,35 @@ export default function GameCanvas({ roomId, artists }: GameCanvasProps) {
   };
 
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }, []);
+
+  useEffect(() => {
+    if (isTimeUp) return;
+
+    const intervalId = window.setInterval(() => {
+      setGameNow(Date.now());
+    }, 250);
+    return () => window.clearInterval(intervalId);
+  }, [isTimeUp]);
+
+  useEffect(() => {
+    if (!isTimeUp || artworkSaved) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const base64 = canvas.toDataURL("image/png");
+    finishGameAction(roomDatabaseId, roomId, base64)
+      .then(() => setArtworkSaved(true))
+      .catch((err) => console.error("Error saving artwork:", err));
+  }, [isTimeUp, artworkSaved, roomDatabaseId, roomId]);
+
+  useEffect(() => {
     const channel = supabase.channel(`room_game_${roomId}`, {
       config: { broadcast: { self: false } },
     });
@@ -230,9 +282,9 @@ export default function GameCanvas({ roomId, artists }: GameCanvasProps) {
         alt="Full Logo"
         className="-mt-20 mx-auto mb-12 w-108"
       />
-      <BoxLabel className="w-fit text-6xl ml-35" degree={1.2}>
+      <BoxLabel className="w-fit text-6xl mx-auto" degree={1.2}>
         <Text className="px-8 py-4" largeShadow>
-          A blue man in a purple jacket.
+          {theme ?? "Get ready to draw."}
         </Text>
       </BoxLabel>
 
@@ -271,6 +323,16 @@ export default function GameCanvas({ roomId, artists }: GameCanvasProps) {
         </aside>
 
         <div className="box-shadow border-4 border-black bg-white max-w-[512px] max-h-[512px] box-content">
+          {isTimeUp && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/60 z-10">
+              <p
+                className="text-border text-border-lg text-white text-7xl -rotate-6"
+                data-text="Time Is Up!"
+              >
+                Time Is Up!
+              </p>
+            </div>
+          )}
           <canvas
             ref={canvasRef}
             width={512}
@@ -285,7 +347,7 @@ export default function GameCanvas({ roomId, artists }: GameCanvasProps) {
           <div className="flex flex-col items-center">
             <BoxLabel className="w-fit my-10">
               <Text className="px-8 py-4 text-8xl" largeShadow>
-                02:30
+                {formattedTime}
               </Text>
             </BoxLabel>
             <Text className="text-blue! text-5xl">Timer</Text>
