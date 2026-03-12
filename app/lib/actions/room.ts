@@ -107,7 +107,7 @@ export async function leaveRoomAction() {
         roomId: null,
       },
     });
-  } catch (err) {
+  } catch {
     return {
       message: "Failed to leave room. Please try again.",
     };
@@ -116,13 +116,104 @@ export async function leaveRoomAction() {
   redirect("/room");
 }
 
-export async function startGameAction(roomDatabaseId: string, roomId: string) {
-  await prisma.room.update({
+async function getHostRoom(roomDatabaseId: string, roomId: string) {
+  const { artistId } = await getArtistId();
+
+  const room = await prisma.room.findUnique({
     where: { id: roomDatabaseId },
-    data: {
-      status: RoomStatus.ACTIVE,
+    select: {
+      ownerId: true,
+      code: true,
+      status: true,
+      startsAt: true,
     },
   });
+
+  if (!room || room.ownerId !== artistId || room.code !== roomId) {
+    console.error("Unauthorized room start attempt");
+    return null;
+  }
+
+  return room;
+}
+
+export async function startGameCountdownAction(
+  roomDatabaseId: string,
+  roomId: string,
+) {
+  const room = await getHostRoom(roomDatabaseId, roomId);
+
+  if (!room || room.status !== RoomStatus.WAITING || room.startsAt) {
+    return;
+  }
+
+  await prisma.room.updateMany({
+    where: {
+      id: roomDatabaseId,
+      status: RoomStatus.WAITING,
+      startsAt: null,
+    },
+    data: {
+      startsAt: new Date(Date.now() + 5000),
+    },
+  });
+
+  revalidatePath(`/room/${roomId}`);
+}
+
+export async function cancelGameCountdownAction(
+  roomDatabaseId: string,
+  roomId: string,
+) {
+  const room = await getHostRoom(roomDatabaseId, roomId);
+
+  if (!room || room.status !== RoomStatus.WAITING || !room.startsAt) {
+    return;
+  }
+
+  await prisma.room.updateMany({
+    where: {
+      id: roomDatabaseId,
+      status: RoomStatus.WAITING,
+      startsAt: room.startsAt,
+    },
+    data: {
+      startsAt: null,
+    },
+  });
+
+  revalidatePath(`/room/${roomId}`);
+}
+
+export async function finalizeGameCountdownAction(
+  roomDatabaseId: string,
+  roomId: string,
+) {
+  const room = await getHostRoom(roomDatabaseId, roomId);
+
+  if (!room || room.status !== RoomStatus.WAITING || !room.startsAt) {
+    return;
+  }
+
+  if (room.startsAt.getTime() > Date.now()) {
+    return;
+  }
+
+  const result = await prisma.room.updateMany({
+    where: {
+      id: roomDatabaseId,
+      status: RoomStatus.WAITING,
+      startsAt: room.startsAt,
+    },
+    data: {
+      status: RoomStatus.STARTING,
+      startsAt: null,
+    },
+  });
+
+  if (!result.count) {
+    return;
+  }
 
   revalidatePath(`/room/${roomId}`);
 }
