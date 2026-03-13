@@ -15,7 +15,7 @@ const CommentForm = ({ artworkId }: { artworkId: string }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (isInvalid) return;
+    if (isInvalid) return {};
 
     setErrorMessage("");
 
@@ -43,6 +43,7 @@ const CommentForm = ({ artworkId }: { artworkId: string }) => {
         />
 
         <button
+          disabled={isPending}
           type="submit"
           className="box-shadow flex h-28 w-28 items-center justify-center rounded-full bg-pink uppercase transition-transform hover:scale-105 active:scale-90"
         >

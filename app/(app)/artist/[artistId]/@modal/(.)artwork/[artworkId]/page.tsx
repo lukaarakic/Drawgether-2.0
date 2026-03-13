@@ -3,6 +3,7 @@ import CommentContainer from "@/app/components/comment-module/CommentsContainer"
 import Modal from "@/app/components/ui/Modal";
 import { getArtist, logout } from "@/app/lib/auth-utils";
 import prisma from "@/app/lib/db";
+import { redirect } from "next/navigation";
 
 const ShowArtwork = async ({
   params,
@@ -12,7 +13,10 @@ const ShowArtwork = async ({
   const { artworkId } = await params;
   const loggedInArtistId = await getArtist();
 
-  if (!loggedInArtistId) return logout();
+  if (!loggedInArtistId) {
+    await logout();
+    redirect("/login");
+  }
 
   const artwork = await prisma.artwork.findUnique({
     where: { id: artworkId },

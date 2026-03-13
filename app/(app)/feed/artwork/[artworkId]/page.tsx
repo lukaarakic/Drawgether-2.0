@@ -1,5 +1,6 @@
 import ArtworkPost from "@/app/components/artwork-module/ArtworkPost";
 import CommentContainer from "@/app/components/comment-module/CommentsContainer";
+import { getArtistId } from "@/app/lib/auth-utils";
 import prisma from "@/app/lib/db";
 import { notFound } from "next/navigation";
 
@@ -9,6 +10,7 @@ const ArtworkPage = async ({
   params: Promise<{ artistId: string; artworkId: string }>;
 }) => {
   const { artworkId } = await params;
+  const { artistId } = await getArtistId();
 
   const artwork = await prisma.artwork.findUnique({
     where: { id: artworkId },
@@ -23,6 +25,11 @@ const ArtworkPage = async ({
           artist: { select: { id: true, username: true } },
         },
       },
+      likes: {
+        select: {
+          artistId: true,
+        },
+      },
     },
   });
 
@@ -30,9 +37,12 @@ const ArtworkPage = async ({
     notFound();
   }
 
+  const isLiked = artwork.likes.some((like) => like.artistId === artistId);
+
   return (
     <div className="grid grid-cols-2 p-8 gap-20 mt-[10vh]">
       <ArtworkPost
+        isLiked={isLiked}
         artwork={artwork}
         index={1}
         className="w-full"

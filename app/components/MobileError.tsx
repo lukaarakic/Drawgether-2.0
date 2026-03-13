@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react"
+import Link from "next/link";
 
 const MobileError = () => {
   return (
@@ -19,13 +19,13 @@ const MobileError = () => {
       </p>
 
       <Link
-        to="/home/0"
+        href="/feed"
         className="text-border mt-20 text-29 text-pink"
         data-text="Back to home"
       >
         Back to home
       </Link>
     </div>
-  )
-}
-export default MobileError
+  );
+};
+export default MobileError;

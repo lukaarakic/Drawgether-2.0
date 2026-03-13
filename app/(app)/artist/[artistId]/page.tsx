@@ -2,7 +2,7 @@ import ArtistCircle from "@/app/components/ui/ArtistCircle";
 import BoxLabel from "@/app/components/ui/BoxLabel";
 import SmallArtworkContainer from "@/app/components/artwork-module/profile-artworks/SmallArtworkContainer";
 import ArtworksContainer from "@/app/components/artwork-module/profile-artworks/ArtworksContainer";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import prisma from "@/app/lib/db";
 import { getArtist, logout } from "@/app/lib/auth-utils";
 import Link from "next/link";
@@ -61,7 +61,8 @@ const Profile = async ({
   const loggedInArtistId = await getArtist();
 
   if (!loggedInArtistId) {
-    return logout();
+    await logout();
+    redirect("/login");
   }
 
   const isOwner = loggedInArtistId.id === artist.id;
