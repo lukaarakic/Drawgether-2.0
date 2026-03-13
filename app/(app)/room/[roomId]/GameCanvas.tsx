@@ -3,14 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import Toolbox from "./components/game-canvas/Toolbox";
 import Image from "next/image";
-import UndoSVG from "@/app/assets/misc/undo.svg";
-import ArtistCircle from "@/app/components/ui/ArtistCircle";
 import FullLogo from "@/app/assets/logos/full_both_logo.svg";
-import BoxLabel from "@/app/components/ui/BoxLabel";
-import Text from "@/app/components/Text";
 import { Artist } from "@/app/generated/prisma/client";
 import { createClient, RealtimeChannel } from "@supabase/supabase-js";
 import { finishGameAction } from "@/app/lib/actions/room";
+import GameCanvasHeader from "./components/game-canvas/GameCanvasHeader";
+import PlayerSidebar from "./components/game-canvas/PlayerSidebar";
+import CanvasStage from "./components/game-canvas/CanvasStage";
 
 interface GameCanvasProps {
   roomId: string;
@@ -48,16 +47,32 @@ export default function GameCanvas({
   const [gameNow, setGameNow] = useState(() => Date.now());
   const [artworkSaved, setArtworkSaved] = useState(false);
 
-  const gamesEndsAt = expiresAt ? new Date(expiresAt).getTime() : null;
+  const safeDateString = expiresAt
+    ? expiresAt.endsWith("Z")
+      ? expiresAt
+      : `${expiresAt}Z`
+    : null;
+  const gamesEndsAt = safeDateString
+    ? new Date(safeDateString).getTime()
+    : null;
   const remainingSeconds = gamesEndsAt
     ? Math.max(0, Math.ceil((gamesEndsAt - gameNow) / 1000))
     : 5 * 60;
+
+  console.log(
+    "Expires At:",
+    expiresAt,
+    "Games ends at:",
+    gamesEndsAt,
+    "Current time:",
+    gameNow,
+    "Remaining seconds:",
+    remainingSeconds,
+  );
   const isTimeUp = gamesEndsAt !== null && remainingSeconds <= 0;
   const formattedTime = `${Math.floor(remainingSeconds / 60)
     .toString()
     .padStart(2, "0")}:${(remainingSeconds % 60).toString().padStart(2, "0")}`;
-
-  console.log(gamesEndsAt, remainingSeconds, isTimeUp, gameNow);
 
   const executeStroke = (
     x0: number,
@@ -228,7 +243,7 @@ export default function GameCanvas({
   }, [isTimeUp]);
 
   useEffect(() => {
-    if (!isTimeUp || artworkSaved) return;
+    if (!isTimeUp) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -282,77 +297,24 @@ export default function GameCanvas({
         alt="Full Logo"
         className="-mt-20 mx-auto mb-12 w-108"
       />
-      <BoxLabel className="w-fit text-6xl mx-auto" degree={1.2}>
-        <Text className="px-8 py-4" largeShadow>
-          {theme ?? "Get ready to draw."}
-        </Text>
-      </BoxLabel>
+      <GameCanvasHeader theme={theme} />
 
       <div className="mt-10 flex gap-10" data-room-id={roomId}>
-        <aside className="flex flex-col">
-          <div>
-            {artists.map((artist) => (
-              <ArtistCircle
-                key={artist.id}
-                username={artist.username}
-                className="not-first:-mt-10"
-              />
-            ))}
-          </div>
+        <PlayerSidebar
+          artists={artists}
+          canUndo={canUndo}
+          onUndo={handleUndoClick}
+        />
 
-          <button
-            className="mt-auto flex flex-col items-center justify-center"
-            onClick={handleUndoClick}
-            disabled={!canUndo}
-            aria-label="Undo last drawing action"
-          >
-            <p
-              className="text-border text-border-lg text-25 text-pink"
-              data-text="Undo"
-            >
-              Undo
-            </p>
-            <div
-              className={`box-shadow flex h-32 w-32 items-center justify-center rounded-full bg-blue uppercase transition-transform ${
-                canUndo ? "hover:scale-105 active:scale-90" : "opacity-60"
-              }`}
-            >
-              <Image src={UndoSVG} alt="" className="h-24 w-24" />
-            </div>
-          </button>
-        </aside>
-
-        <div className="box-shadow border-4 border-black bg-white max-w-[512px] max-h-[512px] box-content">
-          {isTimeUp && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/60 z-10">
-              <p
-                className="text-border text-border-lg text-white text-7xl -rotate-6"
-                data-text="Time Is Up!"
-              >
-                Time Is Up!
-              </p>
-            </div>
-          )}
-          <canvas
-            ref={canvasRef}
-            width={512}
-            height={512}
-            onPointerDown={startDrawing}
-            onPointerMove={draw}
-            onPointerUp={stopDrawing}
-            onPointerOut={stopDrawing}
-            className="touch-none cursor-crosshair"
-          />
-
-          <div className="flex flex-col items-center">
-            <BoxLabel className="w-fit my-10">
-              <Text className="px-8 py-4 text-8xl" largeShadow>
-                {formattedTime}
-              </Text>
-            </BoxLabel>
-            <Text className="text-blue! text-5xl">Timer</Text>
-          </div>
-        </div>
+        <CanvasStage
+          canvasRef={canvasRef}
+          isTimeUp={isTimeUp}
+          formattedTime={formattedTime}
+          onPointerDown={startDrawing}
+          onPointerMove={draw}
+          onPointerUp={stopDrawing}
+          onPointerOut={stopDrawing}
+        />
 
         <Toolbox
           color={color}

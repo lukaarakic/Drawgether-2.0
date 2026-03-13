@@ -71,6 +71,7 @@ async function generateRoomOpening(roomId: string): Promise<RoomOpening> {
   const prompt = getRoomOpeningPrompt();
 
   try {
+    console.log("Generating room opening with OpenAI...");
     const response = await openAIClient.responses.create({
       model: "gpt-4o-mini",
       input: [
@@ -302,13 +303,19 @@ export async function finalizeGameCountdownAction(
 ) {
   const room = await getHostRoom(roomDatabaseId, roomId);
 
+  console.log("Finalizing game countdown for room:", roomId);
+
   if (!room || room.status !== RoomStatus.WAITING || !room.startsAt) {
+    console.error("Room not found or invalid status for finalizing countdown");
     return;
   }
 
   if (room.startsAt.getTime() > Date.now()) {
+    console.error("Countdown has not expired yet for room:", roomId);
     return;
   }
+
+  console.log("Generating room opening and activating room:", roomId);
 
   const roomOpening = await generateRoomOpening(roomId);
 
@@ -365,7 +372,7 @@ export async function activateRoomAction(
     data: {
       status: RoomStatus.ACTIVE,
       startingExpiresAt: null,
-      expiresAt: new Date(Date.now() + 10000),
+      expiresAt: new Date(Date.now() + GAME_DURATION_MS),
     },
   });
 
