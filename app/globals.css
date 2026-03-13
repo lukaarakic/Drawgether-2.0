@@ -105,14 +105,19 @@
       font-size: calc(100vw / 1920 * 10);
     }
   }
-  @media (width <= 63.8em) {
+  @media (width <= 78.125em) {
     html {
-      font-size: calc(100vw / 1024 * 10);
+      font-size: calc(100vw / 1240 * 10);
     }
   }
-  @media (width <= 36.25em) {
+  @media (width <= 45em) {
     html {
-      font-size: calc(100vw / 580 * 10);
+      font-size: calc(100vw / 720 * 10);
+    }
+  }
+  @media (width <= 26.5625em) {
+    html {
+      font-size: calc(100vw / 425 * 8);
     }
   }
 }

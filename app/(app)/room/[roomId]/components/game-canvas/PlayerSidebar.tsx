@@ -15,13 +15,13 @@ export default function PlayerSidebar({
   onUndo,
 }: PlayerSidebarProps) {
   return (
-    <aside className="flex flex-col">
+    <aside className="flex items-center justify-between lg:flex-col">
       <div>
         {artists.map((artist) => (
           <ArtistCircle
             key={artist.id}
             username={artist.username}
-            className="not-first:-mt-10"
+            className="lg:not-first:-mt-10"
           />
         ))}
       </div>

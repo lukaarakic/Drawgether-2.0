@@ -10,7 +10,7 @@ import { RoomStatus } from "@/app/generated/prisma/enums";
 import OpenAI from "openai";
 
 const STARTING_COUNTDOWN_MS = 10000;
-const GAME_DURATION_MS = 5 * 60 * 1000;
+const GAME_DURATION_MS = 60 * 60 * 1000;
 const FALLBACK_INTRO_MESSAGE =
   "We hope you'll have fun playing our game! Get your ideas ready.";
 const FALLBACK_TOPICS = [
@@ -303,6 +303,9 @@ export async function finalizeGameCountdownAction(
 ) {
   const room = await getHostRoom(roomDatabaseId, roomId);
 
+  console.log(
+    `Date now: ${new Date().toISOString()}, Room startsAt: ${room?.startsAt?.toISOString()}`,
+  );
   console.log("Finalizing game countdown for room:", roomId);
 
   if (!room || room.status !== RoomStatus.WAITING || !room.startsAt) {

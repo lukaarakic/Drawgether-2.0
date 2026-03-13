@@ -6,7 +6,7 @@ import Link from "next/link";
 const Room = () => {
   return (
     <>
-      <div className="h-calc flex flex-col items-center justify-evenly">
+      <div className="h-calc flex flex-col items-center justify-evenly mt-20">
         <Image src={FullLogo} alt="" className="h-[30svh]" />
 
         <form action={createRoom}>

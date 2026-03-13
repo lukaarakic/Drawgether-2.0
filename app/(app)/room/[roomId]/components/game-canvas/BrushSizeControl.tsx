@@ -9,11 +9,14 @@ const BrushSizeControl = ({
   brushSize,
   setBrushSize,
 }: BrushSizeControlProps) => {
-  const sliderProgress = ((brushSize - 1) / (30 - 1)) * 100;
+  const sliderProgress = ((brushSize - 1) / (50 - 1)) * 100;
 
   return (
     <div className="flex flex-col items-center justify-center gap-1 mb-6 w-full">
-      <label htmlFor="brushSize" className="text-center text-4xl leading-none">
+      <label
+        htmlFor="brushSize"
+        className="text-center text-4xl leading-none mb-5"
+      >
         Brush Size
       </label>
       <div
@@ -26,7 +29,7 @@ const BrushSizeControl = ({
           id="brushSize"
           type="range"
           min={1}
-          max={30}
+          max={50}
           className="w-full game-slider"
           value={brushSize}
           onChange={(e) => setBrushSize(Number(e.target.value))}

@@ -75,7 +75,7 @@ const Profile = async ({
 
   return (
     <>
-      <div className="mx-auto w-[90%] xs:w-7xl">
+      <div className="mx-auto w-[90%] xs:w-7xl mt-20 md:mt-72">
         <div className="flex flex-col items-center justify-center gap-16 mb-32">
           <div className="flex flex-col items-center justify-center gap-16 md:flex-row">
             <ArtistCircle username={artist.username} size="large" />

@@ -38,13 +38,10 @@ const LobbyStatusPannel = ({
         <>
           {isCountdownActive && countdownSeconds !== null && (
             <>
-              <Text
-                className="uppercase text-blue! text-[4rem] leading-tight"
-                largeShadow
-              >
+              <Text className="uppercase text-blue! text-40 leading-tight">
                 Starting in:
               </Text>
-              <Text className="text-[7rem] leading-none mb-4" largeShadow>
+              <Text className="text-60 leading-none mb-4">
                 {countdownSeconds}
               </Text>
             </>
@@ -52,14 +49,11 @@ const LobbyStatusPannel = ({
 
           {!isCountdownActive && (
             <>
-              <Text
-                className="uppercase text-blue! text-[5rem] leading-tight"
-                largeShadow
-              >
+              <Text className="uppercase text-blue! text-[5rem] leading-tight">
                 Lobby code:
               </Text>
               <div className="flex items-center">
-                <Text className="text-[5rem] leading-tight" largeShadow>
+                <Text className="text-[5rem] leading-tight">
                   {"#".concat(roomId)}
                 </Text>
                 <button onClick={handleCopyCode} aria-label="Copy lobby code">
@@ -79,14 +73,14 @@ const LobbyStatusPannel = ({
         </>
       ) : (
         <>
-          <Text className="text-blue! text-[5rem]">
+          <Text className="text-blue! text-40" largeShadow>
             {isCountdownActive
               ? "Game starts in..."
               : "Waiting for the host..."}
           </Text>
 
           {isCountdownActive && countdownSeconds !== null && (
-            <Text className="text-[7rem] leading-none mt-4" largeShadow>
+            <Text className="text-40 leading-none mt-4" largeShadow>
               {countdownSeconds}
             </Text>
           )}
