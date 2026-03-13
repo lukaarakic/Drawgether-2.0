@@ -16,7 +16,7 @@ const ToolActions = ({
   onFill,
 }: ToolActionsProps) => {
   return (
-    <>
+    <div className="flex flex-col gap-5 mb-10">
       <BoxButton
         className={`px-15 py-5 mb-6 ${activeTool === "pencil" ? "bg-blue!" : ""}`}
         degree={generateRandomRotation(1)}
@@ -44,7 +44,7 @@ const ToolActions = ({
           Fill
         </Text>
       </BoxButton>
-    </>
+    </div>
   );
 };
 

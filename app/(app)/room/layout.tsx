@@ -11,12 +11,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <Image
           src={LeftCloud}
           alt="Left corner cloud"
-          className="pointer-events-none absolute bottom-0 left-0 w-full xs:w-1/2 lg:w-1/3"
+          className="pointer-events-none fixed bottom-0 left-0 w-full xs:w-1/2 lg:w-1/3 hidden 2xl:block"
         />
         <Image
           src={RightCloud}
           alt="Right corner cloud"
-          className="pointer-events-none absolute bottom-0 right-0 w-full xs:w-1/2 lg:w-1/3"
+          className="pointer-events-none fixed bottom-0 right-0 w-full xs:w-1/2 lg:w-1/3 hidden 2xl:block"
         />
       </div>
     </div>

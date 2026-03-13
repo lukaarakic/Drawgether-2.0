@@ -15,7 +15,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
       <header>
         <Navbar username={artist.username} />
       </header>
-      <main className="mt-20 flex items-center justify-center md:mt-72">
+      <main className="min-h-dvh flex items-center justify-center">
         {children}
       </main>
     </>

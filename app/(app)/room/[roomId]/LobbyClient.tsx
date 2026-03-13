@@ -153,7 +153,7 @@ const LobbyClient = ({
   ]);
 
   return (
-    <div className="grid grid-cols-2 mt-[3vh] gap-16">
+    <div className="grid grid-cols-1 md:grid-cols-2 mt-[3vh] gap-16 px-10">
       <div className="box-shadow bg-pink rotate-2 px-10 py-5 h-fit min-w-2xl max-w-3xl">
         {artists.map((artist) => (
           <div

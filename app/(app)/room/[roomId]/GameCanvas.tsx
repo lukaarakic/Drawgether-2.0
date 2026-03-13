@@ -10,6 +10,8 @@ import { finishGameAction } from "@/app/lib/actions/room";
 import GameCanvasHeader from "./components/game-canvas/GameCanvasHeader";
 import PlayerSidebar from "./components/game-canvas/PlayerSidebar";
 import CanvasStage from "./components/game-canvas/CanvasStage";
+import BoxLabel from "@/app/components/ui/BoxLabel";
+import Text from "@/app/components/Text";
 
 interface GameCanvasProps {
   roomId: string;
@@ -136,7 +138,12 @@ export default function GameCanvas({
     const canvas = canvasRef.current;
     if (!canvas) return null;
     const rect = canvas.getBoundingClientRect();
-    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    return {
+      x: (e.clientX - rect.left) * scaleX,
+      y: (e.clientY - rect.top) * scaleY,
+    };
   };
 
   const pushHistory = () => {
@@ -152,6 +159,8 @@ export default function GameCanvas({
   const startDrawing = (e: React.PointerEvent<HTMLCanvasElement>) => {
     const pos = getCoordinates(e);
     if (!pos) return;
+
+    e.currentTarget.setPointerCapture(e.pointerId);
 
     pushHistory();
 
@@ -207,7 +216,10 @@ export default function GameCanvas({
     prevPos.current = currentPos;
   };
 
-  const stopDrawing = () => {
+  const stopDrawing: React.PointerEventHandler<HTMLCanvasElement> = (e) => {
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    }
     setIsDrawing(false);
     prevPos.current = null;
   };
@@ -243,7 +255,7 @@ export default function GameCanvas({
   }, [isTimeUp]);
 
   useEffect(() => {
-    if (!isTimeUp) return;
+    if (!isTimeUp || artworkSaved) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -291,15 +303,18 @@ export default function GameCanvas({
   }, [roomId]);
 
   return (
-    <>
-      <Image
+    <div className="flex flex-col px-4 sm:px-5 mt-20">
+      {/* <Image
         src={FullLogo}
         alt="Full Logo"
-        className="-mt-20 mx-auto mb-12 w-108"
-      />
+        className="mx-auto mb-12 w-108 hidden lg:block"
+      /> */}
       <GameCanvasHeader theme={theme} />
 
-      <div className="mt-10 flex gap-10" data-room-id={roomId}>
+      <div
+        className="mt-8 flex flex-col gap-8 lg:mt-10 lg:flex-row lg:gap-10"
+        data-room-id={roomId}
+      >
         <PlayerSidebar
           artists={artists}
           canUndo={canUndo}
@@ -309,7 +324,6 @@ export default function GameCanvas({
         <CanvasStage
           canvasRef={canvasRef}
           isTimeUp={isTimeUp}
-          formattedTime={formattedTime}
           onPointerDown={startDrawing}
           onPointerMove={draw}
           onPointerUp={stopDrawing}
@@ -327,6 +341,14 @@ export default function GameCanvas({
           onFill={fillCanvas}
         />
       </div>
-    </>
+      <div className="flex flex-col items-center mt-20">
+        <BoxLabel className="w-fit my-10">
+          <Text className="px-8 py-4 text-8xl" largeShadow>
+            {formattedTime}
+          </Text>
+        </BoxLabel>
+        <Text className="text-blue! text-5xl">Timer</Text>
+      </div>
+    </div>
   );
 }

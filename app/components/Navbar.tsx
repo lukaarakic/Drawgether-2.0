@@ -35,10 +35,6 @@ const Navbar = ({ username, isMobile = false }: NavbarProps) => {
       "--nav-rotation": `${rotation.toFixed(2)}deg`,
     }) as React.CSSProperties;
 
-  if (pathname.includes("room/")) {
-    return null;
-  }
-
   return (
     <div>
       <div className="fixed left-0 top-0 z-30 hidden h-12 w-screen bg-white md:block"></div>
