@@ -3,7 +3,6 @@ import prisma from "@/app/lib/db";
 async function main() {
   console.log("🌱 Seeding database...");
 
-  // Clean up existing data (in reverse order of dependencies)
   await prisma.like.deleteMany();
   await prisma.comment.deleteMany();
   await prisma.follows.deleteMany();

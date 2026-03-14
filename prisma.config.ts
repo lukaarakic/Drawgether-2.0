@@ -11,6 +11,5 @@ export default defineConfig({
   },
   datasource: {
     url: env("DIRECT_URL"),
-    shadowDatabaseUrl: env("DIRECT_URL"),
   },
 });
