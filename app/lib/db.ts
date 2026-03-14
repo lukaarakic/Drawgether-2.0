@@ -1,17 +1,18 @@
 import { PrismaClient } from "@/app/generated/prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
+import { withAccelerate } from "@prisma/extension-accelerate";
 
-const isProduction = process.env.NODE_ENV === "production";
+const databaseUrl = process.env.DATABASE_URL;
 
-const adapter = new PrismaPg({
-  connectionString: process.env["DATABASE_URL"],
-  ssl: isProduction
-    ? { rejectUnauthorized: true }
-    : { rejectUnauthorized: false },
-});
+if (!databaseUrl) {
+  throw new Error(
+    "Please define the DATABASE_URL environment variable inside .env",
+  );
+}
 
 const prismaClientSingleton = () => {
-  return new PrismaClient({ adapter });
+  return new PrismaClient({
+    accelerateUrl: databaseUrl,
+  }).$extends(withAccelerate());
 };
 
 declare const globalThis: {
