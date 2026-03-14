@@ -2,6 +2,7 @@ import ArtworkPost from "@/app/components/artwork-module/ArtworkPost";
 import { getArtistId } from "@/app/lib/auth-utils";
 import prisma from "@/app/lib/db";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
   title: `Explore Artworks`,
@@ -12,6 +13,16 @@ const Home = async () => {
   const { artistId } = await getArtistId();
 
   const artworks = await prisma.artwork.findMany({
+    select: {
+      id: true,
+      createdAt: true,
+      theme: true,
+      artworkImage: true,
+      likesCount: true,
+      commentsCount: true,
+      roomId: true,
+      updatedAt: true,
+    },
     include: {
       artists: {
         select: {
@@ -57,6 +68,7 @@ const Home = async () => {
           <ArtworkPost
             key={artwork.id}
             index={index}
+            // @ts-expect-error - TypeScript is having trouble inferring the type of artwork
             artwork={artwork}
             isLiked={likedArtworkIds.has(artwork.id)}
             className="mb-50"
