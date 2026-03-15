@@ -11,6 +11,7 @@ import BoxLabel from "@/app/components/ui/BoxLabel";
 import Text from "@/app/components/Text";
 import { Artist } from "@/drizzle/schema";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 interface GameCanvasProps {
   roomId: string;
@@ -34,6 +35,7 @@ export default function GameCanvas({
   expiresAt,
   roomDatabaseId,
 }: GameCanvasProps) {
+  const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const channelRef = useRef<RealtimeChannel | null>(null);
   const historyRef = useRef<ImageData[]>([]);
@@ -107,7 +109,7 @@ export default function GameCanvas({
   const executeFill = (fillColor: string) => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx) return;
+    if (!canvas || !ctx || isTimeUp) return;
     ctx.fillStyle = fillColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   };
@@ -235,6 +237,10 @@ export default function GameCanvas({
     });
   };
 
+  const handleClose = () => {
+    router.push("/feed");
+  };
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -328,6 +334,7 @@ export default function GameCanvas({
         <CanvasStage
           canvasRef={canvasRef}
           isTimeUp={isTimeUp}
+          onClose={handleClose}
           onPointerDown={startDrawing}
           onPointerMove={draw}
           onPointerUp={stopDrawing}
