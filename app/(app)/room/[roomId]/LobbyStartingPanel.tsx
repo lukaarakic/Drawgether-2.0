@@ -2,6 +2,7 @@ import Image from "next/image";
 import FullLogo from "@/app/assets/logos/full_both_logo.svg";
 import Bubble from "@/app/assets/misc/chat_bubble.svg";
 import GPTLogo from "@/app/assets/logos/gpt_logo.svg";
+import { motion } from "framer-motion";
 
 interface LobbyStartingPanelProps {
   introMessage: string | null;
@@ -15,19 +16,39 @@ const LobbyStartingPanel = ({
   countdownSeconds,
 }: LobbyStartingPanelProps) => {
   const safeCountdownSeconds = Math.max(0, countdownSeconds);
+  const isFinished = safeCountdownSeconds <= 1;
 
   return (
     <>
-      <div className="transitionBlock origin-bottom scale-y-0" />
+      <motion.div
+        className="transitionBlock pointer-events-none origin-top"
+        animate={{ scaleY: 0 }}
+        transition={{ delay: 0.6, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+      />
 
-      <div className="flex mt-40">
+      <motion.div
+        className="transitionBlock pointer-events-none origin-left"
+        initial={false}
+        animate={{ scaleX: isFinished ? 1 : 0 }}
+        transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+      />
+
+      <div className="flex flex-col lg:flex-row mt-40 md:mt-80 lg:mt-60">
         <div>
-          <Image src={FullLogo} alt="" className="h-204 w-280" />
+          <Image
+            src={FullLogo}
+            alt=""
+            className="h-104 w-180 lg:h-204 lg:w-280"
+          />
         </div>
 
-        <div className="flex h-192 w-3xl">
-          <Image src={Bubble} alt="" className="absolute -z-10 h-192 w-3xl" />
-          <div className="ml-36 mr-20 mt-8 flex h-full flex-col justify-between pb-16 text-34 leading-none">
+        <div className="flex h-192 w-3xl mx-auto lg:mx-auto p-10 box-shadow bg-white lg:border-0 lg:bg-transparent lg:filter-none">
+          <Image
+            src={Bubble}
+            alt=""
+            className="absolute -z-10 h-192 w-3xl hidden lg:block"
+          />
+          <div className="lg:ml-36 lg:mr-20 mt-8 flex h-full flex-col justify-between pb-16 text-34 leading-none">
             <div>
               <p>
                 Welcome to <span className="text-pink">Draw</span>

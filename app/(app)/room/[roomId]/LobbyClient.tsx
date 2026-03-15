@@ -14,6 +14,7 @@ import LobbyForm from "./components/lobby/LobbyForm";
 import LobbyStatusPannel from "./components/lobby/LobbyStatusPannel";
 import LobbyStartButton from "./components/lobby/LobbyStartButton";
 import { Artist } from "@/drizzle/schema";
+import { motion } from "framer-motion";
 
 interface LobbyClientProps {
   roomId: string;
@@ -117,13 +118,32 @@ const LobbyClient = ({
       return;
     }
 
-    const timeRemaining = countdownEndsAt - Date.now();
+    const localTimeRemaining =
+      displayCountdownStartedAt !== null
+        ? 5000 - (Date.now() - displayCountdownStartedAt)
+        : null;
+    const timeRemaining =
+      localTimeRemaining !== null
+        ? Math.max(0, localTimeRemaining)
+        : countdownEndsAt - Date.now();
+    let retryTimeoutId: number | null = null;
 
     const finalize = async () => {
       try {
-        await finalizeGameCountdownAction(roomDatabaseId, roomId);
-        finalizedCountdown.current = startsAt;
-        router.refresh();
+        const didFinalize = await finalizeGameCountdownAction(
+          roomDatabaseId,
+          roomId,
+        );
+
+        if (didFinalize) {
+          finalizedCountdown.current = startsAt;
+          router.refresh();
+          return;
+        }
+
+        retryTimeoutId = window.setTimeout(() => {
+          void finalize();
+        }, 1000);
       } catch (error) {
         finalizedCountdown.current = null;
         console.error("Failed to finalize game countdown:", error);
@@ -141,8 +161,12 @@ const LobbyClient = ({
 
     return () => {
       window.clearTimeout(timeoutId);
+      if (retryTimeoutId !== null) {
+        window.clearTimeout(retryTimeoutId);
+      }
     };
   }, [
+    displayCountdownStartedAt,
     countdownEndsAt,
     isCountdownActive,
     isHost,
@@ -152,8 +176,17 @@ const LobbyClient = ({
     startsAt,
   ]);
 
+  const isTransitioning =
+    countdownSeconds !== null && countdownSeconds <= 1 && isCountdownActive;
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 mt-[3vh] gap-16 px-10">
+      <motion.div
+        className="transitionBlock origin-bottom"
+        initial={{ scaleY: 0 }}
+        animate={{ scaleY: isTransitioning ? 1 : 0 }}
+        transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+      />
       <div className="box-shadow bg-pink rotate-2 px-10 py-5 h-fit min-w-2xl max-w-3xl">
         {artists.map((artist) => (
           <div

@@ -59,7 +59,7 @@ const ArtworkPage = async ({
   };
 
   return (
-    <div className="grid grid-cols-2 p-8 gap-20 mt-[10vh]">
+    <div className="flex flex-col md:grid md:grid-cols-2 p-8 gap-10 md:gap-20 mt-[10vh] h-fit pb-80">
       <ArtworkPost
         isLiked={isLiked}
         artwork={formattedArtwork}

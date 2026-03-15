@@ -33,6 +33,64 @@ interface RoomRealtimeState {
   expiresAt: string | null;
 }
 
+type ArtistRealtimePayload = Partial<Artist> & {
+  room_id?: string | null;
+};
+
+type RoomRealtimePayload = {
+  status?: RoomStatus;
+  startsAt?: string | null;
+  starts_at?: string | null;
+  startingExpiresAt?: string | null;
+  starting_expires_at?: string | null;
+  introMessage?: string | null;
+  intro_message?: string | null;
+  theme?: string | null;
+  expiresAt?: string | null;
+  expires_at?: string | null;
+};
+
+function normalizeArtistPayload(payload: ArtistRealtimePayload): Artist {
+  return {
+    ...(payload as Artist),
+    roomId: payload.roomId ?? payload.room_id ?? null,
+  };
+}
+
+function mergeRoomState(
+  previous: RoomRealtimeState,
+  payload: RoomRealtimePayload,
+): RoomRealtimeState {
+  const next = { ...previous };
+
+  if ("status" in payload && payload.status !== undefined) {
+    next.status = payload.status;
+  }
+
+  if ("startsAt" in payload || "starts_at" in payload) {
+    next.startsAt = payload.startsAt ?? payload.starts_at ?? null;
+  }
+
+  if ("startingExpiresAt" in payload || "starting_expires_at" in payload) {
+    next.startingExpiresAt =
+      payload.startingExpiresAt ?? payload.starting_expires_at ?? null;
+  }
+
+  if ("introMessage" in payload || "intro_message" in payload) {
+    next.introMessage = payload.introMessage ?? payload.intro_message ?? null;
+  }
+
+  if ("theme" in payload) {
+    next.theme = payload.theme ?? null;
+  }
+
+  if ("expiresAt" in payload || "expires_at" in payload) {
+    next.expiresAt = payload.expiresAt ?? payload.expires_at ?? null;
+  }
+
+  return next;
+}
+
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -183,11 +241,13 @@ const RoomManager = ({
         {
           event: "*",
           schema: "public",
-          table: "Artist",
+          table: "artists",
         },
         (payload) => {
           setArtists((prev) => {
-            const updatedArtist = payload.new as Artist;
+            const updatedArtist = normalizeArtistPayload(
+              payload.new as ArtistRealtimePayload,
+            );
 
             if (payload.eventType === "DELETE") {
               return prev.filter((artist) => artist.id !== payload.old.id);
@@ -223,11 +283,13 @@ const RoomManager = ({
         {
           event: "UPDATE",
           schema: "public",
-          table: "Artist",
+          table: "artists",
           filter: `id=eq.${currentArtistId}`,
         },
         (payload) => {
-          const updatedArtist = payload.new as Artist;
+          const updatedArtist = normalizeArtistPayload(
+            payload.new as ArtistRealtimePayload,
+          );
 
           if (!updatedArtist.roomId) {
             router.push("/room");
@@ -248,23 +310,8 @@ const RoomManager = ({
           filter: `id=eq.${roomDatabaseId}`,
         },
         (payload) => {
-          const updatedRoom = payload.new as {
-            status: RoomStatus;
-            startsAt: string | null;
-            startingExpiresAt: string | null;
-            introMessage: string | null;
-            theme: string | null;
-            expiresAt: string | null;
-          };
-
-          setRoomState({
-            status: updatedRoom.status as RoomStatus,
-            startsAt: updatedRoom.startsAt ?? null,
-            startingExpiresAt: updatedRoom.startingExpiresAt ?? null,
-            introMessage: updatedRoom.introMessage ?? null,
-            theme: updatedRoom.theme ?? null,
-            expiresAt: updatedRoom.expiresAt ?? null,
-          });
+          const updatedRoom = payload.new as RoomRealtimePayload;
+          setRoomState((previous) => mergeRoomState(previous, updatedRoom));
         },
       )
       .subscribe();

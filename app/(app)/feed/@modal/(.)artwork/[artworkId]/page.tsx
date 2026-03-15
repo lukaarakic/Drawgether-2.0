@@ -33,7 +33,7 @@ const ShowComments = async ({
   });
 
   return (
-    <Modal boxClassName="w-max h-min top-[45%]" className="w-max">
+    <Modal boxClassName="w-max h-min top-[45%]" className="w-fit">
       <CommentContainer
         artwork={artwork ? artwork : { id: artworkId, comments: [] }}
       />

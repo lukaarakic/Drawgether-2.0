@@ -10,6 +10,7 @@ import CanvasStage from "./components/game-canvas/CanvasStage";
 import BoxLabel from "@/app/components/ui/BoxLabel";
 import Text from "@/app/components/Text";
 import { Artist } from "@/drizzle/schema";
+import { motion } from "framer-motion";
 
 interface GameCanvasProps {
   roomId: string;
@@ -302,6 +303,11 @@ export default function GameCanvas({
 
   return (
     <div className="flex flex-col px-4 sm:px-5 mt-20">
+      <motion.div
+        className="transitionBlock pointer-events-none origin-right"
+        animate={{ scaleX: 0 }}
+        transition={{ delay: 0.6, duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+      />
       {/* <Image
         src={FullLogo}
         alt="Full Logo"
