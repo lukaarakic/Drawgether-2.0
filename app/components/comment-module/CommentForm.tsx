@@ -45,7 +45,7 @@ const CommentForm = ({ artworkId }: { artworkId: string }) => {
         <button
           disabled={isPending}
           type="submit"
-          className="box-shadow flex h-28 w-28 items-center justify-center rounded-full bg-pink uppercase transition-transform hover:scale-105 active:scale-90"
+          className="box-shadow cursor-pointer flex h-28 w-28 items-center justify-center rounded-full bg-pink uppercase transition-transform hover:scale-105 active:scale-90"
         >
           <div className={`text-16 text-white`}>Post</div>
         </button>

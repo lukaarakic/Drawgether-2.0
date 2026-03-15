@@ -1,12 +1,13 @@
 "use server";
 
-import { AuthTokenType } from "@/app/generated/prisma/enums";
 import { getArtist, logout } from "../auth-utils";
 import { generateSecretAndTOTP } from "../totp";
-import prisma from "../db";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { sendVerificationEmail } from "./email";
+import { db } from "../db";
+import { verificationTokens } from "@/drizzle/schema";
+import { AuthTokenType } from "@/drizzle/types";
 
 export async function verifyEmail() {
   const artist = await getArtist();
@@ -15,26 +16,25 @@ export async function verifyEmail() {
   }
   const { secret, token } = await generateSecretAndTOTP();
 
-  await prisma.verificationToken.upsert({
-    where: {
-      target_type: {
-        target: artist.email,
-        type: AuthTokenType.EMAIL_VERIFICATION,
-      },
-    },
-    update: {
-      token,
-      secret,
-      expiresAt: new Date(Date.now() + 15 * 60 * 1000),
-    },
-    create: {
+  const newExpiresAt = new Date(Date.now() + 15 * 60 * 1000);
+
+  await db
+    .insert(verificationTokens)
+    .values({
       target: artist.email,
       type: AuthTokenType.EMAIL_VERIFICATION,
       token,
       secret,
-      expiresAt: new Date(Date.now() + 15 * 60 * 1000),
-    },
-  });
+      expiresAt: newExpiresAt,
+    })
+    .onConflictDoUpdate({
+      target: [verificationTokens.target, verificationTokens.type],
+      set: {
+        token,
+        secret,
+        expiresAt: newExpiresAt,
+      },
+    });
 
   await sendVerificationEmail(
     artist.email,

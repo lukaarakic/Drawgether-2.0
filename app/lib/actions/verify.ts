@@ -1,10 +1,12 @@
 "use server";
 
+import { AuthTokenType } from "@/drizzle/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import prisma from "../db";
 import z from "zod";
-import { AuthTokenType } from "@/app/generated/prisma/enums";
+import { db } from "../db";
+import { and, eq } from "drizzle-orm";
+import { artists, verificationTokens } from "@/drizzle/schema";
 const VerifySchema = z.object({
   token: z.string().length(6, "Code must be 6 digits"),
 });
@@ -37,13 +39,12 @@ export async function verifyTOTPAction(
     };
   }
 
-  const verificationToken = await prisma.verificationToken.findUnique({
-    where: {
-      target_type: {
-        target: verifyTarget,
-        type: AuthTokenType[verifyType as keyof typeof AuthTokenType],
-      },
-    },
+  const verificationToken = await db.query.verificationTokens.findFirst({
+    where: (token, { eq, and }) =>
+      and(
+        eq(token.target, verifyTarget),
+        eq(token.type, AuthTokenType[verifyType as keyof typeof AuthTokenType]),
+      ),
   });
 
   if (!verificationToken) {
@@ -62,29 +63,32 @@ export async function verifyTOTPAction(
     };
   }
 
-  const artist = await prisma.artist.findFirst({
-    where: {
-      OR: [{ email: verifyTarget }, { username: verifyTarget }],
+  const artist = await db.query.artists.findFirst({
+    where: (a, { eq, or }) =>
+      or(eq(a.email, verifyTarget), eq(a.username, verifyTarget)),
+    columns: {
+      id: true,
+      email: true,
+      username: true,
     },
-    select: { id: true, email: true, username: true },
   });
 
   if (!artist) {
     return { errors: {}, message: "Account not found." };
   }
 
-  await prisma.verificationToken.delete({
-    where: { id: verificationToken.id },
-  });
+  await db
+    .delete(verificationTokens)
+    .where(eq(verificationTokens.id, verificationToken.id));
 
   cookieStore.delete("dg_verify_target");
   cookieStore.delete("dg_verify_type");
 
   if (verifyType === AuthTokenType.EMAIL_VERIFICATION) {
-    await prisma.artist.update({
-      where: { id: artist.id },
-      data: { emailVerified: new Date() },
-    });
+    await db
+      .update(artists)
+      .set({ emailVerified: new Date() })
+      .where(eq(artists.id, artist.id));
 
     redirect(`/artist/${artist.username}`);
   }

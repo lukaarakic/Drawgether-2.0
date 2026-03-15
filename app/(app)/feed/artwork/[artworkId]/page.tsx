@@ -1,7 +1,7 @@
 import ArtworkPost from "@/app/components/artwork-module/ArtworkPost";
 import CommentContainer from "@/app/components/comment-module/CommentsContainer";
 import { getArtistId } from "@/app/lib/auth-utils";
-import prisma from "@/app/lib/db";
+import { db } from "@/app/lib/db";
 import { notFound } from "next/navigation";
 
 const ArtworkPage = async ({
@@ -12,21 +12,35 @@ const ArtworkPage = async ({
   const { artworkId } = await params;
   const { artistId } = await getArtistId();
 
-  const artwork = await prisma.artwork.findUnique({
-    where: { id: artworkId },
-    include: {
+  const artwork = await db.query.artworks.findFirst({
+    where: (a, { eq }) => eq(a.id, artworkId),
+    with: {
       artists: {
-        select: { id: true, username: true },
+        with: {
+          artist: {
+            columns: {
+              id: true,
+              username: true,
+            },
+          },
+        },
       },
       comments: {
-        select: {
+        columns: {
           id: true,
           content: true,
-          artist: { select: { id: true, username: true } },
+        },
+        with: {
+          artist: {
+            columns: {
+              id: true,
+              username: true,
+            },
+          },
         },
       },
       likes: {
-        select: {
+        columns: {
           artistId: true,
         },
       },

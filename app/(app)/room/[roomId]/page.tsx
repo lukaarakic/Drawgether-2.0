@@ -1,17 +1,15 @@
 import { getArtistId } from "@/app/lib/auth-utils";
-import prisma from "@/app/lib/db";
 import { notFound } from "next/navigation";
 import RoomManager from "./RoomManager";
+import { db } from "@/app/lib/db";
 
 const Lobby = async ({ params }: { params: Promise<{ roomId: string }> }) => {
   const { roomId } = await params;
   const { artistId } = await getArtistId();
 
-  const room = await prisma.room.findUnique({
-    where: {
-      code: roomId,
-    },
-    include: {
+  const room = await db.query.rooms.findFirst({
+    where: (r, { eq }) => eq(r.code, roomId),
+    with: {
       artists: true,
     },
   });
