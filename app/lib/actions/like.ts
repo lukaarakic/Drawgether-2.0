@@ -1,8 +1,10 @@
 "use server";
 
+import { and, eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { getArtistId } from "../auth-utils";
-import prisma from "../db";
+import { db } from "../db";
+import { artworks, likes } from "@/drizzle/schema";
 
 export async function likeArtwork(artworkId: string, path: string) {
   const { artistId: id } = await getArtistId();
@@ -10,34 +12,39 @@ export async function likeArtwork(artworkId: string, path: string) {
   const artistId = id;
 
   try {
-    const existingLike = await prisma.like.findFirst({
-      where: {
-        artworkId,
-        artistId,
-      },
-      select: {
+    const existingLike = await db.query.likes.findFirst({
+      where: (like, { and, eq }) =>
+        and(eq(like.artworkId, artworkId), eq(like.artistId, artistId)),
+      columns: {
         artistId: true,
       },
     });
 
     const alreadyLiked = !!existingLike;
 
-    await prisma.$transaction([
-      alreadyLiked
-        ? prisma.like.delete({
-            where: { artistId_artworkId: { artistId, artworkId } },
-          })
-        : prisma.like.create({ data: { artistId, artworkId } }),
+    await db.transaction(async (tx) => {
+      if (alreadyLiked) {
+        await tx
+          .delete(likes)
+          .where(
+            and(eq(likes.artworkId, artworkId), eq(likes.artistId, artistId)),
+          );
 
-      prisma.artwork.update({
-        where: { id: artworkId },
-        data: {
-          likesCount: {
-            [alreadyLiked ? "decrement" : "increment"]: 1,
-          },
-        },
-      }),
-    ]);
+        await tx
+          .update(artworks)
+          .set({ likesCount: sql`${artworks.likesCount} - 1` })
+          .where(eq(artworks.id, artworkId));
+
+        return;
+      }
+
+      await tx.insert(likes).values({ artistId, artworkId });
+
+      await tx
+        .update(artworks)
+        .set({ likesCount: sql`${artworks.likesCount} + 1` })
+        .where(eq(artworks.id, artworkId));
+    });
 
     revalidatePath(path);
 

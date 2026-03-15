@@ -1,8 +1,7 @@
 import ArtworkPost from "@/app/components/artwork-module/ArtworkPost";
 import { getArtistId } from "@/app/lib/auth-utils";
-import prisma from "@/app/lib/db";
+import { db } from "@/app/lib/db";
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
   title: `Explore Artworks`,
@@ -12,31 +11,22 @@ export const metadata: Metadata = {
 const Home = async () => {
   const { artistId } = await getArtistId();
 
-  const artworks = await prisma.artwork.findMany({
-    select: {
-      id: true,
-      createdAt: true,
-      theme: true,
-      artworkImage: true,
-      likesCount: true,
-      commentsCount: true,
-      roomId: true,
-      updatedAt: true,
-    },
-    include: {
+  const artworks = await db.query.artworks.findMany({
+    with: {
       artists: {
-        select: {
-          id: true,
-          username: true,
+        with: {
+          artist: {
+            columns: {
+              id: true,
+              username: true,
+            },
+          },
         },
       },
-
       comments: {
-        select: {
-          id: true,
-          content: true,
+        with: {
           artist: {
-            select: {
+            columns: {
               id: true,
               username: true,
             },
@@ -44,19 +34,20 @@ const Home = async () => {
         },
       },
     },
-    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+    orderBy: (artwork, { desc }) => [desc(artwork.createdAt), desc(artwork.id)],
   });
 
   let likedArtworkIds = new Set<string>();
 
-  const artistLikes = await prisma.like.findMany({
-    where: {
-      artistId,
-      artworkId: { in: artworks.map((artwork) => artwork.id) },
-    },
-    select: {
-      artworkId: true,
-    },
+  const artistLikes = await db.query.likes.findMany({
+    where: (likes, { and, eq, inArray }) =>
+      and(
+        eq(likes.artistId, artistId),
+        inArray(
+          likes.artworkId,
+          artworks.map((a) => a.id),
+        ),
+      ),
   });
 
   likedArtworkIds = new Set(artistLikes.map((like) => like.artworkId));
@@ -68,7 +59,6 @@ const Home = async () => {
           <ArtworkPost
             key={artwork.id}
             index={index}
-            // @ts-expect-error - TypeScript is having trouble inferring the type of artwork
             artwork={artwork}
             isLiked={likedArtworkIds.has(artwork.id)}
             className="mb-50"

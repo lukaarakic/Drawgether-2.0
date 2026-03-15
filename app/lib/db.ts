@@ -1,28 +1,12 @@
-import { PrismaClient } from "@/app/generated/prisma/client";
-import { withAccelerate } from "@prisma/extension-accelerate";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+import * as schema from "@/drizzle/schema";
+import * as relations from "@/drizzle/relations";
 
-const databaseUrl = process.env.DATABASE_URL;
+const connectionString = process.env.DATABASE_URL!;
 
-if (!databaseUrl) {
-  throw new Error(
-    "Please define the DATABASE_URL environment variable inside .env",
-  );
-}
+const client = postgres(connectionString, { prepare: false });
 
-const prismaClientSingleton = () => {
-  return new PrismaClient({
-    accelerateUrl: databaseUrl,
-  }).$extends(withAccelerate());
-};
-
-declare const globalThis: {
-  prismaGlobal: ReturnType<typeof prismaClientSingleton>;
-} & typeof global;
-
-const prisma = globalThis.prismaGlobal || prismaClientSingleton();
-
-if (process.env.NODE_ENV !== "production") {
-  globalThis.prismaGlobal = prisma;
-}
-
-export default prisma;
+export const db = drizzle(client, {
+  schema: { ...schema, ...relations },
+});
