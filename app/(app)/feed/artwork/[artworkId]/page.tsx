@@ -53,11 +53,16 @@ const ArtworkPage = async ({
 
   const isLiked = artwork.likes.some((like) => like.artistId === artistId);
 
+  const formattedArtwork = {
+    ...artwork,
+    artists: artwork.artists.map((joinRow) => joinRow.artist),
+  };
+
   return (
     <div className="grid grid-cols-2 p-8 gap-20 mt-[10vh]">
       <ArtworkPost
         isLiked={isLiked}
-        artwork={artwork}
+        artwork={formattedArtwork}
         index={1}
         className="w-full"
         showComments={false}
