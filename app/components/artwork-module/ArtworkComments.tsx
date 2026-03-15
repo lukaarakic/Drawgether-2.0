@@ -1,19 +1,8 @@
+import { ArtworkComment } from "@/drizzle/types";
 import Link from "next/link";
-import { Prisma } from "@/app/generated/prisma/client";
 
-type Comments = Prisma.ArtworkGetPayload<{
-  include: {
-    comments: {
-      select: {
-        id: true;
-        content: true;
-        artist: { select: { id: true; username: true } };
-      };
-    };
-  };
-}>;
 type ArtworkCommentsProps = {
-  comments: Comments["comments"];
+  comments: ArtworkComment[];
   artworkId: string;
 };
 

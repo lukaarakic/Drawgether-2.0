@@ -61,13 +61,18 @@ const ShowArtwork = async ({
 
   isLiked = !!existingLike;
 
+  const formattedArtwork = {
+    ...artwork,
+    artists: artwork.artists.map((joinRow) => joinRow.artist),
+  };
+
   return (
     <Modal
       boxClassName="w-max h-min top-[52.5%]"
       className="grid w-max grid-cols-2 items-start justify-items-center gap-20"
     >
       <ArtworkPost
-        artwork={artwork}
+        artwork={formattedArtwork}
         index={1}
         className="w-full"
         showComments={false}

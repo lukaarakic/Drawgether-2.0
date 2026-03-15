@@ -95,6 +95,16 @@ const Profile = async ({
     (follower) => follower.followerId === loggedInArtistId.id,
   );
 
+  const formattedArtist = {
+    artworks: artist.artworks.map((artworkJoinRow) => ({
+      ...artworkJoinRow.artwork,
+
+      artists: artworkJoinRow.artwork.artists.map(
+        (artistJoinRow) => artistJoinRow.artist,
+      ),
+    })),
+  };
+
   return (
     <>
       <div className="mx-auto w-[90%] xs:w-7xl mt-20 md:mt-72">
@@ -137,10 +147,17 @@ const Profile = async ({
         {hasArtworks ? (
           <>
             <div className="hidden md:block">
-              <SmallArtworkContainer artist={artist} />
+              <SmallArtworkContainer
+                artist={{
+                  username: artist.username,
+                  artworks: formattedArtist.artworks.map(
+                    ({ id, artworkImage }) => ({ id, artworkImage }),
+                  ),
+                }}
+              />
             </div>
             <div className="md:hidden">
-              <ArtworksContainer artworks={artist.artworks} />
+              <ArtworksContainer artworks={formattedArtist.artworks} />
             </div>
           </>
         ) : (

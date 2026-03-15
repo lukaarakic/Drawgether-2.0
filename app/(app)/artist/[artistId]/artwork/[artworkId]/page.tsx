@@ -1,7 +1,7 @@
 import ArtworkPost from "@/app/components/artwork-module/ArtworkPost";
 import CommentContainer from "@/app/components/comment-module/CommentsContainer";
 import { getArtistId } from "@/app/lib/auth-utils";
-import prisma from "@/app/lib/db";
+import { db } from "@/app/lib/db";
 import { notFound } from "next/navigation";
 
 const ArtworkPage = async ({
@@ -11,17 +11,31 @@ const ArtworkPage = async ({
 }) => {
   const { artworkId } = await params;
 
-  const artwork = await prisma.artwork.findUnique({
-    where: { id: artworkId },
-    include: {
+  const artwork = await db.query.artworks.findFirst({
+    where: (artwork, { eq }) => eq(artwork.id, artworkId),
+    with: {
       artists: {
-        select: { id: true, username: true },
+        with: {
+          artist: {
+            columns: {
+              id: true,
+              username: true,
+            },
+          },
+        },
       },
       comments: {
-        select: {
+        columns: {
           id: true,
           content: true,
-          artist: { select: { id: true, username: true } },
+        },
+        with: {
+          artist: {
+            columns: {
+              id: true,
+              username: true,
+            },
+          },
         },
       },
     },
@@ -33,8 +47,9 @@ const ArtworkPage = async ({
 
   const { artistId } = await getArtistId();
 
-  const existingLike = await prisma.like.findUnique({
-    where: { artistId_artworkId: { artistId, artworkId } },
+  const existingLike = await db.query.likes.findFirst({
+    where: (like, { eq }) =>
+      eq(like.artistId, artistId) && eq(like.artworkId, artworkId),
   });
 
   const isLiked = !!existingLike;

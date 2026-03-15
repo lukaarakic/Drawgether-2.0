@@ -1,14 +1,14 @@
 "use client";
 
 import LobbyClient from "./LobbyClient";
-import { RoomStatus } from "@/app/generated/prisma/enums";
 import GameCanvas from "./GameCanvas";
-import { Artist } from "@/app/generated/prisma/client";
 import { createClient } from "@supabase/supabase-js";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import LobbyStartingPanel from "@/app/(app)/room/[roomId]/LobbyStartingPanel";
 import { activateRoomAction } from "@/app/lib/actions/room";
+import { Artist } from "@/drizzle/schema";
+import { RoomStatus } from "@/drizzle/types";
 
 interface RoomManagerProps {
   roomId: string;
