@@ -13,6 +13,7 @@ type NavbarProps = {
 
 const Navbar = ({ username, isMobile = false }: NavbarProps) => {
   const pathname = usePathname();
+  const isTutorialPage = pathname.startsWith("/tutorial");
 
   const [rotations] = useState(() => ({
     feed: Math.random() * 4.8 - 2.4,
@@ -25,19 +26,19 @@ const Navbar = ({ username, isMobile = false }: NavbarProps) => {
     new Audio("/audio/bloop.wav").play();
   }
 
+  if (isTutorialPage) {
+    return null;
+  }
+
   const linkClass = (path: string) => {
     const isActive = pathname.startsWith(path);
     return `text-border md:text-border-lg uppercase text-white ${isActive ? "activeNavLink" : ""}`;
   };
 
-  const linkStyle = (rotation: number) =>
-    ({
-      "--nav-rotation": `${rotation.toFixed(2)}deg`,
-    }) as React.CSSProperties;
-
   return (
     <div>
       <div className="fixed left-0 top-0 z-30 hidden h-12 w-screen bg-white md:block"></div>
+
       <nav
         className="box-shadow fixed bottom-11 left-1/2 z-50 flex h-[11.3rem] w-[90%] -translate-x-1/2 items-center justify-between
        rounded-full bg-blue px-20 align-middle text-25 xs:px-44 xs:text-32 md:top-11 md:px-28 lg:w-588 lg:px-44 lg:text-40"
@@ -46,7 +47,6 @@ const Navbar = ({ username, isMobile = false }: NavbarProps) => {
           data-text="HOME"
           href="/feed"
           className={linkClass("/feed")}
-          style={linkStyle(rotations.feed)}
           onClick={play}
         >
           Home
@@ -55,7 +55,6 @@ const Navbar = ({ username, isMobile = false }: NavbarProps) => {
           data-text="SEARCH"
           href="/search"
           className={linkClass("/search")}
-          style={linkStyle(rotations.search)}
           onClick={play}
         >
           Search
@@ -72,7 +71,6 @@ const Navbar = ({ username, isMobile = false }: NavbarProps) => {
           data-text="profile"
           href={`/artist/${username}`}
           className={linkClass(`/artist/${username}`)}
-          style={linkStyle(rotations.profile)}
           onClick={play}
         >
           Profile
@@ -82,7 +80,6 @@ const Navbar = ({ username, isMobile = false }: NavbarProps) => {
             data-text="play"
             href="/room"
             className={linkClass("/room")}
-            style={linkStyle(rotations.play)}
             onClick={play}
           >
             Play

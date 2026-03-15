@@ -50,7 +50,7 @@ const ArtworkPost = async ({
           alt={artwork.theme}
           width={572}
           height={572}
-          className="box-shadow mt-5 h-[57.2rem] w-[57.2rem] object-cover"
+          className="box-shadow mt-5 h-[57.2rem] w-[57.2rem] aspect-square object-cover"
         />
 
         <div className="absolute -bottom-12 -left-5 flex">

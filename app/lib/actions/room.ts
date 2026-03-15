@@ -320,26 +320,18 @@ export async function cancelGameCountdownAction(
 export async function finalizeGameCountdownAction(
   roomDatabaseId: string,
   roomId: string,
-) {
+): Promise<boolean> {
   const room = await getHostRoom(roomDatabaseId, roomId);
-
-  console.log(
-    `Date now: ${new Date().toISOString()}, Room startsAt: ${room?.startsAt?.toISOString()}`,
-  );
-  console.log("Finalizing game countdown for room:", roomId);
 
   if (!room || room.status !== RoomStatus.WAITING || !room.startsAt) {
     console.error("Room not found or invalid status for finalizing countdown");
-    return;
+    return false;
   }
 
-  if (room.startsAt.getTime() > Date.now()) {
+  if (room.startsAt.getTime() > Date.now() + 2000) {
     console.error("Countdown has not expired yet for room:", roomId);
-    return;
+    return false;
   }
-
-  console.log("Generating room opening and activating room:", roomId);
-
   const roomOpening = await generateRoomOpening(roomId);
 
   const result = await db
@@ -360,10 +352,11 @@ export async function finalizeGameCountdownAction(
     );
 
   if (!result.count) {
-    return;
+    return false;
   }
 
   revalidatePath(`/room/${roomId}`);
+  return true;
 }
 
 export async function activateRoomAction(

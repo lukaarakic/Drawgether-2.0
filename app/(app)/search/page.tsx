@@ -6,7 +6,6 @@ import ArtistCircle from "@/app/components/ui/ArtistCircle";
 import BoxLabel from "@/app/components/ui/BoxLabel";
 import SearchIcon from "@/app/assets/misc/searchIcon.svg";
 import { searchArtist, searchArtistsAction } from "@/app/lib/searchArtists";
-import MainAlignOnMount from "./MainAlignOnMount";
 
 export const metadata: Metadata = {
   title: "Find Artist",
@@ -28,7 +27,6 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
 
   return (
     <>
-      <MainAlignOnMount />
       <div className="mt-20 md:mt-96">
         <form
           action={searchArtistsAction}

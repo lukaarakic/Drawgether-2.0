@@ -95,7 +95,7 @@
     box-sizing: border-box;
   }
 
-  @media (width <= 160em) {
+  /* @media (width <= 160em) {
     html {
       font-size: calc(100vw / 2560 * 12);
     }
@@ -110,14 +110,30 @@
       font-size: calc(100vw / 1240 * 10);
     }
   }
-  @media (width <= 45em) {
-    html {
-      font-size: calc(100vw / 720 * 10);
-    }
-  }
   @media (width <= 26.5625em) {
     html {
-      font-size: calc(100vw / 425 * 8);
+      font-size: calc(100vw / 425 * 6);
+    }
+  } */
+
+  @media only screen and (max-width: 160em) {
+    html {
+      font-size: calc(100vw / 2560 * 12);
+    }
+  }
+  @media only screen and (max-width: 120em) {
+    html {
+      font-size: calc(100vw / 1920 * 10);
+    }
+  }
+  @media only screen and (max-width: 63.8em) {
+    html {
+      font-size: calc(100vw / 1024 * 10);
+    }
+  }
+  @media only screen and (max-width: 36.25em) {
+    html {
+      font-size: calc(100vw / 580 * 10);
     }
   }
 }
@@ -327,7 +343,7 @@
 
   .transitionBlock {
     z-index: 999;
-    @apply fixed left-0 top-0 h-svh w-full bg-blue;
+    @apply fixed inset-0 h-svh w-full bg-blue;
   }
 }
 

@@ -16,12 +16,12 @@ export default function PlayerSidebar({
 }: PlayerSidebarProps) {
   return (
     <aside className="flex items-center justify-between lg:flex-col">
-      <div>
+      <div className="flex lg:block">
         {artists.map((artist) => (
           <ArtistCircle
             key={artist.id}
             username={artist.username}
-            className="lg:not-first:-mt-10"
+            className="not-first:-ml-10 lg:not-first:-mt-10 lg:not-first:ml-0"
           />
         ))}
       </div>

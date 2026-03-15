@@ -4,7 +4,7 @@ import RightCloud from "@/app/assets/clouds/right_blue.svg";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div>
+    <div className="pb-40 lg:mt-80">
       {children}
 
       <div>

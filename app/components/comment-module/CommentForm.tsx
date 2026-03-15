@@ -38,7 +38,7 @@ const CommentForm = ({ artworkId }: { artworkId: string }) => {
           name="content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          className="input h-20 max-w-2xl px-8 py-10 text-20"
+          className="input h-20 max-w-2xl md:w-auto w-120 px-8 py-10 text-20"
           placeholder="Your comment..."
         />
 

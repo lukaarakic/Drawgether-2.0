@@ -1,9 +1,13 @@
+import Image from "next/image";
+import type { StaticImageData } from "next/image";
+import type { CSSProperties } from "react";
+
 interface WindowProps {
-  index: number
-  text: string
-  type: "rule" | "play"
-  details?: string
-  style?: any
+  index: number;
+  text: string;
+  type: "rule" | "play";
+  details?: StaticImageData;
+  style?: CSSProperties;
 }
 
 const Window = ({ index, text, type, details, style }: WindowProps) => {
@@ -11,7 +15,7 @@ const Window = ({ index, text, type, details, style }: WindowProps) => {
     <div
       className={
         type === "rule"
-          ? `floatAnimation absolute max-h-[22rem] w-[36rem] `
+          ? "floatAnimation absolute max-h-88 w-xl"
           : "floatAnimationSmall"
       }
       style={style}
@@ -26,11 +30,11 @@ const Window = ({ index, text, type, details, style }: WindowProps) => {
           {index}.
         </span>
 
-        {type === "rule" ? <img src={details} alt="" /> : null}
+        {type === "rule" && details ? <Image src={details} alt="" /> : null}
       </div>
 
       <div
-        className={`border-only flex h-64 items-center bg-white ${type === "rule" ? "border-t-0 py-8" : "w-[40rem] justify-center"}`}
+        className={`border-only flex h-64 items-center bg-white ${type === "rule" ? "border-t-0 py-8" : "w-160 justify-center"}`}
       >
         <p
           className={`text-border text-border-lg drop-shadow-filter-lg mx-auto text-40 text-white ${type === "rule" ? "w-[27.6rem]" : "w-[33.3rem]"}`}
@@ -40,6 +44,6 @@ const Window = ({ index, text, type, details, style }: WindowProps) => {
         </p>
       </div>
     </div>
-  )
-}
-export default Window
+  );
+};
+export default Window;

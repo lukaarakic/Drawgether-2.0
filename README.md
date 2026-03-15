@@ -11,7 +11,7 @@ As a solo developer, I use Trello to organize my workflow and manage the feature
 
 - **Framework:** Next.js (App Router)
 - **Database:** PostgreSQL
-- **ORM:** Prisma
+- **ORM:** Drizzle
 - **Language:** TypeScript/JavaScript
 
 ## ⚙️ Setup & Installation
@@ -35,6 +35,9 @@ As a solo developer, I use Trello to organize my workflow and manage the feature
     DATABASE_URL="your_postgresql_url_here"
     JWT_SECRET="your_jwt_secret"
     OPENAI_API_KEY="your_openai_api_key"
+    RESEND_API_KEY="your_resend_api_key"
+    NEXT_PUBLIC_SUPABASE_URL="your_supabase_url"
+    NEXT_PUBLIC_SUPABASE_ANON_KEY="your_supabase_anon_key"
     ```
 
 4.  **Database Sync:**

@@ -62,7 +62,7 @@ const Home = async () => {
 
   return (
     <div>
-      <div className="flex flex-col mt-20 md:mt-72">
+      <div className="flex flex-col mt-20 md:mt-72 px-10 overflow-hidden">
         {formattedArtworks.map((artwork, index) => (
           <ArtworkPost
             key={artwork.id}

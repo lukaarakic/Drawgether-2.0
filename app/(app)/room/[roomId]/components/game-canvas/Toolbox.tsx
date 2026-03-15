@@ -26,7 +26,7 @@ const Toolbox = ({
   onFill,
 }: ToolboxProps) => {
   return (
-    <aside className="flex flex-col xs:flex-row lg:flex-col lg:justify-normal justify-between">
+    <aside className="flex xs:flex-row lg:flex-col lg:justify-normal justify-between">
       <ToolActions
         activeTool={activeTool}
         onSelectPencil={onSelectPencil}

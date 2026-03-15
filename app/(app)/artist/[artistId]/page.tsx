@@ -107,7 +107,7 @@ const Profile = async ({
 
   return (
     <>
-      <div className="mx-auto w-[90%] xs:w-7xl mt-20 md:mt-72">
+      <div className="mx-auto w-[90%] xs:w-7xl mt-20 md:mt-72 pb-60">
         <div className="flex flex-col items-center justify-center gap-16 mb-32">
           <div className="flex flex-col items-center justify-center gap-16 md:flex-row">
             <ArtistCircle username={artist.username} size="large" />
@@ -133,7 +133,7 @@ const Profile = async ({
             </BoxLabel>
           </div>
 
-          <div className="flex items-center justify-between gap-16">
+          <div className="flex items-center justify-between gap-8 md:gap-16">
             <Follow
               isOwner={isOwner}
               isFollowing={isFollowing}
