@@ -4,6 +4,12 @@ import Modal from "@/app/components/ui/Modal";
 import { getArtist, logout } from "@/app/lib/auth-utils";
 import { db } from "@/app/lib/db";
 import { redirect } from "next/navigation";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Artwork",
+  description: "Preview artwork and comments.",
+};
 
 const ShowArtwork = async ({
   params,

@@ -7,6 +7,7 @@ import z from "zod";
 import { db } from "../db";
 import { and, eq } from "drizzle-orm";
 import { artists, verificationTokens } from "@/drizzle/schema";
+import { validateHoneypot } from "../security";
 const VerifySchema = z.object({
   token: z.string().length(6, "Code must be 6 digits"),
 });
@@ -20,6 +21,12 @@ export async function verifyTOTPAction(
   prevState: VerifyState,
   formData: FormData,
 ): Promise<VerifyState> {
+  if (!validateHoneypot(formData))
+    return {
+      errors: {},
+      message: "Unknown error occurred. Please try again.",
+    };
+
   const cookieStore = await cookies();
   const verifyTarget = cookieStore.get("dg_verify_target")?.value;
   const verifyType = cookieStore.get("dg_verify_type")?.value;

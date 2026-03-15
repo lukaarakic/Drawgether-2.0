@@ -1,5 +1,11 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import LoginForm from "./LoginForm";
+
+export const metadata: Metadata = {
+  title: "Login",
+  description: "Sign in to continue drawing with friends.",
+};
 
 export default async function Login() {
   return (

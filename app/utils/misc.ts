@@ -21,3 +21,9 @@ export function generateRoomCode(): string {
 
   return result;
 }
+
+export function play(type: "bloop" | "scribble" = "bloop") {
+  const audio = type === "bloop" ? "/audio/bloop.wav" : "/audio/scribble.wav";
+
+  new Audio(audio).play();
+}

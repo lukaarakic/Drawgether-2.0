@@ -9,6 +9,35 @@ import Link from "next/link";
 import Image from "next/image";
 import SettingsIcon from "@/app/assets/misc/settings.svg";
 import Follow from "./Follow";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ artistId: string }>;
+}): Promise<Metadata> {
+  const { artistId } = await params;
+  const displayArtistId = artistId
+    .split(/[-_\s]+/)
+    .filter(Boolean)
+    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+    .join(" ");
+  const title = `${displayArtistId} Profile`;
+  const description = `View ${displayArtistId}'s profile, followers, and artworks.`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+    },
+    twitter: {
+      title,
+      description,
+    },
+  };
+}
 
 const Profile = async ({
   params,

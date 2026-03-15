@@ -4,6 +4,7 @@ import ErrorList from "@/app/components/error/ErrorList";
 import BoxButton from "@/app/components/ui/BoxButton";
 import HoneypotField from "@/app/components/ui/HoneypotField";
 import { AuthState, registerAction } from "@/app/lib/actions/register";
+import { play } from "@/app/utils/misc";
 import Image from "next/image";
 import Link from "next/link";
 import { useActionState } from "react";
@@ -77,7 +78,12 @@ const RegisterPage = () => {
 
         <div>
           <div className="checkbox">
-            <input type="checkbox" id="remember-me" className="check" />
+            <input
+              type="checkbox"
+              id="remember-me"
+              className="check"
+              onChange={() => play("scribble")}
+            />
             <label
               htmlFor="remember-me"
               className="flex items-center justify-center"

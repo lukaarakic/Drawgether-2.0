@@ -3,6 +3,12 @@ import CommentContainer from "@/app/components/comment-module/CommentsContainer"
 import { getArtistId } from "@/app/lib/auth-utils";
 import { db } from "@/app/lib/db";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Artwork",
+  description: "View artwork details, likes, and comments.",
+};
 
 const ArtworkPage = async ({
   params,

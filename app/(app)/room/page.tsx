@@ -2,6 +2,12 @@ import FullLogo from "@/app/assets/logos/full_both_logo.svg";
 import { createRoom } from "@/app/lib/actions/room";
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Play",
+  description: "Create or join a room and start drawing together.",
+};
 
 const Room = () => {
   return (

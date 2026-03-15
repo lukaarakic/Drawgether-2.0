@@ -7,6 +7,12 @@ import { getArtistId } from "@/app/lib/auth-utils";
 import { db } from "@/app/lib/db";
 import { maskEmail } from "@/app/utils/misc";
 import { notFound, redirect } from "next/navigation";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Settings",
+  description: "Manage your account and email verification.",
+};
 
 const Settings = async ({
   params,

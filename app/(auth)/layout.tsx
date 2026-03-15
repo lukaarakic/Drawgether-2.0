@@ -8,8 +8,8 @@ import LeftCloud from "@/app/assets/clouds/left_white.svg";
 import RightCloud from "@/app/assets/clouds/right_white.svg";
 
 export const metadata: Metadata = {
-  title: "Drawgether",
-  description: "Welcome to Remix!",
+  title: "Authentication",
+  description: "Sign in, register, and verify your Drawgether account.",
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
