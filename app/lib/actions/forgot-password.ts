@@ -1,12 +1,12 @@
 "use server";
 
-import { AuthTokenType } from "@/app/generated/prisma/enums";
 import { generateSecretAndTOTP } from "../totp";
-import prisma from "../db";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import z from "zod";
 import { sendVerificationEmail } from "./email";
+import { db } from "../db";
+import { authTokenTypeEnum, verificationTokens } from "@/drizzle/schema";
 
 export type ForgotPasswordState = {
   errors: { identifier?: string[] };
@@ -32,14 +32,13 @@ export async function ForgotPasswordAction(
     };
   }
 
-  const artist = await prisma.artist.findFirst({
-    where: {
-      OR: [
-        { email: result.data.identifier },
-        { username: result.data.identifier },
-      ],
-    },
-    select: {
+  const artist = await db.query.artists.findFirst({
+    where: (artist, { eq, or }) =>
+      or(
+        eq(artist.email, result.data.identifier),
+        eq(artist.username, result.data.identifier),
+      ),
+    columns: {
       id: true,
       email: true,
       username: true,
@@ -55,26 +54,25 @@ export async function ForgotPasswordAction(
 
   const { secret, token } = await generateSecretAndTOTP();
 
-  await prisma.verificationToken.upsert({
-    where: {
-      target_type: {
-        target: artist.email,
-        type: AuthTokenType.PASSWORD_RESET,
-      },
-    },
-    update: {
-      token,
-      secret,
-      expiresAt: new Date(Date.now() + 15 * 60 * 1000),
-    },
-    create: {
+  const newExpiresAt = new Date(Date.now() + 15 * 60 * 1000);
+
+  await db
+    .insert(verificationTokens)
+    .values({
       target: artist.email,
-      type: AuthTokenType.PASSWORD_RESET,
+      type: authTokenTypeEnum.enumValues[0],
       token,
       secret,
-      expiresAt: new Date(Date.now() + 15 * 60 * 1000),
-    },
-  });
+      expiresAt: newExpiresAt,
+    })
+    .onConflictDoUpdate({
+      target: [verificationTokens.target, verificationTokens.type],
+      set: {
+        token,
+        secret,
+        expiresAt: newExpiresAt,
+      },
+    });
 
   await sendVerificationEmail(artist.email, token, "reset", artist.username);
 
@@ -87,7 +85,7 @@ export async function ForgotPasswordAction(
     expires: new Date(Date.now() + 15 * 60 * 1000),
   });
 
-  cookieStore.set("dg_verify_type", AuthTokenType.PASSWORD_RESET, {
+  cookieStore.set("dg_verify_type", authTokenTypeEnum.enumValues[0], {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",

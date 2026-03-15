@@ -110,7 +110,7 @@ const RegisterPage = () => {
                 className="text-border text-border-sm text-20 text-white"
                 data-text="Remember me?"
               >
-                4 Remember me?
+                Remember me?
               </span>
             </label>
           </div>

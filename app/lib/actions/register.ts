@@ -5,13 +5,14 @@ import {
   PasswordSchema,
   UsernameSchema,
 } from "@/app/utils/user-validation";
-import prisma from "../db";
 import z from "zod";
 import { getPasswordHash } from "../auth-utils";
 import { signJWT } from "../jwt";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { validateHoneypot } from "../security";
+import { db } from "../db";
+import { artists, passwords } from "@/drizzle/schema";
 
 export type AuthState = {
   errors: { username?: string[]; email?: string[]; password?: string[] };
@@ -29,15 +30,14 @@ const RegisterSchema = z
       .transform((val) => val === "on"),
   })
   .superRefine(async (data, ctx) => {
-    const [existingUsername, existingEmail] = await prisma.$transaction([
-      prisma.artist.findUnique({
-        where: { username: data.username },
-        select: { id: true },
+    const [existingUsername, existingEmail] = await Promise.all([
+      db.query.artists.findFirst({
+        where: (artist, { eq }) => eq(artist.username, data.username),
+        columns: { id: true },
       }),
-
-      prisma.artist.findUnique({
-        where: { email: data.email },
-        select: { id: true },
+      db.query.artists.findFirst({
+        where: (artist, { eq }) => eq(artist.email, data.email),
+        columns: { id: true },
       }),
     ]);
 
@@ -80,24 +80,35 @@ export async function registerAction(
 
   try {
     const hashedPassword = await getPasswordHash(result.data.password);
-    const artist = await prisma.artist.create({
-      data: {
+
+    const userRole = await db.query.roles.findFirst({
+      where: (role, { eq }) => eq(role.name, "user"),
+      columns: { id: true, name: true },
+    });
+
+    if (!userRole) {
+      return {
+        errors: {},
+        message: "Role configuration error. Please contact support.",
+      };
+    }
+
+    const [createdArtist] = await db
+      .insert(artists)
+      .values({
         username: result.data.username,
         email: result.data.email,
-        password: {
-          create: {
-            hash: hashedPassword,
-          },
-        },
-        role: {
-          connect: { name: "user" },
-        },
-      },
-      select: { id: true, role: { select: { name: true } } },
+        roleId: userRole.id,
+      })
+      .returning({ id: artists.id });
+
+    await db.insert(passwords).values({
+      artistId: createdArtist.id,
+      hash: hashedPassword,
     });
 
     const token = await signJWT(
-      { sub: artist.id, role: artist.role.name },
+      { sub: createdArtist.id, role: userRole.name },
       result.data.rememberMe ? "30d" : "24h",
     );
 

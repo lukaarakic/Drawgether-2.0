@@ -2,8 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { getArtistId } from "../auth-utils";
-import prisma from "../db";
 import z from "zod";
+import { db } from "../db";
+import { artworks, comments } from "@/drizzle/schema";
+import { eq, sql } from "drizzle-orm";
 
 const CommentSchema = z.object({
   content: z
@@ -28,19 +30,18 @@ export async function addCommentAction(
   const validContent = validationResult.data.content;
 
   try {
-    await prisma.$transaction([
-      prisma.comment.create({
-        data: {
-          content: validContent,
-          artistId: loggedInArtist.artistId,
-          artworkId,
-        },
-      }),
-      prisma.artwork.update({
-        where: { id: artworkId },
-        data: { commentsCount: { increment: 1 } },
-      }),
-    ]);
+    await db.transaction(async (tx) => {
+      await tx.insert(comments).values({
+        content: validContent,
+        artistId: loggedInArtist.artistId,
+        artworkId,
+      });
+
+      await tx
+        .update(artworks)
+        .set({ commentsCount: sql`${artworks.commentsCount} + 1` })
+        .where(eq(artworks.id, artworkId));
+    });
 
     revalidatePath(path);
     return { success: true };
@@ -57,9 +58,9 @@ export async function deleteCommentAction(
 ) {
   const loggedInArtist = await getArtistId();
 
-  const comment = await prisma.comment.findUnique({
-    where: { id: commentId },
-    select: { artistId: true },
+  const comment = await db.query.comments.findFirst({
+    where: (comment, { eq }) => eq(comment.id, commentId),
+    columns: { artistId: true },
   });
 
   if (!comment) return { error: "Comment not found" };
@@ -70,16 +71,14 @@ export async function deleteCommentAction(
   if (!isOwner && !isAdmin) return { error: "Unauthorized" };
 
   try {
-    await prisma.$transaction([
-      prisma.comment.delete({
-        where: { id: commentId },
-      }),
+    await db.transaction(async (tx) => {
+      await tx.delete(comments).where(eq(comments.id, commentId));
 
-      prisma.artwork.update({
-        where: { id: artworkId },
-        data: { commentsCount: { decrement: 1 } },
-      }),
-    ]);
+      await tx
+        .update(artworks)
+        .set({ commentsCount: sql`${artworks.commentsCount} - 1` })
+        .where(eq(artworks.id, artworkId));
+    });
 
     revalidatePath(path);
     return { success: true };

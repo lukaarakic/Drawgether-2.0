@@ -2,9 +2,11 @@
 
 import { cookies } from "next/headers";
 import z from "zod";
-import prisma from "../db";
 import { getPasswordHash } from "../auth-utils";
 import { redirect } from "next/navigation";
+import { db } from "../db";
+import { artists, passwords } from "@/drizzle/schema";
+import { eq } from "drizzle-orm";
 
 const ResetPasswordSchema = z
   .object({
@@ -53,20 +55,32 @@ export async function resetPassword(
 
   const hash = await getPasswordHash(result.data.newPassword);
 
-  const updatedArtist = await prisma.artist.update({
-    where: { username: artistUsername },
-    data: {
-      password: {
-        upsert: {
-          create: { hash },
-          update: { hash },
-        },
-      },
-    },
-    select: { id: true },
-  });
+  try {
+    const updatedArtist = await db
+      .update(passwords)
+      .set({
+        hash,
+      })
+      .where(
+        eq(
+          passwords.artistId,
+          db
+            .select({ id: artists.id })
+            .from(artists)
+            .where(eq(artists.username, artistUsername))
+            .limit(1),
+        ),
+      )
+      .returning({ id: passwords.artistId });
 
-  if (!updatedArtist) {
+    if (!updatedArtist) {
+      return {
+        errors: {},
+        message: "Failed to update password. Please try again.",
+      };
+    }
+  } catch (err) {
+    console.error(err);
     return {
       errors: {},
       message: "Failed to update password. Please try again.",
@@ -74,6 +88,5 @@ export async function resetPassword(
   }
 
   cookieStore.delete("dg_reset_artist_username");
-
   redirect("/login");
 }
