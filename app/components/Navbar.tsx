@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import LogoOnly from "@/app/assets/logos/logo_only.svg";
+import { play } from "../utils/misc";
 
 type NavbarProps = {
   username: string;
@@ -21,10 +22,6 @@ const Navbar = ({ username, isMobile = false }: NavbarProps) => {
     profile: Math.random() * 4.8 - 2.4,
     play: Math.random() * 4.8 - 2.4,
   }));
-
-  function play() {
-    new Audio("/audio/bloop.wav").play();
-  }
 
   if (isTutorialPage) {
     return null;
@@ -47,7 +44,7 @@ const Navbar = ({ username, isMobile = false }: NavbarProps) => {
           data-text="HOME"
           href="/feed"
           className={linkClass("/feed")}
-          onClick={play}
+          onClick={() => play()}
         >
           Home
         </Link>
@@ -55,12 +52,12 @@ const Navbar = ({ username, isMobile = false }: NavbarProps) => {
           data-text="SEARCH"
           href="/search"
           className={linkClass("/search")}
-          onClick={play}
+          onClick={() => play()}
         >
           Search
         </Link>
 
-        <Link href="/feed" onClick={play} className="hidden md:block">
+        <Link href="/feed" onClick={() => play()} className="hidden md:block">
           <Image
             src={LogoOnly}
             alt="Logo of drawgether"
@@ -71,7 +68,7 @@ const Navbar = ({ username, isMobile = false }: NavbarProps) => {
           data-text="profile"
           href={`/artist/${username}`}
           className={linkClass(`/artist/${username}`)}
-          onClick={play}
+          onClick={() => play()}
         >
           Profile
         </Link>
@@ -80,7 +77,7 @@ const Navbar = ({ username, isMobile = false }: NavbarProps) => {
             data-text="play"
             href="/room"
             className={linkClass("/room")}
-            onClick={play}
+            onClick={() => play()}
           >
             Play
           </Link>

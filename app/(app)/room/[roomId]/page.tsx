@@ -2,6 +2,12 @@ import { getArtistId } from "@/app/lib/auth-utils";
 import { notFound } from "next/navigation";
 import RoomManager from "./RoomManager";
 import { db } from "@/app/lib/db";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Room",
+  description: "Live room lobby and drawing game.",
+};
 
 const Lobby = async ({ params }: { params: Promise<{ roomId: string }> }) => {
   const { roomId } = await params;

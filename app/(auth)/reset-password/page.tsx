@@ -1,5 +1,11 @@
 import { cookies } from "next/headers";
+import type { Metadata } from "next";
 import ResetPasswordForm from "./ResetPasswordForm";
+
+export const metadata: Metadata = {
+  title: "Reset Password",
+  description: "Set a new password for your Drawgether account.",
+};
 
 export default async function ResetPasswordPage() {
   const cookieStore = await cookies();

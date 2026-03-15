@@ -1,6 +1,12 @@
 import CommentContainer from "@/app/components/comment-module/CommentsContainer";
 import Modal from "@/app/components/ui/Modal";
 import { db } from "@/app/lib/db";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Artwork Comments",
+  description: "Read and join artwork discussions.",
+};
 
 const ShowComments = async ({
   params,

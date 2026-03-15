@@ -7,6 +7,7 @@ import ErrorList from "@/app/components/error/ErrorList";
 import BoxButton from "@/app/components/ui/BoxButton";
 import Spinner from "@/app/components/ui/Spinner/Spinner";
 import HoneypotField from "@/app/components/ui/HoneypotField";
+import { play } from "@/app/utils/misc";
 
 const LoginForm = () => {
   const initalState: AuthState = { errors: {}, message: "" };
@@ -43,6 +44,7 @@ const LoginForm = () => {
             name="rememberMe"
             id="remember-me"
             className="check"
+            onChange={() => play("scribble")}
           />
           <label
             htmlFor="remember-me"

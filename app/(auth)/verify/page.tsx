@@ -34,7 +34,7 @@ const Verify = () => {
       </div>
 
       <form action={action}>
-        {/* <HoneypotField /> */}
+        <HoneypotField />
         <div className="flex flex-col items-center xs:flex-row">
           <div className="text-center">
             <input
