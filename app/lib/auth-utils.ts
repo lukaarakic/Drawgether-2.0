@@ -39,6 +39,8 @@ export async function getArtist() {
     columns: {
       id: true,
       username: true,
+      email: true,
+      emailVerified: true,
     },
     with: {
       role: {

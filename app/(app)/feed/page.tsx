@@ -37,6 +37,11 @@ const Home = async () => {
     orderBy: (artwork, { desc }) => [desc(artwork.createdAt), desc(artwork.id)],
   });
 
+  const formattedArtworks = artworks.map((artwork) => ({
+    ...artwork,
+    artists: artwork.artists.map((joinRow) => joinRow.artist),
+  }));
+
   let likedArtworkIds = new Set<string>();
 
   const artistLikes = await db.query.likes.findMany({
@@ -48,6 +53,9 @@ const Home = async () => {
           artworks.map((a) => a.id),
         ),
       ),
+    columns: {
+      artworkId: true,
+    },
   });
 
   likedArtworkIds = new Set(artistLikes.map((like) => like.artworkId));
@@ -55,7 +63,7 @@ const Home = async () => {
   return (
     <div>
       <div className="flex flex-col mt-20 md:mt-72">
-        {artworks.map((artwork, index) => (
+        {formattedArtworks.map((artwork, index) => (
           <ArtworkPost
             key={artwork.id}
             index={index}

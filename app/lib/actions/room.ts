@@ -2,15 +2,17 @@
 
 import { generateRoomCode } from "@/app/utils/misc";
 import { getArtistId } from "../auth-utils";
-import prisma from "../db";
 import { redirect } from "next/navigation";
 import z from "zod";
 import { revalidatePath } from "next/cache";
-import { RoomStatus } from "@/app/generated/prisma/enums";
 import OpenAI from "openai";
+import { db } from "../db";
+import { artists, artistsArtworks, artworks, rooms } from "@/drizzle/schema";
+import { and, eq, isNull } from "drizzle-orm";
+import { RoomStatus } from "@/drizzle/types";
 
 const STARTING_COUNTDOWN_MS = 10000;
-const GAME_DURATION_MS = 60 * 60 * 1000;
+const GAME_DURATION_MS = 5 * 60 * 1000;
 const FALLBACK_INTRO_MESSAGE =
   "We hope you'll have fun playing our game! Get your ideas ready.";
 const FALLBACK_TOPICS = [
@@ -121,12 +123,21 @@ export async function createRoom() {
   const code = generateRoomCode();
 
   try {
-    const room = await prisma.room.create({
-      data: {
-        code,
-        ownerId: artistId,
-        artists: { connect: { id: artistId } },
-      },
+    const room = await db.transaction(async (tx) => {
+      const [room] = await tx
+        .insert(rooms)
+        .values({
+          code,
+          ownerId: artistId,
+        })
+        .returning();
+
+      await tx
+        .update(artists)
+        .set({ roomId: room.id })
+        .where(eq(artists.id, artistId));
+
+      return room;
     });
 
     if (!room) throw new Error("Failed to create room");
@@ -158,13 +169,22 @@ export async function joinRoomAction(
   const code = result.data.roomId.toUpperCase();
 
   try {
-    await prisma.room.update({
-      where: { code },
-      data: {
-        artists: {
-          connect: { id: artistId },
+    await db.transaction(async (tx) => {
+      const room = await tx.query.rooms.findFirst({
+        where: eq(rooms.code, code),
+        columns: {
+          id: true,
         },
-      },
+      });
+
+      if (!room) {
+        throw new Error("Room not found");
+      }
+
+      await tx
+        .update(artists)
+        .set({ roomId: room.id })
+        .where(eq(artists.id, artistId));
     });
   } catch (err) {
     console.error("Failed to join room:", err);
@@ -179,9 +199,11 @@ export async function joinRoomAction(
 export async function kickPlayerAction(roomId: string, targetArtistId: string) {
   const { artistId: hostId } = await getArtistId();
 
-  const room = await prisma.room.findUnique({
-    where: { code: roomId },
-    select: { ownerId: true },
+  const room = await db.query.rooms.findFirst({
+    where: eq(rooms.code, roomId),
+    columns: {
+      ownerId: true,
+    },
   });
 
   if (!room || room.ownerId !== hostId) {
@@ -190,14 +212,10 @@ export async function kickPlayerAction(roomId: string, targetArtistId: string) {
   }
 
   try {
-    await prisma.room.update({
-      where: { code: roomId },
-      data: {
-        artists: {
-          disconnect: { id: targetArtistId },
-        },
-      },
-    });
+    await db
+      .update(artists)
+      .set({ roomId: null })
+      .where(eq(artists.id, targetArtistId));
 
     revalidatePath(`/room/${roomId}`);
   } catch (err) {
@@ -209,12 +227,10 @@ export async function leaveRoomAction() {
   const { artistId } = await getArtistId();
 
   try {
-    await prisma.artist.update({
-      where: { id: artistId },
-      data: {
-        roomId: null,
-      },
-    });
+    await db
+      .update(artists)
+      .set({ roomId: null })
+      .where(eq(artists.id, artistId));
   } catch {
     return {
       message: "Failed to leave room. Please try again.",
@@ -227,9 +243,9 @@ export async function leaveRoomAction() {
 async function getHostRoom(roomDatabaseId: string, roomId: string) {
   const { artistId } = await getArtistId();
 
-  const room = await prisma.room.findUnique({
-    where: { id: roomDatabaseId },
-    select: {
+  const room = await db.query.rooms.findFirst({
+    where: eq(rooms.id, roomDatabaseId),
+    columns: {
       ownerId: true,
       code: true,
       status: true,
@@ -259,16 +275,18 @@ export async function startGameCountdownAction(
     return;
   }
 
-  await prisma.room.updateMany({
-    where: {
-      id: roomDatabaseId,
-      status: RoomStatus.WAITING,
-      startsAt: null,
-    },
-    data: {
+  await db
+    .update(rooms)
+    .set({
       startsAt: new Date(Date.now() + 5000),
-    },
-  });
+    })
+    .where(
+      and(
+        eq(rooms.id, roomDatabaseId),
+        eq(rooms.status, RoomStatus.WAITING),
+        isNull(rooms.startsAt),
+      ),
+    );
 
   revalidatePath(`/room/${roomId}`);
 }
@@ -283,16 +301,18 @@ export async function cancelGameCountdownAction(
     return;
   }
 
-  await prisma.room.updateMany({
-    where: {
-      id: roomDatabaseId,
-      status: RoomStatus.WAITING,
-      startsAt: room.startsAt,
-    },
-    data: {
+  await db
+    .update(rooms)
+    .set({
       startsAt: null,
-    },
-  });
+    })
+    .where(
+      and(
+        eq(rooms.id, roomDatabaseId),
+        eq(rooms.status, RoomStatus.WAITING),
+        eq(rooms.startsAt, room.startsAt),
+      ),
+    );
 
   revalidatePath(`/room/${roomId}`);
 }
@@ -322,20 +342,22 @@ export async function finalizeGameCountdownAction(
 
   const roomOpening = await generateRoomOpening(roomId);
 
-  const result = await prisma.room.updateMany({
-    where: {
-      id: roomDatabaseId,
-      status: RoomStatus.WAITING,
-      startsAt: room.startsAt,
-    },
-    data: {
+  const result = await db
+    .update(rooms)
+    .set({
       status: RoomStatus.STARTING,
       startsAt: null,
       startingExpiresAt: new Date(Date.now() + STARTING_COUNTDOWN_MS),
       introMessage: roomOpening.introMessage,
       theme: roomOpening.topic,
-    },
-  });
+    })
+    .where(
+      and(
+        eq(rooms.id, roomDatabaseId),
+        eq(rooms.status, RoomStatus.WAITING),
+        eq(rooms.startsAt, room.startsAt),
+      ),
+    );
 
   if (!result.count) {
     return;
@@ -348,9 +370,9 @@ export async function activateRoomAction(
   roomDatabaseId: string,
   roomId: string,
 ) {
-  const room = await prisma.room.findUnique({
-    where: { id: roomDatabaseId },
-    select: {
+  const room = await db.query.rooms.findFirst({
+    where: eq(rooms.id, roomDatabaseId),
+    columns: {
       status: true,
       startingExpiresAt: true,
       expiresAt: true,
@@ -366,18 +388,20 @@ export async function activateRoomAction(
     return;
   }
 
-  const result = await prisma.room.updateMany({
-    where: {
-      id: roomDatabaseId,
-      status: RoomStatus.STARTING,
-      startingExpiresAt: room.startingExpiresAt,
-    },
-    data: {
+  const result = await db
+    .update(rooms)
+    .set({
       status: RoomStatus.ACTIVE,
       startingExpiresAt: null,
       expiresAt: new Date(Date.now() + GAME_DURATION_MS),
-    },
-  });
+    })
+    .where(
+      and(
+        eq(rooms.id, roomDatabaseId),
+        eq(rooms.status, RoomStatus.STARTING),
+        eq(rooms.startingExpiresAt, room.startingExpiresAt),
+      ),
+    );
 
   if (!result.count) {
     return;
@@ -391,9 +415,9 @@ export async function finishGameAction(
   roomId: string,
   artwork: string,
 ) {
-  const room = await prisma.room.findUnique({
-    where: { id: roomDatabaseId },
-    select: {
+  const room = await db.query.rooms.findFirst({
+    where: eq(rooms.id, roomDatabaseId),
+    columns: {
       status: true,
       startingExpiresAt: true,
       expiresAt: true,
@@ -408,15 +432,17 @@ export async function finishGameAction(
     return;
   }
 
-  const roomWithArtists = await prisma.room.findUnique({
-    where: { id: roomDatabaseId },
-    select: {
+  const roomWithArtists = await db.query.rooms.findFirst({
+    where: eq(rooms.id, roomDatabaseId),
+    columns: {
+      theme: true,
+    },
+    with: {
       artists: {
-        select: {
+        columns: {
           id: true,
         },
       },
-      theme: true,
     },
   });
 
@@ -424,16 +450,35 @@ export async function finishGameAction(
     return;
   }
 
-  await prisma.artwork.create({
-    data: {
-      artworkImage: artwork,
-      roomId: roomDatabaseId,
-      artists: {
-        connect: roomWithArtists.artists.map((artist) => ({ id: artist.id })),
-      },
-      theme: roomWithArtists.theme ?? "Unknown Theme",
-    },
+  const newArtwork = await db.transaction(async (tx) => {
+    const [createdArtwork] = await tx
+      .insert(artworks)
+      .values({
+        artworkImage: artwork,
+        roomId: roomDatabaseId,
+        theme: roomWithArtists.theme ?? "Unknown Theme",
+      })
+      .returning();
+
+    const artistConnections = roomWithArtists.artists.map((artist) => ({
+      artworkId: createdArtwork.id,
+      artistId: artist.id,
+    }));
+
+    if (artistConnections.length > 0) {
+      await tx.insert(artistsArtworks).values(artistConnections);
+    }
+
+    return createdArtwork;
   });
+
+  if (!newArtwork) {
+    console.error(
+      "Failed to create artwork record for finished game in room:",
+      roomId,
+    );
+    return;
+  }
 
   revalidatePath(`/room/${roomId}`);
 }

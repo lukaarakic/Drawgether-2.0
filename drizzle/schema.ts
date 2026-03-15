@@ -22,6 +22,11 @@ export const roomStatusEnum = pgEnum("room_status", [
   "FINISHED",
 ]);
 
+export type AuthTokenType = (typeof authTokenTypeEnum.enumValues)[number];
+export type RoomStatus = (typeof roomStatusEnum.enumValues)[number];
+
+export type Artist = typeof artists.$inferSelect;
+
 // --- PERMISSIONS ---
 export const roles = pgTable("roles", {
   id: text("id")

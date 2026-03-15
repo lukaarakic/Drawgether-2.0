@@ -1,20 +1,7 @@
-import { Prisma } from "@/app/generated/prisma/client";
+import { ArtworkWithArtists } from "@/drizzle/types";
 import ArtworkPost from "../ArtworkPost";
-import prisma from "@/app/lib/db";
 import { getArtistId } from "@/app/lib/auth-utils";
-
-type ArtworkWithArtists = Prisma.ArtworkGetPayload<{
-  include: {
-    artists: { select: { id: true; username: true } };
-    comments: {
-      select: {
-        id: true;
-        artist: { select: { id: true; username: true } };
-        content: true;
-      };
-    };
-  };
-}>;
+import { db } from "@/app/lib/db";
 
 type ArtworksContainerProps = {
   artworks: ArtworkWithArtists[];
@@ -24,12 +11,16 @@ const ArtworksContainer = async ({ artworks }: ArtworksContainerProps) => {
   const { artistId } = await getArtistId();
   let likedArtworkIds = new Set<string>();
 
-  const artistLikes = await prisma.like.findMany({
-    where: {
-      artistId,
-      artworkId: { in: artworks.map((artwork) => artwork.id) },
-    },
-    select: {
+  const artistLikes = await db.query.likes.findMany({
+    where: (like, { eq, and, inArray }) =>
+      and(
+        eq(like.artistId, artistId),
+        inArray(
+          like.artworkId,
+          artworks.map((artwork) => artwork.id),
+        ),
+      ),
+    columns: {
       artworkId: true,
     },
   });

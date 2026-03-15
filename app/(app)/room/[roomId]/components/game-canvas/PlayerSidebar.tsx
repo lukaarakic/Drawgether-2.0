@@ -1,7 +1,7 @@
 import Image from "next/image";
 import UndoSVG from "@/app/assets/misc/undo.svg";
 import ArtistCircle from "@/app/components/ui/ArtistCircle";
-import { Artist } from "@/app/generated/prisma/client";
+import { Artist } from "@/drizzle/schema";
 
 interface PlayerSidebarProps {
   artists: Artist[];
