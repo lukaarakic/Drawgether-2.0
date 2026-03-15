@@ -4,7 +4,6 @@ import Text from "@/app/components/Text";
 import ArtistCircle from "@/app/components/ui/ArtistCircle";
 import Image from "next/image";
 import ExitIcon from "@/app/assets/misc/exit.svg";
-import { Artist } from "@/app/generated/prisma/client";
 import {
   finalizeGameCountdownAction,
   kickPlayerAction,
@@ -14,6 +13,7 @@ import { useEffect, useRef, useState } from "react";
 import LobbyForm from "./components/lobby/LobbyForm";
 import LobbyStatusPannel from "./components/lobby/LobbyStatusPannel";
 import LobbyStartButton from "./components/lobby/LobbyStartButton";
+import { Artist } from "@/drizzle/schema";
 
 interface LobbyClientProps {
   roomId: string;

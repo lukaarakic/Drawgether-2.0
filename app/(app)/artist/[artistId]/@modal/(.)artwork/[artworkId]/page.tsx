@@ -2,7 +2,7 @@ import ArtworkPost from "@/app/components/artwork-module/ArtworkPost";
 import CommentContainer from "@/app/components/comment-module/CommentsContainer";
 import Modal from "@/app/components/ui/Modal";
 import { getArtist, logout } from "@/app/lib/auth-utils";
-import prisma from "@/app/lib/db";
+import { db } from "@/app/lib/db";
 import { redirect } from "next/navigation";
 
 const ShowArtwork = async ({
@@ -18,18 +18,22 @@ const ShowArtwork = async ({
     redirect("/login");
   }
 
-  const artwork = await prisma.artwork.findUnique({
-    where: { id: artworkId },
-    include: {
+  const artwork = await db.query.artworks.findFirst({
+    where: (artwork, { eq }) => eq(artwork.id, artworkId),
+    with: {
       comments: {
-        include: {
+        with: {
           artist: {
-            select: { id: true, username: true },
+            columns: { id: true, username: true },
           },
         },
       },
       artists: {
-        select: { id: true, username: true },
+        with: {
+          artist: {
+            columns: { id: true, username: true },
+          },
+        },
       },
     },
   });
@@ -44,16 +48,23 @@ const ShowArtwork = async ({
 
   let isLiked = false;
 
-  const existingLike = await prisma.like.findUnique({
-    where: {
-      artistId_artworkId: {
-        artistId: loggedInArtistId.id,
-        artworkId: artworkId,
-      },
+  const existingLike = await db.query.likes.findFirst({
+    where: (like, { and, eq }) =>
+      and(
+        eq(like.artworkId, artworkId),
+        eq(like.artistId, loggedInArtistId.id),
+      ),
+    columns: {
+      artistId: true,
     },
   });
 
   isLiked = !!existingLike;
+
+  const formattedArtwork = {
+    ...artwork,
+    artists: artwork.artists.map((joinRow) => joinRow.artist),
+  };
 
   return (
     <Modal
@@ -61,7 +72,7 @@ const ShowArtwork = async ({
       className="grid w-max grid-cols-2 items-start justify-items-center gap-20"
     >
       <ArtworkPost
-        artwork={artwork}
+        artwork={formattedArtwork}
         index={1}
         className="w-full"
         showComments={false}

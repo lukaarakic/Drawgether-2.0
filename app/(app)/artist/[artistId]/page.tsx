@@ -3,7 +3,7 @@ import BoxLabel from "@/app/components/ui/BoxLabel";
 import SmallArtworkContainer from "@/app/components/artwork-module/profile-artworks/SmallArtworkContainer";
 import ArtworksContainer from "@/app/components/artwork-module/profile-artworks/ArtworksContainer";
 import { notFound, redirect } from "next/navigation";
-import prisma from "@/app/lib/db";
+import { db } from "@/app/lib/db";
 import { getArtist, logout } from "@/app/lib/auth-utils";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,37 +17,59 @@ const Profile = async ({
 }) => {
   const { artistId } = await params;
 
-  const artist = await prisma.artist.findUnique({
-    where: { username: artistId },
-    select: {
+  const artist = await db.query.artists.findFirst({
+    where: (artist, { eq }) => eq(artist.username, artistId),
+    columns: {
       id: true,
       username: true,
+      followerCount: true,
+      followingCount: true,
+    },
+    with: {
       artworks: {
-        select: {
-          id: true,
-          theme: true,
-          artworkImage: true,
-          likesCount: true,
-          createdAt: true,
-          updatedAt: true,
-          roomId: true,
-          commentsCount: true,
-          artists: {
-            select: { id: true, username: true },
-          },
-          comments: {
-            select: {
+        with: {
+          artwork: {
+            columns: {
               id: true,
-              content: true,
-              artist: { select: { id: true, username: true } },
+              theme: true,
+              artworkImage: true,
+              likesCount: true,
+              createdAt: true,
+              updatedAt: true,
+              roomId: true,
+              commentsCount: true,
+            },
+            with: {
+              comments: {
+                columns: {
+                  id: true,
+                  content: true,
+                },
+                with: {
+                  artist: {
+                    columns: {
+                      id: true,
+                      username: true,
+                    },
+                  },
+                },
+              },
+              artists: {
+                with: {
+                  artist: {
+                    columns: {
+                      id: true,
+                      username: true,
+                    },
+                  },
+                },
+              },
             },
           },
         },
       },
-      followerCount: true,
-      followingCount: true,
       followers: {
-        select: {
+        columns: {
           followerId: true,
         },
       },
@@ -72,6 +94,16 @@ const Profile = async ({
   const isFollowing = artist.followers.some(
     (follower) => follower.followerId === loggedInArtistId.id,
   );
+
+  const formattedArtist = {
+    artworks: artist.artworks.map((artworkJoinRow) => ({
+      ...artworkJoinRow.artwork,
+
+      artists: artworkJoinRow.artwork.artists.map(
+        (artistJoinRow) => artistJoinRow.artist,
+      ),
+    })),
+  };
 
   return (
     <>
@@ -115,10 +147,17 @@ const Profile = async ({
         {hasArtworks ? (
           <>
             <div className="hidden md:block">
-              <SmallArtworkContainer artist={artist} />
+              <SmallArtworkContainer
+                artist={{
+                  username: artist.username,
+                  artworks: formattedArtist.artworks.map(
+                    ({ id, artworkImage }) => ({ id, artworkImage }),
+                  ),
+                }}
+              />
             </div>
             <div className="md:hidden">
-              <ArtworksContainer artworks={artist.artworks} />
+              <ArtworksContainer artworks={formattedArtist.artworks} />
             </div>
           </>
         ) : (

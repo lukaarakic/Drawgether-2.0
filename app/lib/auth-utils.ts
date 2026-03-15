@@ -1,8 +1,8 @@
 import bcrypt from "bcryptjs";
-import prisma from "./db";
 import { cookies } from "next/headers";
 import { verifyJWT } from "./jwt";
 import { redirect } from "next/navigation";
+import { db } from "./db";
 
 export async function getSession() {
   const cookieStore = await cookies();
@@ -16,7 +16,7 @@ export async function getSession() {
     if (!payload) return;
 
     return payload;
-  } catch (error) {
+  } catch {
     return null;
   }
 }
@@ -34,9 +34,21 @@ export async function getArtist() {
 
   if (!session) return null;
 
-  const artist = await prisma.artist.findUnique({
-    where: { id: session.sub },
-    select: { id: true, username: true, email: true, emailVerified: true },
+  const artist = await db.query.artists.findFirst({
+    where: (artist, { eq }) => eq(artist.id, session.sub),
+    columns: {
+      id: true,
+      username: true,
+      email: true,
+      emailVerified: true,
+    },
+    with: {
+      role: {
+        columns: {
+          name: true,
+        },
+      },
+    },
   });
 
   if (!artist) return;
@@ -73,16 +85,26 @@ export async function getPasswordHash(password: string) {
 }
 
 export async function verifyPassword(email: string, password: string) {
-  const artist = await prisma.artist.findUnique({
-    where: { email },
-    select: {
+  const artist = await db.query.artists.findFirst({
+    where: (artist, { eq }) => eq(artist.email, email),
+    columns: {
       id: true,
-      role: { select: { name: true } },
-      password: { select: { hash: true } },
+    },
+    with: {
+      password: {
+        columns: {
+          hash: true,
+        },
+      },
+      role: {
+        columns: {
+          name: true,
+        },
+      },
     },
   });
 
-  if (!artist || !artist.password) return null;
+  if (!artist || !artist.password.hash) return null;
 
   const isValid = await bcrypt.compare(password, artist.password.hash);
 

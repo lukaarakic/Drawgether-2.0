@@ -1,5 +1,5 @@
-import prisma from "@/app/lib/db";
 import { redirect } from "next/navigation";
+import { db } from "./db";
 
 export async function searchArtistsAction(formData: FormData) {
   "use server";
@@ -13,14 +13,9 @@ export async function searchArtist(searchTerm: string) {
     return [];
   }
 
-  const artists = await prisma.artist.findMany({
-    where: {
-      username: {
-        contains: searchTerm,
-        mode: "insensitive",
-      },
-    },
-    select: {
+  const artists = await db.query.artists.findMany({
+    where: (a, { ilike }) => ilike(a.username, `%${searchTerm}%`),
+    columns: {
       id: true,
       username: true,
     },

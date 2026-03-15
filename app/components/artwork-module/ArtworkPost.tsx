@@ -6,21 +6,8 @@ import ArtworkDeleteButton from "./ArtworkDeleteButton";
 import Image from "next/image";
 import Link from "next/link";
 import CommentIcon from "@/app/assets/misc/comment.svg";
-import { Prisma } from "@/app/generated/prisma/client";
 import { getArtistId } from "@/app/lib/auth-utils";
-
-type ArtworkWithArtists = Prisma.ArtworkGetPayload<{
-  include: {
-    artists: { select: { id: true; username: true } };
-    comments: {
-      select: {
-        id: true;
-        content: true;
-        artist: { select: { id: true; username: true } };
-      };
-    };
-  };
-}>;
+import { ArtworkWithArtists } from "@/drizzle/types";
 
 function generateRandomRotation(seed: number): number {
   return ((seed * 7) % 5) - 2.5;
@@ -91,7 +78,7 @@ const ArtworkPost = async ({
           {artwork.artists.map((artist) => (
             <Link
               href={`/artist/${artist.username}`}
-              key={artist.username}
+              key={artist.id}
               className="-mr-10 last-of-type:mr-0"
             >
               <ArtistCircle

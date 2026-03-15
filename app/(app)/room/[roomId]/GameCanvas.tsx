@@ -2,9 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Toolbox from "./components/game-canvas/Toolbox";
-import Image from "next/image";
-import FullLogo from "@/app/assets/logos/full_both_logo.svg";
-import { Artist } from "@/app/generated/prisma/client";
 import { createClient, RealtimeChannel } from "@supabase/supabase-js";
 import { finishGameAction } from "@/app/lib/actions/room";
 import GameCanvasHeader from "./components/game-canvas/GameCanvasHeader";
@@ -12,6 +9,7 @@ import PlayerSidebar from "./components/game-canvas/PlayerSidebar";
 import CanvasStage from "./components/game-canvas/CanvasStage";
 import BoxLabel from "@/app/components/ui/BoxLabel";
 import Text from "@/app/components/Text";
+import { Artist } from "@/drizzle/schema";
 
 interface GameCanvasProps {
   roomId: string;

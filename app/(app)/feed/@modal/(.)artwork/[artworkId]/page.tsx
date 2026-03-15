@@ -1,6 +1,6 @@
 import CommentContainer from "@/app/components/comment-module/CommentsContainer";
 import Modal from "@/app/components/ui/Modal";
-import prisma from "@/app/lib/db";
+import { db } from "@/app/lib/db";
 
 const ShowComments = async ({
   params,
@@ -9,16 +9,20 @@ const ShowComments = async ({
 }) => {
   const { artworkId } = await params;
 
-  const artwork = await prisma.artwork.findUnique({
-    where: { id: artworkId },
-    select: {
+  const artwork = await db.query.artworks.findFirst({
+    where: (artwork, { eq }) => eq(artwork.id, artworkId),
+    columns: {
       id: true,
+    },
+    with: {
       comments: {
-        select: {
+        columns: {
           id: true,
           content: true,
+        },
+        with: {
           artist: {
-            select: {
+            columns: {
               id: true,
               username: true,
             },

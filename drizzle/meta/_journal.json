@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1773519887565,
+      "tag": "0000_unique_sleepwalker",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1773521883489,
+      "tag": "0001_adorable_moon_knight",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1773524008940,
+      "tag": "0002_last_guardian",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1773525166366,
+      "tag": "0003_dashing_wallop",
+      "breakpoints": true
+    }
+  ]
+}
