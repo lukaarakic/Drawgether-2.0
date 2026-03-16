@@ -31,6 +31,10 @@ export async function proxy(request: NextRequest) {
       const payload = await verifyJWT(token);
       if (payload) {
         return NextResponse.redirect(new URL("/feed", request.url));
+      } else {
+        const response = NextResponse.redirect(new URL("/login", request.url));
+        response.cookies.delete("dg_session_token");
+        return response;
       }
     }
     return NextResponse.next();

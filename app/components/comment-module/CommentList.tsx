@@ -10,6 +10,7 @@ const CommentList = ({
     artist: {
       id: string;
       username: string;
+      avatar: string | null;
     };
   }[];
   artworkId: string;

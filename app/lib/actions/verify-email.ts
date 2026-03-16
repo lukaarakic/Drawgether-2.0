@@ -1,6 +1,6 @@
 "use server";
 
-import { getArtist, logout } from "../auth-utils";
+import { getArtist } from "../auth-utils";
 import { generateSecretAndTOTP } from "../totp";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
@@ -8,11 +8,12 @@ import { sendVerificationEmail } from "./email";
 import { db } from "../db";
 import { verificationTokens } from "@/drizzle/schema";
 import { AuthTokenType } from "@/drizzle/types";
+import { logoutAction } from "./logout";
 
 export async function verifyEmail() {
   const artist = await getArtist();
   if (!artist) {
-    return logout();
+    return logoutAction();
   }
   const { secret, token } = await generateSecretAndTOTP();
 

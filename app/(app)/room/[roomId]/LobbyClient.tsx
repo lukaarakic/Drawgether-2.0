@@ -193,7 +193,10 @@ const LobbyClient = ({
             key={artist.id}
             className="flex items-center gap-2 text-4xl not-last-of-type:border-b border-black first-of-type:pb-5 not-first-of-type:py-10"
           >
-            <ArtistCircle username={artist.username} />
+            <ArtistCircle
+              username={artist.username}
+              avatarUrl={artist.avatar}
+            />
 
             <Text className="text-blue! ml-4">
               {"@".concat(artist.username)}

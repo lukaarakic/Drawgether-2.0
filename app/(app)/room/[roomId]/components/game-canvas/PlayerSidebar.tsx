@@ -21,6 +21,7 @@ export default function PlayerSidebar({
           <ArtistCircle
             key={artist.id}
             username={artist.username}
+            avatarUrl={artist.avatar}
             className="not-first:-ml-10 lg:not-first:-mt-10 lg:not-first:ml-0"
           />
         ))}

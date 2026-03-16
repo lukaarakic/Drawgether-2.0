@@ -11,6 +11,7 @@ const CommentContainer = ({
       artist: {
         id: string;
         username: string;
+        avatar: string | null;
       };
     }[];
     id: string;

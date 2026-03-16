@@ -21,6 +21,7 @@ export type FeedArtwork = {
   artists: {
     id: string;
     username: string;
+    avatar: string | null;
   }[];
   comments: FeedComment[];
 };
@@ -64,6 +65,7 @@ export async function getFeedChunk({
             columns: {
               id: true,
               username: true,
+              avatar: true,
             },
           },
         },
@@ -74,6 +76,7 @@ export async function getFeedChunk({
             columns: {
               id: true,
               username: true,
+              avatar: true,
             },
           },
         },

@@ -1,10 +1,11 @@
 import ArtworkPost from "@/app/components/artwork-module/ArtworkPost";
 import CommentContainer from "@/app/components/comment-module/CommentsContainer";
 import Modal from "@/app/components/ui/Modal";
-import { getArtist, logout } from "@/app/lib/auth-utils";
+import { getArtist } from "@/app/lib/auth-utils";
 import { db } from "@/app/lib/db";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
+import { logoutAction } from "@/app/lib/actions/logout";
 
 export const metadata: Metadata = {
   title: "Artwork",
@@ -20,7 +21,7 @@ const ShowArtwork = async ({
   const loggedInArtistId = await getArtist();
 
   if (!loggedInArtistId) {
-    await logout();
+    await logoutAction();
     redirect("/login");
   }
 
@@ -30,14 +31,14 @@ const ShowArtwork = async ({
       comments: {
         with: {
           artist: {
-            columns: { id: true, username: true },
+            columns: { id: true, username: true, avatar: true },
           },
         },
       },
       artists: {
         with: {
           artist: {
-            columns: { id: true, username: true },
+            columns: { id: true, username: true, avatar: true },
           },
         },
       },

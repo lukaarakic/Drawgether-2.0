@@ -83,6 +83,7 @@ const ArtworkPost = async ({
             >
               <ArtistCircle
                 username={artist.username || "default"}
+                avatarUrl={artist.avatar}
                 className=""
               />
             </Link>

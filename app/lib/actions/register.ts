@@ -99,6 +99,7 @@ export async function registerAction(
         username: result.data.username,
         email: result.data.email,
         roleId: userRole.id,
+        avatar: `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(result.data.username)}`,
       })
       .returning({ id: artists.id });
 
