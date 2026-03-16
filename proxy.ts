@@ -3,7 +3,9 @@ import type { NextRequest } from "next/server";
 import { verifyJWT } from "./app/lib/jwt";
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|audio).*)"],
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|favicon.svg|audio).*)",
+  ],
 };
 
 const publicRoutes = [

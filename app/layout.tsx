@@ -7,6 +7,10 @@ export const metadata: Metadata = {
     template: "%s | Drawgether",
   },
   description: "A multiplayer drawing game where creativity meets AI.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+  },
   openGraph: {
     type: "website",
     title: "Drawgether",
