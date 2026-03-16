@@ -26,6 +26,7 @@ const ArtworkPage = async ({
             columns: {
               id: true,
               username: true,
+              avatar: true,
             },
           },
         },
@@ -40,6 +41,7 @@ const ArtworkPage = async ({
             columns: {
               id: true,
               username: true,
+              avatar: true,
             },
           },
         },
