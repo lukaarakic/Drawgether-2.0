@@ -14,6 +14,7 @@ export default async function Comment({
     artist: {
       id: string;
       username: string;
+      avatar: string | null;
     };
   };
   artworkId: string;
@@ -23,7 +24,11 @@ export default async function Comment({
   return (
     <div className="mb-24 flex items-start gap-5">
       <Link href={`/artist/${comment.artist.username}`} className="shrink-0">
-        <ArtistCircle size="small" username={comment.artist.username} />
+        <ArtistCircle
+          size="small"
+          username={comment.artist.username}
+          avatarUrl={comment.artist.avatar}
+        />
       </Link>
 
       <div>

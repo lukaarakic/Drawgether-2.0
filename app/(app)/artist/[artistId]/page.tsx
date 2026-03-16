@@ -4,12 +4,13 @@ import SmallArtworkContainer from "@/app/components/artwork-module/profile-artwo
 import ArtworksContainer from "@/app/components/artwork-module/profile-artworks/ArtworksContainer";
 import { notFound, redirect } from "next/navigation";
 import { db } from "@/app/lib/db";
-import { getArtist, logout } from "@/app/lib/auth-utils";
+import { getArtist } from "@/app/lib/auth-utils";
 import Link from "next/link";
 import Image from "next/image";
 import SettingsIcon from "@/app/assets/misc/settings.svg";
 import Follow from "./Follow";
 import type { Metadata } from "next";
+import { logoutAction } from "@/app/lib/actions/logout";
 
 export async function generateMetadata({
   params,
@@ -53,6 +54,7 @@ const Profile = async ({
       username: true,
       followerCount: true,
       followingCount: true,
+      avatar: true,
     },
     with: {
       artworks: {
@@ -112,7 +114,7 @@ const Profile = async ({
   const loggedInArtistId = await getArtist();
 
   if (!loggedInArtistId) {
-    await logout();
+    await logoutAction();
     redirect("/login");
   }
 
@@ -139,7 +141,11 @@ const Profile = async ({
       <div className="mx-auto w-[90%] xs:w-7xl mt-20 md:mt-72 pb-60">
         <div className="flex flex-col items-center justify-center gap-16 mb-32">
           <div className="flex flex-col items-center justify-center gap-16 md:flex-row">
-            <ArtistCircle username={artist.username} size="large" />
+            <ArtistCircle
+              avatarUrl={artist.avatar}
+              username={artist.username}
+              size="large"
+            />
             <BoxLabel degree={-2}>
               <div className="flex h-40 items-center justify-between gap-20 px-4">
                 <p

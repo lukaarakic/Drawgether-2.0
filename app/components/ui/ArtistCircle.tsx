@@ -5,14 +5,18 @@ interface ArtistCircleProps {
   username: string;
   className?: string;
   size?: "small" | "medium" | "large";
+  avatarUrl?: string | null;
 }
 
 const ArtistCircle: FC<ArtistCircleProps> = ({
   username,
   className,
+  avatarUrl,
   size = "medium",
 }) => {
-  const avatarSrc = `https://api.dicebear.com/7.x/adventurer/svg?seed=${username || "default"}`;
+  const avatarSrc =
+    avatarUrl ||
+    `https://api.dicebear.com/7.x/adventurer/svg?seed=${username || "default"}`;
 
   return (
     <div

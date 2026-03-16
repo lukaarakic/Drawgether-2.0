@@ -65,7 +65,11 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
                 key={artist.id}
                 className="mb-8 flex items-center gap-8"
               >
-                <ArtistCircle size="medium" username={artist.username} />
+                <ArtistCircle
+                  size="medium"
+                  username={artist.username}
+                  avatarUrl={artist.avatar}
+                />
 
                 <BoxLabel degree={generateRandomRotation(index % 4)}>
                   <div className="flex h-28 w-116 items-center justify-between gap-20 px-4">

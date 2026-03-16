@@ -4,13 +4,16 @@ import ErrorList from "@/app/components/error/ErrorList";
 import BoxButton from "@/app/components/ui/BoxButton";
 import HoneypotField from "@/app/components/ui/HoneypotField";
 import { AuthState, registerAction } from "@/app/lib/actions/register";
+import { useDebounce } from "@/app/utils/hooks";
 import { play } from "@/app/utils/misc";
 import Image from "next/image";
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 
 const RegisterPage = () => {
   const initalState: AuthState = { errors: {}, message: "" };
+  const [usernamePreview, setUsernamePreview] = useState("");
+  const debouncedUsername = useDebounce(usernamePreview, 400);
 
   const [state, action, isPending] = useActionState(
     registerAction,
@@ -27,7 +30,7 @@ const RegisterPage = () => {
         <div className="relative text-center">
           <div className="border-only absolute -top-2 left-0 z-10 flex h-32 w-32 items-center justify-center rounded-full bg-white">
             <Image
-              src={`https://api.dicebear.com/7.x/adventurer/svg?seed=drawgether`}
+              src={`https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(debouncedUsername || "drawgether")}`}
               alt="Usernames avatar"
               width={60}
               height={60}
@@ -40,6 +43,7 @@ const RegisterPage = () => {
             placeholder="Username"
             className={`input rotate-[1.4deg] pl-40`}
             name="username"
+            onChange={(e) => setUsernamePreview(e.target.value)}
           />
           <div className="w-220">
             {state.errors.username && (

@@ -9,11 +9,11 @@ export type ArtworkComment = Pick<Comment, "id" | "content"> & {
 };
 
 export type ArtworkWithArtists = Artwork & {
-  artists: Pick<Artist, "id" | "username">[];
+  artists: Pick<Artist, "id" | "username" | "avatar">[];
   comments: ArtworkComment[];
 };
 
-export type ArtistWithArtworks = Pick<Artist, "id" | "username"> & {
+export type ArtistWithArtworks = Pick<Artist, "id" | "username" | "avatar"> & {
   artworks: Pick<Artwork, "id" | "artworkImage">[];
 };
 

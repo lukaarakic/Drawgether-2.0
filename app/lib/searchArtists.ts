@@ -18,6 +18,7 @@ export async function searchArtist(searchTerm: string) {
     columns: {
       id: true,
       username: true,
+      avatar: true,
     },
   });
 

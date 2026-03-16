@@ -31,6 +31,7 @@ const ShowComments = async ({
             columns: {
               id: true,
               username: true,
+              avatar: true,
             },
           },
         },

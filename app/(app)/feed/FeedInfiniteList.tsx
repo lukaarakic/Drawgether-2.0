@@ -200,7 +200,10 @@ export default function FeedInfiniteList({
               key={artist.id}
               className="-mr-10 last-of-type:mr-0"
             >
-              <ArtistCircle username={artist.username || "default"} />
+              <ArtistCircle
+                username={artist.username || "default"}
+                avatarUrl={artist.avatar}
+              />
             </Link>
           ))}
         </div>
@@ -211,7 +214,7 @@ export default function FeedInfiniteList({
   ));
 
   return (
-    <div className="flex flex-col mt-20 md:mt-72 px-10 overflow-hidden">
+    <div className="flex flex-col mt-20 md:mt-72 px-10 ">
       {artworkNodes}
 
       <div ref={sentinelRef} className="h-20 w-full" />

@@ -23,7 +23,13 @@ const Settings = async ({
 
   const artist = await db.query.artists.findFirst({
     where: (artist, { eq }) => eq(artist.username, artistId),
-    columns: { id: true, username: true, email: true, emailVerified: true },
+    columns: {
+      id: true,
+      username: true,
+      email: true,
+      emailVerified: true,
+      avatar: true,
+    },
   });
 
   if (!artist) {
@@ -44,7 +50,11 @@ const Settings = async ({
         >
           Settings
         </p>
-        <ArtistCircle size="large" username={artist.username} />
+        <ArtistCircle
+          size="large"
+          username={artist.username}
+          avatarUrl={artist.avatar}
+        />
         <p className="mt-8 text-29 text-black">Username: @{artist.username}</p>
         <p className="text-29 text-black">Email: {maskedEmail}</p>
         {artist.emailVerified ? (

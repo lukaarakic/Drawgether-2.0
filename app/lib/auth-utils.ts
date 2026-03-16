@@ -72,13 +72,6 @@ export async function requireAnonymous() {
   }
 }
 
-export async function logout() {
-  const cookieStore = await cookies();
-  cookieStore.delete("dg_session_token");
-
-  redirect("/login");
-}
-
 export async function getPasswordHash(password: string) {
   const hash = await bcrypt.hash(password, 10);
   return hash;
