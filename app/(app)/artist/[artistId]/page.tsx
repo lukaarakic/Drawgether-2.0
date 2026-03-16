@@ -81,6 +81,7 @@ const Profile = async ({
                     columns: {
                       id: true,
                       username: true,
+                      avatar: true,
                     },
                   },
                 },
@@ -91,6 +92,7 @@ const Profile = async ({
                     columns: {
                       id: true,
                       username: true,
+                      avatar: true,
                     },
                   },
                 },
