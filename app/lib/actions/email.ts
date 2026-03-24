@@ -13,7 +13,7 @@ export async function sendVerificationEmail(
 ) {
   try {
     const { data, error } = await resend.emails.send({
-      from: "Drawgether Auth <auth@drawgether.lukarakic.me>",
+      from: "Drawgether Auth <no-reply@lukarakic.me>",
       to: email,
       subject:
         type === "verification"
