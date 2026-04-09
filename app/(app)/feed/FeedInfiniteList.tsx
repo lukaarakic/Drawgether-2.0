@@ -164,7 +164,7 @@ export default function FeedInfiniteList({
       </BoxLabel>
 
       <div
-        className="relative mb-24"
+        className="relative mb-24 w-full"
         style={{
           rotate: `${generateRandomRotation((index % 12) + 1)}deg`,
         }}
@@ -174,7 +174,7 @@ export default function FeedInfiniteList({
           alt={artwork.theme}
           width={572}
           height={572}
-          className="box-shadow mt-5 h-[57.2rem] w-[57.2rem] aspect-square object-cover"
+          className="box-shadow mt-5 w-full aspect-square object-cover"
         />
 
         <div className="absolute -bottom-12 -left-5 flex">
