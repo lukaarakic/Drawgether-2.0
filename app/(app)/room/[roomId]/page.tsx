@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import RoomManager from "./RoomManager";
 import { db } from "@/app/lib/db";
 import type { Metadata } from "next";
+import { RoomStatus } from "@/drizzle/types";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Room",

@@ -13,6 +13,7 @@ import { RoomStatus } from "@/drizzle/types";
 
 const STARTING_COUNTDOWN_MS = 10000;
 const GAME_DURATION_MS = 5 * 60 * 1000;
+const LATE_JOIN_WINDOW_MS = 30 * 1000;
 const FALLBACK_INTRO_MESSAGE =
   "We hope you'll have fun playing our game! Get your ideas ready.";
 const FALLBACK_TOPICS = [
@@ -168,23 +169,44 @@ export async function joinRoomAction(
   const code = result.data.roomId.toUpperCase();
 
   try {
-    await db.transaction(async (tx) => {
-      const room = await tx.query.rooms.findFirst({
-        where: eq(rooms.code, code),
-        columns: {
-          id: true,
-        },
-      });
-
-      if (!room) {
-        throw new Error("Room not found");
-      }
-
-      await tx
-        .update(artists)
-        .set({ roomId: room.id })
-        .where(eq(artists.id, artistId));
+    const room = await db.query.rooms.findFirst({
+      where: eq(rooms.code, code),
+      columns: {
+        id: true,
+        status: true,
+        expiresAt: true,
+      },
     });
+
+    if (!room) {
+      throw new Error("Room not found");
+    }
+
+    const artist = await db.query.artists.findFirst({
+      where: eq(artists.id, artistId),
+      columns: {
+        roomId: true,
+      },
+    });
+
+    const isAlreadyInRoom = artist?.roomId === room.id;
+    const startedAtMs =
+      room.status === RoomStatus.ACTIVE && room.expiresAt
+        ? room.expiresAt.getTime() - GAME_DURATION_MS
+        : null;
+    const hasJoinWindowExpired =
+      startedAtMs !== null && Date.now() - startedAtMs > LATE_JOIN_WINDOW_MS;
+
+    if (!isAlreadyInRoom && hasJoinWindowExpired) {
+      return {
+        message: "Room has already started.",
+      };
+    }
+
+    await db
+      .update(artists)
+      .set({ roomId: room.id })
+      .where(eq(artists.id, artistId));
   } catch (err) {
     console.error("Failed to join room:", err);
     return {
