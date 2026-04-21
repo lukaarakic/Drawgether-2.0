@@ -73,7 +73,6 @@ async function generateRoomOpening(roomId: string): Promise<RoomOpening> {
   const prompt = getRoomOpeningPrompt();
 
   try {
-    console.log("Generating room opening with OpenAI...");
     const response = await openAIClient.responses.create({
       model: "gpt-4o-mini",
       input: [
@@ -408,6 +407,23 @@ export async function finishGameAction(
   roomId: string,
   artwork: string,
 ) {
+  const { artistId } = await getArtistId();
+
+  const caller = await db.query.artists.findFirst({
+    where: and(eq(artists.id, artistId), eq(artists.roomId, roomDatabaseId)),
+    columns: { id: true },
+  });
+
+  if (!caller) return;
+
+  const ArtworkSchema = z
+    .string()
+    .startsWith("data:image/png;base64,")
+    .max(8000000, "Artwork too large");
+  const parsed = ArtworkSchema.safeParse(artwork);
+
+  if (!parsed.success) return;
+
   const room = await db.query.rooms.findFirst({
     where: eq(rooms.id, roomDatabaseId),
     columns: {
@@ -447,7 +463,7 @@ export async function finishGameAction(
     const [createdArtwork] = await tx
       .insert(artworks)
       .values({
-        artworkImage: artwork,
+        artworkImage: parsed.data,
         roomId: roomDatabaseId,
         theme: roomWithArtists.theme ?? "Unknown Theme",
       })

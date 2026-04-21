@@ -48,7 +48,7 @@ const ForgotPassword = () => {
             />
           </div>
 
-          <BoxButton type="submit" className="h-min w-min">
+          <BoxButton type="submit" className="h-min w-min" disabled={isPending}>
             <p className="px-8 py-1 text-40 md:px-16 md:text-60">Submit</p>
           </BoxButton>
 

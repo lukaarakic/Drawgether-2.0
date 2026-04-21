@@ -8,6 +8,7 @@ import { db } from "../db";
 import { and, eq } from "drizzle-orm";
 import { artists, verificationTokens } from "@/drizzle/schema";
 import { validateHoneypot } from "../security";
+import { signJWT } from "../jwt";
 const VerifySchema = z.object({
   token: z.string().length(6, "Code must be 6 digits"),
 });
@@ -101,10 +102,15 @@ export async function verifyTOTPAction(
   }
 
   if (verifyType === AuthTokenType.PASSWORD_RESET) {
-    cookieStore.set("dg_reset_artist_username", artist.username, {
+    const resetToken = await signJWT(
+      { sub: artist.id, role: "password-reset" },
+      "15m",
+    );
+
+    cookieStore.set("dg_reset_token", resetToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: "strict",
       expires: new Date(Date.now() + 15 * 60 * 1000),
     });
 
