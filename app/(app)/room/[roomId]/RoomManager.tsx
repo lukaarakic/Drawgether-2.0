@@ -9,6 +9,8 @@ import LobbyStartingPanel from "@/app/(app)/room/[roomId]/LobbyStartingPanel";
 import { activateRoomAction } from "@/app/lib/actions/room";
 import { Artist } from "@/drizzle/schema";
 import { RoomStatus } from "@/drizzle/types";
+import { useLeaveGameConfirm } from "./hooks/useLeaveGameConfirm";
+import { useNavbar } from "@/app/context/NavbarContext";
 
 interface RoomManagerProps {
   roomId: string;
@@ -322,6 +324,19 @@ const RoomManager = ({
       supabase.removeChannel(roomStatusChannel);
     };
   }, [currentArtistId, roomDatabaseId, roomId, router]);
+
+  const { setHidden } = useNavbar();
+  useEffect(() => {
+    const shouldHide =
+      roomState.status === RoomStatus.ACTIVE ||
+      roomState.status === RoomStatus.STARTING;
+    setHidden(shouldHide);
+
+    return () => setHidden(false);
+  }, [roomState.status, setHidden]);
+
+  const isGameActive = roomState.status === RoomStatus.ACTIVE;
+  useLeaveGameConfirm(isGameActive);
 
   return (
     <>

@@ -17,7 +17,7 @@ const Home = async () => {
   });
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       <FeedInfiniteList
         initialArtworks={initialChunk.artworks}
         initialLikedArtworkIds={initialChunk.likedArtworkIds}

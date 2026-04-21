@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useNavbar } from "../context/NavbarContext";
 import LogoOnly from "@/app/assets/logos/logo_only.svg";
 import { play } from "../utils/misc";
 
@@ -15,13 +15,11 @@ type NavbarProps = {
 const Navbar = ({ username, isMobile = false }: NavbarProps) => {
   const pathname = usePathname();
   const isTutorialPage = pathname.startsWith("/tutorial");
+  const { hidden } = useNavbar();
 
-  const [rotations] = useState(() => ({
-    feed: Math.random() * 4.8 - 2.4,
-    search: Math.random() * 4.8 - 2.4,
-    profile: Math.random() * 4.8 - 2.4,
-    play: Math.random() * 4.8 - 2.4,
-  }));
+  if (hidden) {
+    return null;
+  }
 
   if (isTutorialPage) {
     return null;

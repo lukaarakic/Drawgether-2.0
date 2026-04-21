@@ -62,16 +62,6 @@ export default function GameCanvas({
     ? Math.max(0, Math.ceil((gamesEndsAt - gameNow) / 1000))
     : 5 * 60;
 
-  console.log(
-    "Expires At:",
-    expiresAt,
-    "Games ends at:",
-    gamesEndsAt,
-    "Current time:",
-    gameNow,
-    "Remaining seconds:",
-    remainingSeconds,
-  );
   const isTimeUp = gamesEndsAt !== null && remainingSeconds <= 0;
   const formattedTime = `${Math.floor(remainingSeconds / 60)
     .toString()

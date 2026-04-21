@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import type { Metadata } from "next";
 import ResetPasswordForm from "./ResetPasswordForm";
 
@@ -8,15 +7,6 @@ export const metadata: Metadata = {
 };
 
 export default async function ResetPasswordPage() {
-  const cookieStore = await cookies();
-  const artistUsername = cookieStore.get("dg_reset_artist_username")?.value;
-
-  if (!artistUsername) {
-    throw new Error(
-      "No artist information found. Please restart the password reset process.",
-    );
-  }
-
   return (
     <div className="flex flex-col items-center md:-mt-20">
       <div className="mb-20 text-center">
@@ -28,9 +18,9 @@ export default async function ResetPasswordPage() {
         </h1>
         <p
           className="text-border md:text-border-lg text-25 text-white opacity-90 md:-mt-4 md:text-40"
-          data-text={`Hi ${artistUsername}, no worries! It happens all the time 💪`}
+          data-text={`Hi, no worries! It happens all the time 💪`}
         >
-          Hi {artistUsername}, no worries! It happens all the time 💪
+          Hi, no worries! It happens all the time 💪
         </p>
       </div>
 

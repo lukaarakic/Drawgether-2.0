@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { db } from "../db";
 import { artists, passwords } from "@/drizzle/schema";
 import { eq } from "drizzle-orm";
+import { verifyJWT } from "../jwt";
 
 const ResetPasswordSchema = z
   .object({
@@ -43,14 +44,11 @@ export async function resetPassword(
   }
 
   const cookieStore = await cookies();
-  const artistUsername = cookieStore.get("dg_reset_artist_username")?.value;
+  const resetToken = cookieStore.get("dg_reset_token")?.value;
+  const payload = resetToken ? await verifyJWT(resetToken) : null;
 
-  if (!artistUsername) {
-    return {
-      errors: {},
-      message:
-        "No artist information found. Please restart the password reset process.",
-    };
+  if (!payload || payload.role !== "password-reset") {
+    return { errors: {}, message: "Session expired. Please restart reset." };
   }
 
   const hash = await getPasswordHash(result.data.newPassword);
@@ -67,7 +65,7 @@ export async function resetPassword(
           db
             .select({ id: artists.id })
             .from(artists)
-            .where(eq(artists.username, artistUsername))
+            .where(eq(passwords.artistId, payload.sub))
             .limit(1),
         ),
       )
@@ -87,6 +85,6 @@ export async function resetPassword(
     };
   }
 
-  cookieStore.delete("dg_reset_artist_username");
+  cookieStore.delete("dg_reset_token");
   redirect("/login");
 }

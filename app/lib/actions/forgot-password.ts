@@ -60,7 +60,7 @@ export async function ForgotPasswordAction(
     .insert(verificationTokens)
     .values({
       target: artist.email,
-      type: authTokenTypeEnum.enumValues[0],
+      type: authTokenTypeEnum.enumValues[1],
       token,
       secret,
       expiresAt: newExpiresAt,
@@ -85,7 +85,7 @@ export async function ForgotPasswordAction(
     expires: new Date(Date.now() + 15 * 60 * 1000),
   });
 
-  cookieStore.set("dg_verify_type", authTokenTypeEnum.enumValues[0], {
+  cookieStore.set("dg_verify_type", authTokenTypeEnum.enumValues[1], {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
