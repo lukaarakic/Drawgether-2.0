@@ -1,0 +1,2 @@
+REALTIME_JWT_SECRET=dev-shared-secret-change-me
+REALTIME_PUSH_SECRET=dev-push-secret-change-me

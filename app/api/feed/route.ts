@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/app/lib/auth-utils";
-import { getFeedChunk } from "@/app/(app)/feed/feed-query";
+import { getFeedChunk } from "@/app/lib/data/feed";
 
 export async function GET(request: NextRequest) {
   const session = await getSession();

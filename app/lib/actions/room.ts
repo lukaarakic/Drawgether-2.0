@@ -6,10 +6,27 @@ import { redirect } from "next/navigation";
 import z from "zod";
 import { revalidatePath } from "next/cache";
 import OpenAI from "openai";
-import { db } from "../db";
-import { artists, artistsArtworks, artworks, rooms } from "@/drizzle/schema";
-import { and, eq, isNull } from "drizzle-orm";
 import { RoomStatus } from "@/drizzle/types";
+import { publishRoomEvent } from "../realtime";
+import { uploadArtworkImage } from "../artwork-storage";
+import { createArtworkForRoom } from "../data/artworks";
+import {
+  activateRoomState,
+  beginStartCountdown,
+  cancelStartCountdown,
+  createRoomWithOwner,
+  finalizeStartingCountdown,
+  getArtistRoomCode,
+  getArtistRoomId,
+  getHostRoomSnapshot,
+  getRoomActivationSnapshot,
+  getRoomJoinInfo,
+  getRoomOwnerId,
+  getRoomThemeWithArtistIds,
+  isArtistInRoom,
+  joinRoomAsArtist,
+  removeArtistFromRoom,
+} from "../data/rooms";
 
 const STARTING_COUNTDOWN_MS = 10000;
 const GAME_DURATION_MS = 5 * 60 * 1000;
@@ -123,22 +140,7 @@ export async function createRoom() {
   const code = generateRoomCode();
 
   try {
-    const room = await db.transaction(async (tx) => {
-      const [room] = await tx
-        .insert(rooms)
-        .values({
-          code,
-          ownerId: artistId,
-        })
-        .returning();
-
-      await tx
-        .update(artists)
-        .set({ roomId: room.id })
-        .where(eq(artists.id, artistId));
-
-      return room;
-    });
+    const room = await createRoomWithOwner(artistId, code);
 
     if (!room) throw new Error("Failed to create room");
 
@@ -169,25 +171,13 @@ export async function joinRoomAction(
   const code = result.data.roomId.toUpperCase();
 
   try {
-    const room = await db.query.rooms.findFirst({
-      where: eq(rooms.code, code),
-      columns: {
-        id: true,
-        status: true,
-        expiresAt: true,
-      },
-    });
+    const room = await getRoomJoinInfo(code);
 
     if (!room) {
       throw new Error("Room not found");
     }
 
-    const artist = await db.query.artists.findFirst({
-      where: eq(artists.id, artistId),
-      columns: {
-        roomId: true,
-      },
-    });
+    const artist = await getArtistRoomId(artistId);
 
     const isAlreadyInRoom = artist?.roomId === room.id;
     const startedAtMs =
@@ -203,10 +193,11 @@ export async function joinRoomAction(
       };
     }
 
-    await db
-      .update(artists)
-      .set({ roomId: room.id })
-      .where(eq(artists.id, artistId));
+    const joinedArtist = await joinRoomAsArtist(artistId, room.id);
+
+    if (joinedArtist) {
+      await publishRoomEvent(code, "artist_joined", joinedArtist);
+    }
   } catch (err) {
     console.error("Failed to join room:", err);
     return {
@@ -220,12 +211,7 @@ export async function joinRoomAction(
 export async function kickPlayerAction(roomId: string, targetArtistId: string) {
   const { artistId: hostId } = await getArtistId();
 
-  const room = await db.query.rooms.findFirst({
-    where: eq(rooms.code, roomId),
-    columns: {
-      ownerId: true,
-    },
-  });
+  const room = await getRoomOwnerId(roomId);
 
   if (!room || room.ownerId !== hostId) {
     console.error("Unauthorized kick attempt");
@@ -233,11 +219,9 @@ export async function kickPlayerAction(roomId: string, targetArtistId: string) {
   }
 
   try {
-    await db
-      .update(artists)
-      .set({ roomId: null })
-      .where(eq(artists.id, targetArtistId));
+    await removeArtistFromRoom(targetArtistId);
 
+    await publishRoomEvent(roomId, "artist_left", { id: targetArtistId });
     revalidatePath(`/room/${roomId}`);
   } catch (err) {
     console.error("Failed to kick player:", err);
@@ -248,10 +232,15 @@ export async function leaveRoomAction() {
   const { artistId } = await getArtistId();
 
   try {
-    await db
-      .update(artists)
-      .set({ roomId: null })
-      .where(eq(artists.id, artistId));
+    const artist = await getArtistRoomCode(artistId);
+
+    await removeArtistFromRoom(artistId);
+
+    if (artist?.room?.code) {
+      await publishRoomEvent(artist.room.code, "artist_left", {
+        id: artistId,
+      });
+    }
   } catch {
     return {
       message: "Failed to leave room. Please try again.",
@@ -264,19 +253,7 @@ export async function leaveRoomAction() {
 async function getHostRoom(roomDatabaseId: string, roomId: string) {
   const { artistId } = await getArtistId();
 
-  const room = await db.query.rooms.findFirst({
-    where: eq(rooms.id, roomDatabaseId),
-    columns: {
-      ownerId: true,
-      code: true,
-      status: true,
-      startsAt: true,
-      startingExpiresAt: true,
-      introMessage: true,
-      theme: true,
-      expiresAt: true,
-    },
-  });
+  const room = await getHostRoomSnapshot(roomDatabaseId);
 
   if (!room || room.ownerId !== artistId || room.code !== roomId) {
     console.error("Unauthorized room start attempt");
@@ -296,19 +273,13 @@ export async function startGameCountdownAction(
     return;
   }
 
-  await db
-    .update(rooms)
-    .set({
-      startsAt: new Date(Date.now() + 5000),
-    })
-    .where(
-      and(
-        eq(rooms.id, roomDatabaseId),
-        eq(rooms.status, RoomStatus.WAITING),
-        isNull(rooms.startsAt),
-      ),
-    );
+  const newStartsAt = new Date(Date.now() + 5000);
 
+  await beginStartCountdown(roomDatabaseId, newStartsAt);
+
+  await publishRoomEvent(roomId, "room_updated", {
+    startsAt: newStartsAt.toISOString(),
+  });
   revalidatePath(`/room/${roomId}`);
 }
 
@@ -322,19 +293,9 @@ export async function cancelGameCountdownAction(
     return;
   }
 
-  await db
-    .update(rooms)
-    .set({
-      startsAt: null,
-    })
-    .where(
-      and(
-        eq(rooms.id, roomDatabaseId),
-        eq(rooms.status, RoomStatus.WAITING),
-        eq(rooms.startsAt, room.startsAt),
-      ),
-    );
+  await cancelStartCountdown(roomDatabaseId, room.startsAt);
 
+  await publishRoomEvent(roomId, "room_updated", { startsAt: null });
   revalidatePath(`/room/${roomId}`);
 }
 
@@ -354,28 +315,27 @@ export async function finalizeGameCountdownAction(
     return false;
   }
   const roomOpening = await generateRoomOpening(roomId);
+  const newStartingExpiresAt = new Date(Date.now() + STARTING_COUNTDOWN_MS);
 
-  const result = await db
-    .update(rooms)
-    .set({
-      status: RoomStatus.STARTING,
-      startsAt: null,
-      startingExpiresAt: new Date(Date.now() + STARTING_COUNTDOWN_MS),
-      introMessage: roomOpening.introMessage,
-      theme: roomOpening.topic,
-    })
-    .where(
-      and(
-        eq(rooms.id, roomDatabaseId),
-        eq(rooms.status, RoomStatus.WAITING),
-        eq(rooms.startsAt, room.startsAt),
-      ),
-    );
+  const didUpdate = await finalizeStartingCountdown({
+    roomDatabaseId,
+    previousStartsAt: room.startsAt,
+    startingExpiresAt: newStartingExpiresAt,
+    introMessage: roomOpening.introMessage,
+    theme: roomOpening.topic,
+  });
 
-  if (!result.count) {
+  if (!didUpdate) {
     return false;
   }
 
+  await publishRoomEvent(roomId, "room_updated", {
+    status: RoomStatus.STARTING,
+    startsAt: null,
+    startingExpiresAt: newStartingExpiresAt.toISOString(),
+    introMessage: roomOpening.introMessage,
+    theme: roomOpening.topic,
+  });
   revalidatePath(`/room/${roomId}`);
   return true;
 }
@@ -384,14 +344,7 @@ export async function activateRoomAction(
   roomDatabaseId: string,
   roomId: string,
 ) {
-  const room = await db.query.rooms.findFirst({
-    where: eq(rooms.id, roomDatabaseId),
-    columns: {
-      status: true,
-      startingExpiresAt: true,
-      expiresAt: true,
-    },
-  });
+  const room = await getRoomActivationSnapshot(roomDatabaseId);
 
   if (
     !room ||
@@ -402,25 +355,23 @@ export async function activateRoomAction(
     return;
   }
 
-  const result = await db
-    .update(rooms)
-    .set({
-      status: RoomStatus.ACTIVE,
-      startingExpiresAt: null,
-      expiresAt: new Date(Date.now() + GAME_DURATION_MS),
-    })
-    .where(
-      and(
-        eq(rooms.id, roomDatabaseId),
-        eq(rooms.status, RoomStatus.STARTING),
-        eq(rooms.startingExpiresAt, room.startingExpiresAt),
-      ),
-    );
+  const newExpiresAt = new Date(Date.now() + GAME_DURATION_MS);
 
-  if (!result.count) {
+  const didUpdate = await activateRoomState({
+    roomDatabaseId,
+    previousStartingExpiresAt: room.startingExpiresAt,
+    expiresAt: newExpiresAt,
+  });
+
+  if (!didUpdate) {
     return;
   }
 
+  await publishRoomEvent(roomId, "room_updated", {
+    status: RoomStatus.ACTIVE,
+    startingExpiresAt: null,
+    expiresAt: newExpiresAt.toISOString(),
+  });
   revalidatePath(`/room/${roomId}`);
 }
 
@@ -431,12 +382,9 @@ export async function finishGameAction(
 ) {
   const { artistId } = await getArtistId();
 
-  const caller = await db.query.artists.findFirst({
-    where: and(eq(artists.id, artistId), eq(artists.roomId, roomDatabaseId)),
-    columns: { id: true },
-  });
+  const callerInRoom = await isArtistInRoom(artistId, roomDatabaseId);
 
-  if (!caller) return;
+  if (!callerInRoom) return;
 
   const ArtworkSchema = z
     .string()
@@ -446,14 +394,7 @@ export async function finishGameAction(
 
   if (!parsed.success) return;
 
-  const room = await db.query.rooms.findFirst({
-    where: eq(rooms.id, roomDatabaseId),
-    columns: {
-      status: true,
-      startingExpiresAt: true,
-      expiresAt: true,
-    },
-  });
+  const room = await getRoomActivationSnapshot(roomDatabaseId);
 
   if (!room || room.status !== RoomStatus.ACTIVE || !room.expiresAt) {
     return;
@@ -463,44 +404,25 @@ export async function finishGameAction(
     return;
   }
 
-  const roomWithArtists = await db.query.rooms.findFirst({
-    where: eq(rooms.id, roomDatabaseId),
-    columns: {
-      theme: true,
-    },
-    with: {
-      artists: {
-        columns: {
-          id: true,
-        },
-      },
-    },
-  });
+  const roomWithArtists = await getRoomThemeWithArtistIds(roomDatabaseId);
 
   if (!roomWithArtists) {
     return;
   }
 
-  const newArtwork = await db.transaction(async (tx) => {
-    const [createdArtwork] = await tx
-      .insert(artworks)
-      .values({
-        artworkImage: parsed.data,
-        roomId: roomDatabaseId,
-        theme: roomWithArtists.theme ?? "Unknown Theme",
-      })
-      .returning();
+  let artworkImageUrl: string;
+  try {
+    artworkImageUrl = await uploadArtworkImage(parsed.data);
+  } catch (err) {
+    console.error("Failed to upload artwork image:", err);
+    return;
+  }
 
-    const artistConnections = roomWithArtists.artists.map((artist) => ({
-      artworkId: createdArtwork.id,
-      artistId: artist.id,
-    }));
-
-    if (artistConnections.length > 0) {
-      await tx.insert(artistsArtworks).values(artistConnections);
-    }
-
-    return createdArtwork;
+  const newArtwork = await createArtworkForRoom({
+    roomDatabaseId,
+    theme: roomWithArtists.theme ?? "Unknown Theme",
+    artworkImage: artworkImageUrl,
+    artistIds: roomWithArtists.artists.map((artist) => artist.id),
   });
 
   if (!newArtwork) {

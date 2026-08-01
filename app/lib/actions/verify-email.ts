@@ -5,8 +5,7 @@ import { generateSecretAndTOTP } from "../totp";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { sendVerificationEmail } from "./email";
-import { db } from "../db";
-import { verificationTokens } from "@/drizzle/schema";
+import { upsertVerificationToken } from "../data/auth";
 import { AuthTokenType } from "@/drizzle/types";
 import { logoutAction } from "./logout";
 
@@ -19,23 +18,13 @@ export async function verifyEmail() {
 
   const newExpiresAt = new Date(Date.now() + 15 * 60 * 1000);
 
-  await db
-    .insert(verificationTokens)
-    .values({
-      target: artist.email,
-      type: AuthTokenType.EMAIL_VERIFICATION,
-      token,
-      secret,
-      expiresAt: newExpiresAt,
-    })
-    .onConflictDoUpdate({
-      target: [verificationTokens.target, verificationTokens.type],
-      set: {
-        token,
-        secret,
-        expiresAt: newExpiresAt,
-      },
-    });
+  await upsertVerificationToken({
+    target: artist.email,
+    type: AuthTokenType.EMAIL_VERIFICATION,
+    token,
+    secret,
+    expiresAt: newExpiresAt,
+  });
 
   await sendVerificationEmail(
     artist.email,

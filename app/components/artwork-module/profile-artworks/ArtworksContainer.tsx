@@ -1,7 +1,7 @@
 import { ArtworkWithArtists } from "@/drizzle/types";
 import ArtworkPost from "../ArtworkPost";
 import { getArtistId } from "@/app/lib/auth-utils";
-import { db } from "@/app/lib/db";
+import { getLikedArtworkIds } from "@/app/lib/data/interactions";
 
 type ArtworksContainerProps = {
   artworks: ArtworkWithArtists[];
@@ -9,23 +9,12 @@ type ArtworksContainerProps = {
 
 const ArtworksContainer = async ({ artworks }: ArtworksContainerProps) => {
   const { artistId } = await getArtistId();
-  let likedArtworkIds = new Set<string>();
 
-  const artistLikes = await db.query.likes.findMany({
-    where: (like, { eq, and, inArray }) =>
-      and(
-        eq(like.artistId, artistId),
-        inArray(
-          like.artworkId,
-          artworks.map((artwork) => artwork.id),
-        ),
-      ),
-    columns: {
-      artworkId: true,
-    },
+  const likedIds = await getLikedArtworkIds({
+    artistId,
+    artworkIds: artworks.map((artwork) => artwork.id),
   });
-
-  likedArtworkIds = new Set(artistLikes.map((like) => like.artworkId));
+  const likedArtworkIds = new Set(likedIds);
 
   return (
     <div className="flex flex-col">

@@ -11,8 +11,11 @@ import { signJWT } from "../jwt";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { validateHoneypot } from "../security";
-import { db } from "../db";
-import { artists, passwords } from "@/drizzle/schema";
+import {
+  checkArtistAvailability,
+  createArtistAccount,
+  getRoleByName,
+} from "../data/auth";
 
 export type AuthState = {
   errors: { username?: string[]; email?: string[]; password?: string[] };
@@ -30,18 +33,12 @@ const RegisterSchema = z
       .transform((val) => val === "on"),
   })
   .superRefine(async (data, ctx) => {
-    const [existingUsername, existingEmail] = await Promise.all([
-      db.query.artists.findFirst({
-        where: (artist, { eq }) => eq(artist.username, data.username),
-        columns: { id: true },
-      }),
-      db.query.artists.findFirst({
-        where: (artist, { eq }) => eq(artist.email, data.email),
-        columns: { id: true },
-      }),
-    ]);
+    const { usernameTaken, emailTaken } = await checkArtistAvailability({
+      username: data.username,
+      email: data.email,
+    });
 
-    if (existingUsername) {
+    if (usernameTaken) {
       ctx.addIssue({
         code: "custom",
         message: "Username is already taken",
@@ -49,7 +46,7 @@ const RegisterSchema = z
       });
     }
 
-    if (existingEmail) {
+    if (emailTaken) {
       ctx.addIssue({
         code: "custom",
         message: "Email is already registered",
@@ -81,10 +78,7 @@ export async function registerAction(
   try {
     const hashedPassword = await getPasswordHash(result.data.password);
 
-    const userRole = await db.query.roles.findFirst({
-      where: (role, { eq }) => eq(role.name, "user"),
-      columns: { id: true, name: true },
-    });
+    const userRole = await getRoleByName("user");
 
     if (!userRole) {
       return {
@@ -93,19 +87,12 @@ export async function registerAction(
       };
     }
 
-    const [createdArtist] = await db
-      .insert(artists)
-      .values({
-        username: result.data.username,
-        email: result.data.email,
-        roleId: userRole.id,
-        avatar: `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(result.data.username)}`,
-      })
-      .returning({ id: artists.id });
-
-    await db.insert(passwords).values({
-      artistId: createdArtist.id,
-      hash: hashedPassword,
+    const createdArtist = await createArtistAccount({
+      username: result.data.username,
+      email: result.data.email,
+      roleId: userRole.id,
+      avatar: `https://api.dicebear.com/7.x/adventurer/svg?seed=${encodeURIComponent(result.data.username)}`,
+      passwordHash: hashedPassword,
     });
 
     const token = await signJWT(

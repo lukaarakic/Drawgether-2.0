@@ -4,7 +4,7 @@ import Modal from "@/app/components/ui/Modal";
 import { logoutAction } from "@/app/lib/actions/logout";
 import { verifyEmail } from "@/app/lib/actions/verify-email";
 import { getArtistId } from "@/app/lib/auth-utils";
-import { db } from "@/app/lib/db";
+import { getArtistSettingsByUsername } from "@/app/lib/data/artists";
 import { maskEmail } from "@/app/utils/misc";
 import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
@@ -21,16 +21,7 @@ const Settings = async ({
 }) => {
   const { artistId } = await params;
 
-  const artist = await db.query.artists.findFirst({
-    where: (artist, { eq }) => eq(artist.username, artistId),
-    columns: {
-      id: true,
-      username: true,
-      email: true,
-      emailVerified: true,
-      avatar: true,
-    },
-  });
+  const artist = await getArtistSettingsByUsername(artistId);
 
   if (!artist) {
     notFound();

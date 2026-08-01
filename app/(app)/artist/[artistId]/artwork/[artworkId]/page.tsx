@@ -1,7 +1,8 @@
 import ArtworkPost from "@/app/components/artwork-module/ArtworkPost";
 import CommentContainer from "@/app/components/comment-module/CommentsContainer";
 import { getArtistId } from "@/app/lib/auth-utils";
-import { db } from "@/app/lib/db";
+import { getArtworkWithArtistsAndComments } from "@/app/lib/data/artworks";
+import { isArtworkLikedByArtist } from "@/app/lib/data/interactions";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
@@ -17,37 +18,7 @@ const ArtworkPage = async ({
 }) => {
   const { artworkId } = await params;
 
-  const artwork = await db.query.artworks.findFirst({
-    where: (artwork, { eq }) => eq(artwork.id, artworkId),
-    with: {
-      artists: {
-        with: {
-          artist: {
-            columns: {
-              id: true,
-              username: true,
-              avatar: true,
-            },
-          },
-        },
-      },
-      comments: {
-        columns: {
-          id: true,
-          content: true,
-        },
-        with: {
-          artist: {
-            columns: {
-              id: true,
-              username: true,
-              avatar: true,
-            },
-          },
-        },
-      },
-    },
-  });
+  const artwork = await getArtworkWithArtistsAndComments(artworkId);
 
   if (!artwork) {
     notFound();
@@ -55,22 +26,12 @@ const ArtworkPage = async ({
 
   const { artistId } = await getArtistId();
 
-  const existingLike = await db.query.likes.findFirst({
-    where: (like, { eq }) =>
-      eq(like.artistId, artistId) && eq(like.artworkId, artworkId),
-  });
-
-  const isLiked = !!existingLike;
-
-  const formattedArtwork = {
-    ...artwork,
-    artists: artwork.artists.map((joinRow) => joinRow.artist),
-  };
+  const isLiked = await isArtworkLikedByArtist(artistId, artworkId);
 
   return (
     <div className="grid grid-cols-2 p-8 gap-20 mt-[10vh]">
       <ArtworkPost
-        artwork={formattedArtwork}
+        artwork={artwork}
         index={1}
         className="w-full"
         showComments={false}

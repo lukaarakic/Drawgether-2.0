@@ -1,7 +1,7 @@
 import ArtworkPost from "@/app/components/artwork-module/ArtworkPost";
 import CommentContainer from "@/app/components/comment-module/CommentsContainer";
 import { getArtistId } from "@/app/lib/auth-utils";
-import { db } from "@/app/lib/db";
+import { getArtworkWithArtistsCommentsAndLikes } from "@/app/lib/data/artworks";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
@@ -18,42 +18,7 @@ const ArtworkPage = async ({
   const { artworkId } = await params;
   const { artistId } = await getArtistId();
 
-  const artwork = await db.query.artworks.findFirst({
-    where: (a, { eq }) => eq(a.id, artworkId),
-    with: {
-      artists: {
-        with: {
-          artist: {
-            columns: {
-              id: true,
-              username: true,
-              avatar: true,
-            },
-          },
-        },
-      },
-      comments: {
-        columns: {
-          id: true,
-          content: true,
-        },
-        with: {
-          artist: {
-            columns: {
-              id: true,
-              username: true,
-              avatar: true,
-            },
-          },
-        },
-      },
-      likes: {
-        columns: {
-          artistId: true,
-        },
-      },
-    },
-  });
+  const artwork = await getArtworkWithArtistsCommentsAndLikes(artworkId);
 
   if (!artwork) {
     notFound();
@@ -61,16 +26,11 @@ const ArtworkPage = async ({
 
   const isLiked = artwork.likes.some((like) => like.artistId === artistId);
 
-  const formattedArtwork = {
-    ...artwork,
-    artists: artwork.artists.map((joinRow) => joinRow.artist),
-  };
-
   return (
     <div className="flex flex-col md:grid md:grid-cols-2 p-8 gap-10 md:gap-20 mt-[10vh] h-fit pb-80">
       <ArtworkPost
         isLiked={isLiked}
-        artwork={formattedArtwork}
+        artwork={artwork}
         index={1}
         className="w-full"
         showComments={false}

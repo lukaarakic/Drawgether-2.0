@@ -4,9 +4,7 @@ import { cookies } from "next/headers";
 import z from "zod";
 import { getPasswordHash } from "../auth-utils";
 import { redirect } from "next/navigation";
-import { db } from "../db";
-import { artists, passwords } from "@/drizzle/schema";
-import { eq } from "drizzle-orm";
+import { updateArtistPasswordHash } from "../data/auth";
 import { verifyJWT } from "../jwt";
 
 const ResetPasswordSchema = z
@@ -54,22 +52,7 @@ export async function resetPassword(
   const hash = await getPasswordHash(result.data.newPassword);
 
   try {
-    const updatedArtist = await db
-      .update(passwords)
-      .set({
-        hash,
-      })
-      .where(
-        eq(
-          passwords.artistId,
-          db
-            .select({ id: artists.id })
-            .from(artists)
-            .where(eq(passwords.artistId, payload.sub))
-            .limit(1),
-        ),
-      )
-      .returning({ id: passwords.artistId });
+    const updatedArtist = await updateArtistPasswordHash(payload.sub, hash);
 
     if (!updatedArtist) {
       return {

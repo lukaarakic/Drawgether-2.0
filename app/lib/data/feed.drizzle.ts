@@ -1,4 +1,5 @@
-import { db } from "@/app/lib/db";
+import { db } from "../db";
+import { getLikedArtworkIds } from "./interactions.drizzle";
 
 export type FeedComment = {
   id: string;
@@ -104,23 +105,14 @@ export async function getFeedChunk({
     };
   }
 
-  const artistLikes = await db.query.likes.findMany({
-    where: (likes, { and, eq, inArray }) =>
-      and(
-        eq(likes.artistId, artistId),
-        inArray(
-          likes.artworkId,
-          formattedArtworks.map((a) => a.id),
-        ),
-      ),
-    columns: {
-      artworkId: true,
-    },
+  const likedArtworkIds = await getLikedArtworkIds({
+    artistId,
+    artworkIds: formattedArtworks.map((a) => a.id),
   });
 
   return {
     artworks: formattedArtworks,
-    likedArtworkIds: artistLikes.map((like) => like.artworkId),
+    likedArtworkIds,
     hasMore,
     nextCursor:
       hasMore && lastArtwork

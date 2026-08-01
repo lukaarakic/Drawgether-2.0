@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { verifyJWT } from "./jwt";
 import { redirect } from "next/navigation";
-import { db } from "./db";
+import { getArtistCredentialsByEmail, getArtistWithRole } from "./data/auth";
 
 export async function getSession() {
   const cookieStore = await cookies();
@@ -34,22 +34,7 @@ export async function getArtist() {
 
   if (!session) return null;
 
-  const artist = await db.query.artists.findFirst({
-    where: (artist, { eq }) => eq(artist.id, session.sub),
-    columns: {
-      id: true,
-      username: true,
-      email: true,
-      emailVerified: true,
-    },
-    with: {
-      role: {
-        columns: {
-          name: true,
-        },
-      },
-    },
-  });
+  const artist = await getArtistWithRole(session.sub);
 
   if (!artist) return;
 
@@ -78,24 +63,7 @@ export async function getPasswordHash(password: string) {
 }
 
 export async function verifyPassword(email: string, password: string) {
-  const artist = await db.query.artists.findFirst({
-    where: (artist, { eq }) => eq(artist.email, email),
-    columns: {
-      id: true,
-    },
-    with: {
-      password: {
-        columns: {
-          hash: true,
-        },
-      },
-      role: {
-        columns: {
-          name: true,
-        },
-      },
-    },
-  });
+  const artist = await getArtistCredentialsByEmail(email);
 
   if (!artist || !artist.password.hash) return null;
 

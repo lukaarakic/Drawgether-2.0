@@ -1,7 +1,7 @@
 import { getArtistId } from "@/app/lib/auth-utils";
 import { notFound } from "next/navigation";
 import RoomManager from "./RoomManager";
-import { db } from "@/app/lib/db";
+import { getRoomForLobby } from "@/app/lib/data/rooms";
 import type { Metadata } from "next";
 import { RoomStatus } from "@/drizzle/types";
 import Link from "next/link";
@@ -15,12 +15,7 @@ const Lobby = async ({ params }: { params: Promise<{ roomId: string }> }) => {
   const { roomId } = await params;
   const { artistId } = await getArtistId();
 
-  const room = await db.query.rooms.findFirst({
-    where: (r, { eq }) => eq(r.code, roomId),
-    with: {
-      artists: true,
-    },
-  });
+  const room = await getRoomForLobby(roomId);
 
   if (!room) notFound();
 
