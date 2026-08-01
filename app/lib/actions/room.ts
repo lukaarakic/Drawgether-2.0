@@ -5,6 +5,7 @@ import { getArtistId } from "../auth-utils";
 import { redirect } from "next/navigation";
 import z from "zod";
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
 import OpenAI from "openai";
 import { RoomStatus } from "@/drizzle/types";
 import { publishRoomEvent } from "../realtime";
@@ -13,6 +14,7 @@ import { createArtworkForRoom } from "../data/artworks";
 import {
   activateRoomState,
   beginStartCountdown,
+  cacheRoomOpening,
   cancelStartCountdown,
   createRoomWithOwner,
   finalizeStartingCountdown,
@@ -281,6 +283,20 @@ export async function startGameCountdownAction(
     startsAt: newStartsAt.toISOString(),
   });
   revalidatePath(`/room/${roomId}`);
+
+  // Generate the topic during the 5s countdown instead of after it, so
+  // finalizeGameCountdownAction (which fires the instant the countdown hits
+  // zero) doesn't have to wait on the OpenAI round trip before revealing it.
+  // after() keeps this running past the response Vercel already sent above.
+  after(async () => {
+    const roomOpening = await generateRoomOpening(roomId);
+    await cacheRoomOpening({
+      roomDatabaseId,
+      startsAt: newStartsAt,
+      introMessage: roomOpening.introMessage,
+      theme: roomOpening.topic,
+    });
+  });
 }
 
 export async function cancelGameCountdownAction(
@@ -314,7 +330,13 @@ export async function finalizeGameCountdownAction(
     console.error("Countdown has not expired yet for room:", roomId);
     return false;
   }
-  const roomOpening = await generateRoomOpening(roomId);
+  // startGameCountdownAction kicks off generation in the background as soon
+  // as the countdown begins, so it's usually already cached by now — only
+  // fall back to a synchronous call if it hasn't landed yet.
+  const roomOpening: RoomOpening =
+    room.introMessage && room.theme
+      ? { introMessage: room.introMessage, topic: room.theme }
+      : await generateRoomOpening(roomId);
   const newStartingExpiresAt = new Date(Date.now() + STARTING_COUNTDOWN_MS);
 
   const didUpdate = await finalizeStartingCountdown({

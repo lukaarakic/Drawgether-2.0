@@ -14,6 +14,7 @@ export const removeArtistFromRoom = impl.removeArtistFromRoom;
 export const getArtistRoomCode = impl.getArtistRoomCode;
 export const getHostRoomSnapshot = impl.getHostRoomSnapshot;
 export const beginStartCountdown = impl.beginStartCountdown;
+export const cacheRoomOpening = impl.cacheRoomOpening;
 export const cancelStartCountdown = impl.cancelStartCountdown;
 export const finalizeStartingCountdown = impl.finalizeStartingCountdown;
 export const getRoomActivationSnapshot = impl.getRoomActivationSnapshot;

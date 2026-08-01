@@ -101,6 +101,29 @@ export async function beginStartCountdown(roomDatabaseId: string, startsAt: Date
     );
 }
 
+export async function cacheRoomOpening({
+  roomDatabaseId,
+  startsAt,
+  introMessage,
+  theme,
+}: {
+  roomDatabaseId: string;
+  startsAt: Date;
+  introMessage: string;
+  theme: string;
+}) {
+  await db
+    .update(rooms)
+    .set({ introMessage, theme })
+    .where(
+      and(
+        eq(rooms.id, roomDatabaseId),
+        eq(rooms.status, RoomStatus.WAITING),
+        eq(rooms.startsAt, startsAt),
+      ),
+    );
+}
+
 export async function cancelStartCountdown(
   roomDatabaseId: string,
   previousStartsAt: Date,
