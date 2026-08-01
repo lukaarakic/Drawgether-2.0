@@ -179,12 +179,15 @@ const RoomManager = ({
     startingEndsAt,
   ]);
 
+  const [socket, setSocket] = useState<RoomSocket | null>(null);
+
   useEffect(() => {
     const socket = new RoomSocket(
       process.env.NEXT_PUBLIC_REALTIME_WS_URL!,
       roomId,
       () => mintRealtimeToken(roomId),
     );
+    setSocket(socket);
 
     const unsubscribers = [
       socket.on("artist_joined", (payload) => {
@@ -219,6 +222,7 @@ const RoomManager = ({
     return () => {
       unsubscribers.forEach((unsubscribe) => unsubscribe());
       socket.close();
+      setSocket(null);
     };
   }, [currentArtistId, roomId, router]);
 
@@ -256,13 +260,14 @@ const RoomManager = ({
         />
       )}
 
-      {roomState.status === RoomStatus.ACTIVE && (
+      {roomState.status === RoomStatus.ACTIVE && socket && (
         <GameCanvas
           artists={artists}
           roomId={roomId}
           theme={roomState.theme}
           expiresAt={roomState.expiresAt}
           roomDatabaseId={roomDatabaseId}
+          socket={socket}
         />
       )}
     </>

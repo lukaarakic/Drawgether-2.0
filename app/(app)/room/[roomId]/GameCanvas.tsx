@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Toolbox from "./components/game-canvas/Toolbox";
 import { RoomSocket } from "@/app/lib/realtime-client";
-import { mintRealtimeToken } from "@/app/lib/actions/realtime-token";
 import { finishGameAction } from "@/app/lib/actions/room";
 import GameCanvasHeader from "./components/game-canvas/GameCanvasHeader";
 import PlayerSidebar from "./components/game-canvas/PlayerSidebar";
@@ -20,6 +19,7 @@ interface GameCanvasProps {
   theme: string | null;
   expiresAt: string | null;
   roomDatabaseId: string;
+  socket: RoomSocket;
 }
 
 const MAX_UNDO_STEPS = 20;
@@ -40,10 +40,10 @@ export default function GameCanvas({
   theme,
   expiresAt,
   roomDatabaseId,
+  socket,
 }: GameCanvasProps) {
   const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const channelRef = useRef<RoomSocket | null>(null);
   const historyRef = useRef<ImageData[]>([]);
   const strokeBufferRef = useRef<StrokeSegment[]>([]);
 
@@ -128,7 +128,7 @@ export default function GameCanvas({
   const handleUndoClick = () => {
     executeUndo();
 
-    channelRef.current?.send("undo_canvas");
+    socket.send("undo_canvas");
   };
 
   const getCoordinates = (e: React.PointerEvent<HTMLCanvasElement>) => {
@@ -161,13 +161,13 @@ export default function GameCanvas({
 
     pushHistory();
 
-    channelRef.current?.send("start_drawing");
+    socket.send("start_drawing");
 
     const actualColor = activeTool === "eraser" ? "#ffffff" : color;
 
     executeDot(pos.x, pos.y, actualColor, brushSize);
 
-    channelRef.current?.send("draw_dot", {
+    socket.send("draw_dot", {
       x: pos.x,
       y: pos.y,
       color: actualColor,
@@ -181,7 +181,7 @@ export default function GameCanvas({
   const flushStrokeBuffer = () => {
     if (strokeBufferRef.current.length === 0) return;
 
-    channelRef.current?.send("draw_batch", {
+    socket.send("draw_batch", {
       segments: strokeBufferRef.current,
     });
 
@@ -231,7 +231,7 @@ export default function GameCanvas({
 
     executeFill(color);
 
-    channelRef.current?.send("fill_canvas", { color });
+    socket.send("fill_canvas", { color });
   };
 
   const handleClose = () => {
@@ -292,12 +292,6 @@ export default function GameCanvas({
   }, [isTimeUp, artworkSaved, roomDatabaseId, roomId]);
 
   useEffect(() => {
-    const socket = new RoomSocket(
-      process.env.NEXT_PUBLIC_REALTIME_WS_URL!,
-      roomId,
-      () => mintRealtimeToken(roomId),
-    );
-
     const unsubscribers = [
       socket.on("draw_batch", (payload) => {
         const segments =
@@ -335,14 +329,10 @@ export default function GameCanvas({
       }),
     ];
 
-    void socket.connect();
-    channelRef.current = socket;
-
     return () => {
       unsubscribers.forEach((unsubscribe) => unsubscribe());
-      socket.close();
     };
-  }, [roomId]);
+  }, [socket]);
 
   return (
     <div className="flex flex-col px-4 sm:px-5 mt-20">

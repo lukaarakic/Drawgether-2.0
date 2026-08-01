@@ -175,6 +175,29 @@ export async function beginStartCountdown(roomDatabaseId: string, startsAt: Date
   });
 }
 
+export async function cacheRoomOpening({
+  roomDatabaseId,
+  startsAt,
+  introMessage,
+  theme,
+}: {
+  roomDatabaseId: string;
+  startsAt: Date;
+  introMessage: string;
+  theme: string;
+}) {
+  await tablesDB.updateRows({
+    databaseId: APPWRITE_DATABASE_ID,
+    tableId: TABLES.rooms,
+    data: { introMessage, theme },
+    queries: [
+      Query.equal("$id", roomDatabaseId),
+      Query.equal("status", RoomStatus.WAITING),
+      Query.equal("startsAt", startsAt.toISOString()),
+    ],
+  });
+}
+
 export async function cancelStartCountdown(
   roomDatabaseId: string,
   previousStartsAt: Date,
