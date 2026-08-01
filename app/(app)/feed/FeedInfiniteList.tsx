@@ -9,7 +9,7 @@ import ArtistCircle from "@/app/components/ui/ArtistCircle";
 import ArtworkComments from "@/app/components/artwork-module/ArtworkComments";
 import ArtworkDeleteButton from "@/app/components/artwork-module/ArtworkDeleteButton";
 import CommentIcon from "@/app/assets/misc/comment.svg";
-import type { FeedArtwork, FeedCursor } from "./feed-query";
+import type { FeedArtwork, FeedCursor } from "@/app/lib/data/feed";
 
 const PAGE_SIZE = 6;
 
@@ -33,6 +33,7 @@ export default function FeedInfiniteList({
   currentArtistRole: string;
 }) {
   const [artworks, setArtworks] = useState<FeedArtwork[]>(initialArtworks);
+  const previousInitialArtworksRef = useRef(initialArtworks);
   const [hasMore, setHasMore] = useState(initialHasMore);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [loadMoreError, setLoadMoreError] = useState<string | null>(null);
@@ -128,6 +129,25 @@ export default function FeedInfiniteList({
     await loadMore();
   };
 
+  // initialArtworks is fresh server data on every route refresh (e.g. after
+  // adding/deleting a comment triggers router.refresh()), but `artworks`
+  // state only reads it once on mount. Merge in comment/like-count updates
+  // for artworks we already have, without dropping items loaded via
+  // infinite scroll that aren't part of this initial page.
+  useEffect(() => {
+    if (previousInitialArtworksRef.current === initialArtworks) return;
+    previousInitialArtworksRef.current = initialArtworks;
+
+    setArtworks((previous) =>
+      previous.map((artwork) => {
+        const fresh = initialArtworks.find((item) => item.id === artwork.id);
+        return fresh
+          ? { ...artwork, comments: fresh.comments, commentsCount: fresh.commentsCount }
+          : artwork;
+      }),
+    );
+  }, [initialArtworks]);
+
   useEffect(() => {
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
@@ -182,6 +202,23 @@ export default function FeedInfiniteList({
             artworkId={artwork.id}
             likeCount={artwork.likesCount}
             isLiked={likedArtworkIds.has(artwork.id)}
+            onToggled={({ liked, likeCount }) => {
+              setLikedArtworkIds((previous) => {
+                const next = new Set(previous);
+                if (liked) {
+                  next.add(artwork.id);
+                } else {
+                  next.delete(artwork.id);
+                }
+                return next;
+              });
+
+              setArtworks((previous) =>
+                previous.map((item) =>
+                  item.id === artwork.id ? { ...item, likesCount: likeCount } : item,
+                ),
+              );
+            }}
           />
 
           <Link href={`/feed/artwork/${artwork.id}`} className="flex items-end">

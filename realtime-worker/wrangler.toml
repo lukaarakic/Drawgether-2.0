@@ -1,0 +1,15 @@
+name = "drawgether-realtime"
+main = "src/index.ts"
+compatibility_date = "2026-01-01"
+
+[[durable_objects.bindings]]
+name = "ROOM_DO"
+class_name = "RoomDO"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["RoomDO"]
+
+# Secrets (set with `wrangler secret put <NAME>`, never committed):
+#   REALTIME_JWT_SECRET  - shared with the Next app, used to verify client connect tokens
+#   REALTIME_PUSH_SECRET - shared with the Next app, used to authorize server -> worker pushes

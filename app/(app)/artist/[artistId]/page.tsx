@@ -3,7 +3,7 @@ import BoxLabel from "@/app/components/ui/BoxLabel";
 import SmallArtworkContainer from "@/app/components/artwork-module/profile-artworks/SmallArtworkContainer";
 import ArtworksContainer from "@/app/components/artwork-module/profile-artworks/ArtworksContainer";
 import { notFound, redirect } from "next/navigation";
-import { db } from "@/app/lib/db";
+import { getArtistProfileByUsername } from "@/app/lib/data/artists";
 import { getArtist } from "@/app/lib/auth-utils";
 import Link from "next/link";
 import Image from "next/image";
@@ -47,67 +47,7 @@ const Profile = async ({
 }) => {
   const { artistId } = await params;
 
-  const artist = await db.query.artists.findFirst({
-    where: (artist, { eq }) => eq(artist.username, artistId),
-    columns: {
-      id: true,
-      username: true,
-      followerCount: true,
-      followingCount: true,
-      avatar: true,
-    },
-    with: {
-      artworks: {
-        with: {
-          artwork: {
-            columns: {
-              id: true,
-              theme: true,
-              artworkImage: true,
-              likesCount: true,
-              createdAt: true,
-              updatedAt: true,
-              roomId: true,
-              commentsCount: true,
-            },
-            with: {
-              comments: {
-                columns: {
-                  id: true,
-                  content: true,
-                },
-                with: {
-                  artist: {
-                    columns: {
-                      id: true,
-                      username: true,
-                      avatar: true,
-                    },
-                  },
-                },
-              },
-              artists: {
-                with: {
-                  artist: {
-                    columns: {
-                      id: true,
-                      username: true,
-                      avatar: true,
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-      followers: {
-        columns: {
-          followerId: true,
-        },
-      },
-    },
-  });
+  const artist = await getArtistProfileByUsername(artistId);
 
   if (!artist) {
     notFound();
@@ -127,16 +67,6 @@ const Profile = async ({
   const isFollowing = artist.followers.some(
     (follower) => follower.followerId === loggedInArtistId.id,
   );
-
-  const formattedArtist = {
-    artworks: artist.artworks.map((artworkJoinRow) => ({
-      ...artworkJoinRow.artwork,
-
-      artists: artworkJoinRow.artwork.artists.map(
-        (artistJoinRow) => artistJoinRow.artist,
-      ),
-    })),
-  };
 
   return (
     <>
@@ -187,14 +117,15 @@ const Profile = async ({
               <SmallArtworkContainer
                 artist={{
                   username: artist.username,
-                  artworks: formattedArtist.artworks.map(
-                    ({ id, artworkImage }) => ({ id, artworkImage }),
-                  ),
+                  artworks: artist.artworks.map(({ id, artworkImage }) => ({
+                    id,
+                    artworkImage,
+                  })),
                 }}
               />
             </div>
             <div className="md:hidden">
-              <ArtworksContainer artworks={formattedArtist.artworks} />
+              <ArtworksContainer artworks={artist.artworks} />
             </div>
           </>
         ) : (

@@ -1,7 +1,7 @@
 import { getArtistId } from "@/app/lib/auth-utils";
 import { Metadata } from "next";
 import FeedInfiniteList from "@/app/(app)/feed/FeedInfiniteList";
-import { getFeedChunk } from "@/app/(app)/feed/feed-query";
+import { getFeedChunk } from "@/app/lib/data/feed";
 
 export const metadata: Metadata = {
   title: `Explore Artworks`,

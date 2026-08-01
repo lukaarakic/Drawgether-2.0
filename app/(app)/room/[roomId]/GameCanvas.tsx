@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Toolbox from "./components/game-canvas/Toolbox";
-import { createClient, RealtimeChannel } from "@supabase/supabase-js";
+import { RoomSocket } from "@/app/lib/realtime-client";
+import { mintRealtimeToken } from "@/app/lib/actions/realtime-token";
 import { finishGameAction } from "@/app/lib/actions/room";
 import GameCanvasHeader from "./components/game-canvas/GameCanvasHeader";
 import PlayerSidebar from "./components/game-canvas/PlayerSidebar";
@@ -22,11 +23,16 @@ interface GameCanvasProps {
 }
 
 const MAX_UNDO_STEPS = 20;
+const STROKE_FLUSH_MS = 40;
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-);
+type StrokeSegment = {
+  x0: number;
+  y0: number;
+  x1: number;
+  y1: number;
+  color: string;
+  size: number;
+};
 
 export default function GameCanvas({
   roomId,
@@ -37,8 +43,9 @@ export default function GameCanvas({
 }: GameCanvasProps) {
   const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const channelRef = useRef<RealtimeChannel | null>(null);
+  const channelRef = useRef<RoomSocket | null>(null);
   const historyRef = useRef<ImageData[]>([]);
+  const strokeBufferRef = useRef<StrokeSegment[]>([]);
 
   const [isDrawing, setIsDrawing] = useState(false);
   const [canUndo, setCanUndo] = useState(false);
@@ -49,6 +56,8 @@ export default function GameCanvas({
   const prevPos = useRef<{ x: number; y: number } | null>(null);
   const [gameNow, setGameNow] = useState(() => Date.now());
   const [artworkSaved, setArtworkSaved] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
   const safeDateString = expiresAt
     ? expiresAt.endsWith("Z")
@@ -119,10 +128,7 @@ export default function GameCanvas({
   const handleUndoClick = () => {
     executeUndo();
 
-    channelRef.current?.send({
-      type: "broadcast",
-      event: "undo_canvas",
-    });
+    channelRef.current?.send("undo_canvas");
   };
 
   const getCoordinates = (e: React.PointerEvent<HTMLCanvasElement>) => {
@@ -155,23 +161,31 @@ export default function GameCanvas({
 
     pushHistory();
 
-    channelRef.current?.send({
-      type: "broadcast",
-      event: "start_drawing",
-    });
+    channelRef.current?.send("start_drawing");
 
     const actualColor = activeTool === "eraser" ? "#ffffff" : color;
 
     executeDot(pos.x, pos.y, actualColor, brushSize);
 
-    channelRef.current?.send({
-      type: "broadcast",
-      event: "draw_dot",
-      payload: { x: pos.x, y: pos.y, color: actualColor, size: brushSize },
+    channelRef.current?.send("draw_dot", {
+      x: pos.x,
+      y: pos.y,
+      color: actualColor,
+      size: brushSize,
     });
 
     setIsDrawing(true);
     prevPos.current = pos;
+  };
+
+  const flushStrokeBuffer = () => {
+    if (strokeBufferRef.current.length === 0) return;
+
+    channelRef.current?.send("draw_batch", {
+      segments: strokeBufferRef.current,
+    });
+
+    strokeBufferRef.current = [];
   };
 
   const draw = (e: React.PointerEvent<HTMLCanvasElement>) => {
@@ -191,17 +205,13 @@ export default function GameCanvas({
       brushSize,
     );
 
-    channelRef.current?.send({
-      type: "broadcast",
-      event: "draw_stroke",
-      payload: {
-        x0: prevPos.current.x,
-        y0: prevPos.current.y,
-        x1: currentPos.x,
-        y1: currentPos.y,
-        color: actualColor,
-        size: brushSize,
-      },
+    strokeBufferRef.current.push({
+      x0: prevPos.current.x,
+      y0: prevPos.current.y,
+      x1: currentPos.x,
+      y1: currentPos.y,
+      color: actualColor,
+      size: brushSize,
     });
 
     prevPos.current = currentPos;
@@ -211,6 +221,7 @@ export default function GameCanvas({
     if (e.currentTarget.hasPointerCapture(e.pointerId)) {
       e.currentTarget.releasePointerCapture(e.pointerId);
     }
+    flushStrokeBuffer();
     setIsDrawing(false);
     prevPos.current = null;
   };
@@ -220,11 +231,7 @@ export default function GameCanvas({
 
     executeFill(color);
 
-    channelRef.current?.send({
-      type: "broadcast",
-      event: "fill_canvas",
-      payload: { color },
-    });
+    channelRef.current?.send("fill_canvas", { color });
   };
 
   const handleClose = () => {
@@ -250,50 +257,90 @@ export default function GameCanvas({
   }, [isTimeUp]);
 
   useEffect(() => {
-    if (!isTimeUp || artworkSaved) return;
+    const intervalId = window.setInterval(() => {
+      flushStrokeBuffer();
+    }, STROKE_FLUSH_MS);
+    return () => {
+      window.clearInterval(intervalId);
+      flushStrokeBuffer();
+    };
+  }, []);
+
+  const saveArtwork = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
+    setIsSaving(true);
+    setSaveError(null);
 
     const base64 = canvas.toDataURL("image/png");
     finishGameAction(roomDatabaseId, roomId, base64)
       .then(() => setArtworkSaved(true))
-      .catch((err) => console.error("Error saving artwork:", err));
+      .catch((err) => {
+        console.error("Error saving artwork:", err);
+        setSaveError(
+          "Couldn't save your artwork. Check your connection and try again.",
+        );
+      })
+      .finally(() => setIsSaving(false));
+  };
+
+  useEffect(() => {
+    if (!isTimeUp || artworkSaved || isSaving || saveError) return;
+    saveArtwork();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTimeUp, artworkSaved, roomDatabaseId, roomId]);
 
   useEffect(() => {
-    const channel = supabase.channel(`room_game_${roomId}`, {
-      config: { broadcast: { self: false } },
-    });
+    const socket = new RoomSocket(
+      process.env.NEXT_PUBLIC_REALTIME_WS_URL!,
+      roomId,
+      () => mintRealtimeToken(roomId),
+    );
 
-    channel
-      .on("broadcast", { event: "draw_stroke" }, ({ payload }) => {
-        executeStroke(
-          payload.x0,
-          payload.y0,
-          payload.x1,
-          payload.y1,
-          payload.color,
-          payload.size,
-        );
-      })
-      .on("broadcast", { event: "draw_dot" }, ({ payload }) => {
-        executeDot(payload.x, payload.y, payload.color, payload.size);
-      })
-      .on("broadcast", { event: "fill_canvas" }, ({ payload }) => {
-        executeFill(payload.color);
-      })
-      .on("broadcast", { event: "undo_canvas" }, () => {
+    const unsubscribers = [
+      socket.on("draw_batch", (payload) => {
+        const segments =
+          (payload as { segments?: StrokeSegment[] } | undefined)
+            ?.segments ?? [];
+        for (const segment of segments) {
+          executeStroke(
+            segment.x0,
+            segment.y0,
+            segment.x1,
+            segment.y1,
+            segment.color,
+            segment.size,
+          );
+        }
+      }),
+      socket.on("draw_dot", (payload) => {
+        const dot = payload as {
+          x: number;
+          y: number;
+          color: string;
+          size: number;
+        };
+        executeDot(dot.x, dot.y, dot.color, dot.size);
+      }),
+      socket.on("fill_canvas", (payload) => {
+        const fill = payload as { color: string };
+        executeFill(fill.color);
+      }),
+      socket.on("undo_canvas", () => {
         executeUndo();
-      })
-      .on("broadcast", { event: "start_drawing" }, () => {
+      }),
+      socket.on("start_drawing", () => {
         pushHistory();
-      })
-      .subscribe();
+      }),
+    ];
 
-    channelRef.current = channel;
+    void socket.connect();
+    channelRef.current = socket;
 
     return () => {
-      supabase.removeChannel(channel);
+      unsubscribers.forEach((unsubscribe) => unsubscribe());
+      socket.close();
     };
   }, [roomId]);
 
@@ -349,6 +396,20 @@ export default function GameCanvas({
           </Text>
         </BoxLabel>
         <Text className="text-blue! text-5xl">Timer</Text>
+
+        {saveError && (
+          <div className="mt-10 flex flex-col items-center gap-4">
+            <Text className="text-pink! text-3xl text-center">{saveError}</Text>
+            <button
+              type="button"
+              onClick={saveArtwork}
+              disabled={isSaving}
+              className="box-shadow cursor-pointer bg-pink px-10 py-4 text-25 text-white uppercase transition-transform hover:scale-105 active:scale-90 disabled:opacity-70"
+            >
+              {isSaving ? "Retrying..." : "Retry save"}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

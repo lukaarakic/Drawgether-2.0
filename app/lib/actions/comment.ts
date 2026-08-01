@@ -3,9 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getArtistId } from "../auth-utils";
 import z from "zod";
-import { db } from "../db";
-import { artworks, comments } from "@/drizzle/schema";
-import { eq, sql } from "drizzle-orm";
+import { addComment, deleteComment, getCommentOwnerId } from "../data/interactions";
 
 const CommentSchema = z.object({
   content: z
@@ -30,17 +28,10 @@ export async function addCommentAction(
   const validContent = validationResult.data.content;
 
   try {
-    await db.transaction(async (tx) => {
-      await tx.insert(comments).values({
-        content: validContent,
-        artistId: loggedInArtist.artistId,
-        artworkId,
-      });
-
-      await tx
-        .update(artworks)
-        .set({ commentsCount: sql`${artworks.commentsCount} + 1` })
-        .where(eq(artworks.id, artworkId));
+    await addComment({
+      content: validContent,
+      artistId: loggedInArtist.artistId,
+      artworkId,
     });
 
     revalidatePath(path);
@@ -58,10 +49,7 @@ export async function deleteCommentAction(
 ) {
   const loggedInArtist = await getArtistId();
 
-  const comment = await db.query.comments.findFirst({
-    where: (comment, { eq }) => eq(comment.id, commentId),
-    columns: { artistId: true },
-  });
+  const comment = await getCommentOwnerId(commentId);
 
   if (!comment) return { error: "Comment not found" };
 
@@ -71,14 +59,7 @@ export async function deleteCommentAction(
   if (!isOwner && !isAdmin) return { error: "Unauthorized" };
 
   try {
-    await db.transaction(async (tx) => {
-      await tx.delete(comments).where(eq(comments.id, commentId));
-
-      await tx
-        .update(artworks)
-        .set({ commentsCount: sql`${artworks.commentsCount} - 1` })
-        .where(eq(artworks.id, artworkId));
-    });
+    await deleteComment({ commentId, artworkId });
 
     revalidatePath(path);
     return { success: true };

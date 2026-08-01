@@ -5,8 +5,8 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import z from "zod";
 import { sendVerificationEmail } from "./email";
-import { db } from "../db";
-import { authTokenTypeEnum, verificationTokens } from "@/drizzle/schema";
+import { findArtistByEmailOrUsername, upsertVerificationToken } from "../data/auth";
+import { AuthTokenType } from "@/drizzle/types";
 
 export type ForgotPasswordState = {
   errors: { identifier?: string[] };
@@ -32,18 +32,7 @@ export async function ForgotPasswordAction(
     };
   }
 
-  const artist = await db.query.artists.findFirst({
-    where: (artist, { eq, or }) =>
-      or(
-        eq(artist.email, result.data.identifier),
-        eq(artist.username, result.data.identifier),
-      ),
-    columns: {
-      id: true,
-      email: true,
-      username: true,
-    },
-  });
+  const artist = await findArtistByEmailOrUsername(result.data.identifier);
 
   if (!artist) {
     return {
@@ -56,23 +45,13 @@ export async function ForgotPasswordAction(
 
   const newExpiresAt = new Date(Date.now() + 15 * 60 * 1000);
 
-  await db
-    .insert(verificationTokens)
-    .values({
-      target: artist.email,
-      type: authTokenTypeEnum.enumValues[1],
-      token,
-      secret,
-      expiresAt: newExpiresAt,
-    })
-    .onConflictDoUpdate({
-      target: [verificationTokens.target, verificationTokens.type],
-      set: {
-        token,
-        secret,
-        expiresAt: newExpiresAt,
-      },
-    });
+  await upsertVerificationToken({
+    target: artist.email,
+    type: AuthTokenType.PASSWORD_RESET,
+    token,
+    secret,
+    expiresAt: newExpiresAt,
+  });
 
   await sendVerificationEmail(artist.email, token, "reset", artist.username);
 
@@ -85,7 +64,7 @@ export async function ForgotPasswordAction(
     expires: new Date(Date.now() + 15 * 60 * 1000),
   });
 
-  cookieStore.set("dg_verify_type", authTokenTypeEnum.enumValues[1], {
+  cookieStore.set("dg_verify_type", AuthTokenType.PASSWORD_RESET, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",

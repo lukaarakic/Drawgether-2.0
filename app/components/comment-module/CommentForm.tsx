@@ -1,7 +1,7 @@
 "use client";
 
 import { addCommentAction } from "@/app/lib/actions/comment";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 const CommentForm = ({ artworkId }: { artworkId: string }) => {
@@ -9,6 +9,7 @@ const CommentForm = ({ artworkId }: { artworkId: string }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isPending, startTransition] = useTransition();
   const path = usePathname();
+  const router = useRouter();
 
   const isInvalid = content.trim() === "" || content.length > 500;
 
@@ -26,6 +27,10 @@ const CommentForm = ({ artworkId }: { artworkId: string }) => {
         setErrorMessage(result.error);
       } else {
         setContent("");
+        // revalidatePath (called server-side by the action) doesn't
+        // reliably invalidate this intercepted modal route — force a
+        // client-triggered refetch of every active segment instead.
+        router.refresh();
       }
     });
   };

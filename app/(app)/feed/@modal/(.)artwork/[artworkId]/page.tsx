@@ -1,6 +1,6 @@
 import CommentContainer from "@/app/components/comment-module/CommentsContainer";
 import Modal from "@/app/components/ui/Modal";
-import { db } from "@/app/lib/db";
+import { getArtworkCommentsOnly } from "@/app/lib/data/artworks";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,29 +15,7 @@ const ShowComments = async ({
 }) => {
   const { artworkId } = await params;
 
-  const artwork = await db.query.artworks.findFirst({
-    where: (artwork, { eq }) => eq(artwork.id, artworkId),
-    columns: {
-      id: true,
-    },
-    with: {
-      comments: {
-        columns: {
-          id: true,
-          content: true,
-        },
-        with: {
-          artist: {
-            columns: {
-              id: true,
-              username: true,
-              avatar: true,
-            },
-          },
-        },
-      },
-    },
-  });
+  const artwork = await getArtworkCommentsOnly(artworkId);
 
   return (
     <Modal boxClassName="w-max h-min top-[45%]" className="w-fit">

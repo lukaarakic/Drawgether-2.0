@@ -2,7 +2,8 @@ import ArtworkPost from "@/app/components/artwork-module/ArtworkPost";
 import CommentContainer from "@/app/components/comment-module/CommentsContainer";
 import Modal from "@/app/components/ui/Modal";
 import { getArtist } from "@/app/lib/auth-utils";
-import { db } from "@/app/lib/db";
+import { getArtworkWithArtistsAndComments } from "@/app/lib/data/artworks";
+import { isArtworkLikedByArtist } from "@/app/lib/data/interactions";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 import { logoutAction } from "@/app/lib/actions/logout";
@@ -25,25 +26,7 @@ const ShowArtwork = async ({
     redirect("/login");
   }
 
-  const artwork = await db.query.artworks.findFirst({
-    where: (artwork, { eq }) => eq(artwork.id, artworkId),
-    with: {
-      comments: {
-        with: {
-          artist: {
-            columns: { id: true, username: true, avatar: true },
-          },
-        },
-      },
-      artists: {
-        with: {
-          artist: {
-            columns: { id: true, username: true, avatar: true },
-          },
-        },
-      },
-    },
-  });
+  const artwork = await getArtworkWithArtistsAndComments(artworkId);
 
   if (!artwork) {
     return (
@@ -53,25 +36,10 @@ const ShowArtwork = async ({
     );
   }
 
-  let isLiked = false;
-
-  const existingLike = await db.query.likes.findFirst({
-    where: (like, { and, eq }) =>
-      and(
-        eq(like.artworkId, artworkId),
-        eq(like.artistId, loggedInArtistId.id),
-      ),
-    columns: {
-      artistId: true,
-    },
-  });
-
-  isLiked = !!existingLike;
-
-  const formattedArtwork = {
-    ...artwork,
-    artists: artwork.artists.map((joinRow) => joinRow.artist),
-  };
+  const isLiked = await isArtworkLikedByArtist(
+    loggedInArtistId.id,
+    artworkId,
+  );
 
   return (
     <Modal
@@ -79,7 +47,7 @@ const ShowArtwork = async ({
       className="grid w-max grid-cols-2 items-start justify-items-center gap-20"
     >
       <ArtworkPost
-        artwork={formattedArtwork}
+        artwork={artwork}
         index={1}
         className="w-full"
         showComments={false}

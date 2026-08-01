@@ -4,11 +4,15 @@ import { AuthTokenType } from "@/drizzle/types";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import z from "zod";
-import { db } from "../db";
-import { and, eq } from "drizzle-orm";
-import { artists, verificationTokens } from "@/drizzle/schema";
 import { validateHoneypot } from "../security";
 import { signJWT } from "../jwt";
+import {
+  deleteVerificationToken,
+  findArtistByEmailOrUsername,
+  findVerificationToken,
+} from "../data/auth";
+import { markArtistEmailVerified } from "../data/artists";
+
 const VerifySchema = z.object({
   token: z.string().length(6, "Code must be 6 digits"),
 });
@@ -47,13 +51,10 @@ export async function verifyTOTPAction(
     };
   }
 
-  const verificationToken = await db.query.verificationTokens.findFirst({
-    where: (token, { eq, and }) =>
-      and(
-        eq(token.target, verifyTarget),
-        eq(token.type, AuthTokenType[verifyType as keyof typeof AuthTokenType]),
-      ),
-  });
+  const verificationToken = await findVerificationToken(
+    verifyTarget,
+    AuthTokenType[verifyType as keyof typeof AuthTokenType],
+  );
 
   if (!verificationToken) {
     return { errors: {}, message: "No active verification request found." };
@@ -71,32 +72,19 @@ export async function verifyTOTPAction(
     };
   }
 
-  const artist = await db.query.artists.findFirst({
-    where: (a, { eq, or }) =>
-      or(eq(a.email, verifyTarget), eq(a.username, verifyTarget)),
-    columns: {
-      id: true,
-      email: true,
-      username: true,
-    },
-  });
+  const artist = await findArtistByEmailOrUsername(verifyTarget);
 
   if (!artist) {
     return { errors: {}, message: "Account not found." };
   }
 
-  await db
-    .delete(verificationTokens)
-    .where(eq(verificationTokens.id, verificationToken.id));
+  await deleteVerificationToken(verificationToken.id);
 
   cookieStore.delete("dg_verify_target");
   cookieStore.delete("dg_verify_type");
 
   if (verifyType === AuthTokenType.EMAIL_VERIFICATION) {
-    await db
-      .update(artists)
-      .set({ emailVerified: new Date() })
-      .where(eq(artists.id, artist.id));
+    await markArtistEmailVerified(artist.id);
 
     redirect(`/artist/${artist.username}`);
   }
