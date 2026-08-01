@@ -2,7 +2,7 @@
 
 import { likeArtwork } from "@/app/lib/actions/like";
 import { usePathname } from "next/navigation";
-import { useOptimistic, useState, useTransition } from "react";
+import { useOptimistic, useRef, useState, useTransition } from "react";
 
 interface ArtworkLikeButtonProps {
   isLiked: boolean;
@@ -21,7 +21,7 @@ const ArtworkLikeButton = ({
   artworkId,
   onToggled,
 }: ArtworkLikeButtonProps) => {
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const [optimisticLike, addOptimisticUpdate] = useOptimistic(
@@ -41,19 +41,43 @@ const ArtworkLikeButton = ({
   );
   const path = usePathname();
 
+  // Guards against firing overlapping likeArtwork requests when the button
+  // is clicked again before the previous toggle has resolved: the server
+  // does a read-then-write with no row-level uniqueness guarantee, so two
+  // concurrent toggles could double up. The optimistic UI still flips
+  // instantly on every click; the network calls are serialized instead —
+  // each click queues exactly one toggle, drained one at a time, so the
+  // button never has to block clicks to stay correct.
+  const sendingRef = useRef(false);
+  const queuedTogglesRef = useRef(0);
+
+  const drainQueue = async () => {
+    if (sendingRef.current || queuedTogglesRef.current === 0) return;
+    sendingRef.current = true;
+    queuedTogglesRef.current -= 1;
+
+    const result = await likeArtwork(artworkId, path);
+    sendingRef.current = false;
+
+    if (!result?.success || result.liked === undefined || result.likeCount === undefined) {
+      setErrorMessage(result?.error ?? "Failed to update like. Please try again.");
+      queuedTogglesRef.current = 0;
+      return;
+    }
+
+    onToggled?.({ liked: result.liked, likeCount: result.likeCount });
+
+    await drainQueue();
+  };
+
   const handleLike = () => {
     setErrorMessage(null);
+    const desired = !optimisticLike.isLiked;
+
     startTransition(async () => {
-      addOptimisticUpdate(!optimisticLike.isLiked);
-
-      const result = await likeArtwork(artworkId, path);
-
-      if (!result?.success || result.liked === undefined || result.likeCount === undefined) {
-        setErrorMessage(result?.error ?? "Failed to update like. Please try again.");
-        return;
-      }
-
-      onToggled?.({ liked: result.liked, likeCount: result.likeCount });
+      addOptimisticUpdate(desired);
+      queuedTogglesRef.current += 1;
+      await drainQueue();
     });
   };
 
@@ -62,7 +86,6 @@ const ArtworkLikeButton = ({
       <button
         className="relative rotate-12 cursor-pointer transition-transform active:scale-90"
         onClick={handleLike}
-        disabled={isPending}
         aria-label={optimisticLike.isLiked ? "Unlike artwork" : "Like artwork"}
       >
         <svg
